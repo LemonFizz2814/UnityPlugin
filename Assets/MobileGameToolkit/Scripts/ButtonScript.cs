@@ -22,7 +22,8 @@ public class ButtonScript : MonoBehaviour
         {
             case CanvasManager.ButtonType.Play:
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().name); //restart scene
-                canvasManager.ShowMenuObject(false, CanvasManager.Menu.Start);
+                canvasManager.ShowMenuObject(true, CanvasManager.Menu.GamePlayScreen);
+                canvasManager.StartGame();
                 break;
 
             case CanvasManager.ButtonType.Exit:
@@ -34,7 +35,7 @@ public class ButtonScript : MonoBehaviour
                 break;
 
             case CanvasManager.ButtonType.Back:
-                canvasManager.ShowMenuObject(true, CanvasManager.Menu.GameOver);
+                canvasManager.ShowMenuObject(true, CanvasManager.Menu.Start);
                 break;
 
             case CanvasManager.ButtonType.SocialMedia:
@@ -43,6 +44,10 @@ public class ButtonScript : MonoBehaviour
 
             case CanvasManager.ButtonType.Settings:
                 canvasManager.ShowMenuObject(true, CanvasManager.Menu.Settings);
+                break;
+
+            case CanvasManager.ButtonType.Advert:
+                //play advert here
                 break;
 
             default:
