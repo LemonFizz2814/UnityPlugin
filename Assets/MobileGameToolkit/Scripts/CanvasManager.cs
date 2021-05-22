@@ -33,6 +33,13 @@ public class CanvasManager : MonoBehaviour
 
     private void Start()
     {
+        playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+
+        if (playerScript == null)
+        {
+            print("ERROR, player object not found");
+        }
+
         for (int i = 0; i < (int)Menu.ENUM_LENGTH; i++)
         {
             menuObjList.Add(FindObject(menuTagStrings[i])[0]);
@@ -40,13 +47,6 @@ public class CanvasManager : MonoBehaviour
         }
 
         ShowMenuObject(true, Menu.Start);
-
-        playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
-
-        if(playerScript == null)
-        {
-            print("ERROR, player object not found");
-        }
     }
 
     public void ShowMenuObject(bool _active, Menu _menuType)
@@ -69,18 +69,19 @@ public class CanvasManager : MonoBehaviour
         }
     }
 
-    public GameObject[] FindObject(string _tag)
+    public List<GameObject> FindObject(string _tag)
     {
         Transform[] children = gameObject.GetComponentsInChildren<Transform>();
 
-        //List<GameObject> listOfChildren = new List<GameObject>();
-        GameObject[] listOfChildren = null;
+        List<GameObject> listOfChildren = new List<GameObject>();
+        //GameObject[] listOfChildren;
 
         foreach (Transform child in children)
         {
             if (child.CompareTag(_tag))
             {
-                listOfChildren[listOfChildren.Length] = child.gameObject;
+                //listOfChildren[listOfChildren.Length] = child.gameObject;
+                listOfChildren.Add(child.gameObject);
                 //return child.gameObject;
             }
         }
