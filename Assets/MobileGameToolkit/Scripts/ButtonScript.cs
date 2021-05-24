@@ -16,6 +16,11 @@ public class ButtonScript : MonoBehaviour
         canvasManager = GameObject.Find("Canvas").GetComponent<CanvasManager>();
     }
 
+    public void SetType(CanvasManager.ButtonType _type)
+    {
+        buttonType = _type;
+    }
+
     public void OnButtonClicked()
     {
         switch(buttonType)
