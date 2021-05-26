@@ -40,9 +40,15 @@ public class PlayerScript : MonoBehaviour
     {
         if(lives <= 0) //gameover state here
         {
-            canvasManager.ShowMenuObject(true, CanvasManager.Menu.GameOver);
+            canvasManager.ShowMenuObject(true, CanvasManager.MenuType.GameOver);
             isDead = true;
         }
+    }
+
+    void IncreaseScore(int _points)
+    {
+        score += _points;
+        canvasManager.UpdateCurrencyText(nameOfCurrency, currency);
     }
 
     private void Update()
@@ -53,11 +59,17 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision other)
     {
-        if(collision.gameObject.CompareTag("Enemy"))
+        if(other.gameObject.CompareTag("Enemy"))
         {
-            TakeDamage(collision.gameObject.GetComponent<EnemyScript>().damage);
+            TakeDamage(other.gameObject.GetComponent<EnemyScript>().damage);
+            Destroy(other.gameObject);
+        }
+        if(other.gameObject.CompareTag("Coin"))
+        {
+            IncreaseScore(other.gameObject.GetComponent<CoinScript>().points);
+            Destroy(other.gameObject);
         }
     }
 }

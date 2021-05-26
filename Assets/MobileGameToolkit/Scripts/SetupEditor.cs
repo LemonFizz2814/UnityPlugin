@@ -18,8 +18,6 @@ public class SetupEditor : EditorWindow
     string buttonTitle = "";
 
     bool startEnabled;
-    bool groupEnabled;
-    bool showPosition;
 
     float buttonScale = 1.0f;
     float textScale = 1.0f;
@@ -27,6 +25,7 @@ public class SetupEditor : EditorWindow
     int buttonSelected = 0;
     int textSelected = 0;
     int toolbarInt = 0;
+    int lootBoxPrice;
 
     TMP_FontAsset textFont;
 
@@ -34,7 +33,7 @@ public class SetupEditor : EditorWindow
 
     string[] buttonTypes = new string[7] { "Play", "Exit", "Shop", "Back", "SocialMedia", "Settings", "Advert" };
     string[] menuTypes = new string[5] { "GameOver", "Start", "Settings", "Shop", "GamePlayScreen" };
-    string[] textTypes = new string[5] { "Title", "Currency", "Score", "Lives", "Info" };
+    string[] textTypes = new string[4] { "Info", "Currency", "Score", "Lives" };
     string[] textTypeAdd = new string[5] { "", ": ", "Score: ", "Lives: ", "" };
 
     string[] toolbarStrings = { "Add Menus setup", "Add Buttons setup", "Add Gameplay menu" };
@@ -70,45 +69,11 @@ public class SetupEditor : EditorWindow
                 {
                     EditorGUI.indentLevel++;
 
-                    //Add new button
-                    buttonSelected = EditorGUILayout.Popup("Button Type", buttonSelected, buttonTypes);
-                    buttonScale = EditorGUILayout.Slider("Scale", buttonScale, -3, 3);
-
-
-                    //obj = (Sprite)EditorGUI.ObjectField(new Rect(3, 70, position.width - 6, 20), "Button Sprite", obj, typeof(Sprite), false);
-                    buttonSprite = (Sprite)EditorGUILayout.ObjectField("Button Sprite", buttonSprite, typeof(Sprite), true);
-
-                    buttonTextField = EditorGUILayout.TextField("Button Text", "new text");
-
-                    if (EditorGUILayout.BeginFadeGroup(Convert.ToInt32(buttonSelected == 4))) //social media
-                    {
-                        socialMediaURL = EditorGUILayout.TextField("Social Media URL", "");
-                    }
-                    EditorGUILayout.EndFadeGroup();
-
-                    if (GUILayout.Button("Add New Button"))
-                    {
-                        AddButton(buttonSelected, 0, buttonScale, buttonTextField, buttonSprite);
-                    }
-
-                    EditorGUILayout.Space();
+                    ShowButtonEditOptions();
                     //------------------------------------------------
 
                     //Add new text
-                    textSelected = EditorGUILayout.Popup("Text Type", textSelected, textTypes);
-                    textField = EditorGUILayout.TextField("Text", "new text");
-                    textScale = EditorGUILayout.Slider("Font size", textScale, 0, 400);
-                    textFont = (TMP_FontAsset)EditorGUILayout.ObjectField("Button Sprite", textFont, typeof(TMP_FontAsset), true);
-
-                    if (EditorGUILayout.BeginFadeGroup(Convert.ToInt32(textSelected == 1))) //currency
-                    {
-                        currencyName = EditorGUILayout.TextField("Currency Name", "Currency");
-                    }
-                    EditorGUILayout.EndFadeGroup();
-                    if (GUILayout.Button("Add New Text"))
-                    {
-                        AddText(textSelected, 0, textField, textScale);
-                    }
+                    ShowTextEditOptions();
 
                     EditorGUILayout.Space();
                     var style = new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter };
@@ -132,23 +97,28 @@ public class SetupEditor : EditorWindow
                 GUILayout.Label("Buttons Menu", EditorStyles.boldLabel);
                 for(int i = 0; i < buttonList.Count; i++)
                 {
-                    GUILayout.Label("Button number " + i, EditorStyles.boldLabel);
-
-                    buttonListDropDown[i] = EditorGUILayout.Foldout(showPosition, "Expand");
+                    buttonListDropDown[i] = EditorGUILayout.Foldout(buttonListDropDown[i], "Button " + i);
                     if (buttonListDropDown[i])
                     {
                         EditorGUI.indentLevel++;
-                        GUILayout.Label("rawr XD", EditorStyles.label);
+                        GUILayout.Label("edit button here", EditorStyles.label);
+                        ShowButtonEditOptions();
+
+                        if (GUILayout.Button("Delete Button " + i))
+                        {
+                            DestroyImmediate(buttonList[i]);
+                            buttonList.RemoveAt(i);
+                        }
                         EditorGUI.indentLevel--;
                     }
                 }
 
-                if (GUILayout.Button("Add to list"))
+                if (GUILayout.Button("Add New Button"))
                 {
                     buttonList.Add(AddButton(buttonSelected, 0, 1, buttonTextField, buttonSprite));
-                    buttonListDropDown.Add(false);
+                    buttonListDropDown.Add(true);
                 }
-                if (GUILayout.Button("Clear"))
+                if (GUILayout.Button("Clear All"))
                 {
                     for (int i = 0; i < buttonList.Count; i++)
                     {
@@ -173,17 +143,82 @@ public class SetupEditor : EditorWindow
                     Debug.Log("added enemy");
                     Instantiate(Resources.Load<GameObject>("EnemyPrefab"), new Vector3(0, 0, 0), Quaternion.identity);
                 }
+                if (GUILayout.Button("Add Coin"))
+                {
+                    Debug.Log("added enemy");
+                    Instantiate(Resources.Load<GameObject>("CoinPrefab"), new Vector3(0, 0, 0), Quaternion.identity);
+                }
                 break;
         }
 
+    }
+
+    void ShowButtonEditOptions()
+    {
+        //Add new button
+        buttonSelected = EditorGUILayout.Popup("Button Type", buttonSelected, buttonTypes);
+        buttonScale = EditorGUILayout.Slider("Scale", buttonScale, -3, 3);
+
+        //obj = (Sprite)EditorGUI.ObjectField(new Rect(3, 70, position.width - 6, 20), "Button Sprite", obj, typeof(Sprite), false);
+        buttonSprite = (Sprite)EditorGUILayout.ObjectField("Button Sprite", buttonSprite, typeof(Sprite), true);
+
+        buttonTextField = EditorGUILayout.TextField("Button Text", "new text");
+
+        if (EditorGUILayout.BeginFadeGroup(Convert.ToInt32(buttonSelected == 4))) //social media
+        {
+            socialMediaURL = EditorGUILayout.TextField("Social Media URL", "");
+        }
+        EditorGUILayout.EndFadeGroup();
+        if (EditorGUILayout.BeginFadeGroup(Convert.ToInt32(buttonSelected == 6))) //lootbox
+        {
+            ShowLootBoxEditOptions();
+        }
+        EditorGUILayout.EndFadeGroup();
+
+        if (GUILayout.Button("Add New Button"))
+        {
+            AddButton(buttonSelected, 0, buttonScale, buttonTextField, buttonSprite);
+        }
+
+        EditorGUILayout.Space();
+    }
+
+    void ShowTextEditOptions()
+    {
+        textSelected = EditorGUILayout.Popup("Text Type", textSelected, textTypes);
+        textField = EditorGUILayout.TextField("Text", "new text");
+        textScale = EditorGUILayout.Slider("Font size", textScale, 0, 400);
+        textFont = (TMP_FontAsset)EditorGUILayout.ObjectField("Button Sprite", textFont, typeof(TMP_FontAsset), true);
+
+        if (EditorGUILayout.BeginFadeGroup(Convert.ToInt32(textSelected == 1))) //currency
+        {
+            currencyName = EditorGUILayout.TextField("Currency Name", "Currency");
+        }
+        EditorGUILayout.EndFadeGroup();
+        if (GUILayout.Button("Add New Text"))
+        {
+            AddText(textSelected, 0, textField, textScale);
+        }
+    }
+
+    void ShowLootBoxEditOptions()
+    {
+        lootBoxPrice = EditorGUILayout.IntField("Price for lootbox", 100);
+
+        if (GUILayout.Button("Add New Item To Lootbox"))
+        {
+
+        }
+
+        EditorGUILayout.Space();
     }
 
     GameObject AddButton(int _type, int _menuType, float _scale, string _text, Sprite _sprite)
     {
         GameObject buttonPrefab = Instantiate(Resources.Load<GameObject>("ButtonPrefab"), new Vector3(0, 0, 0), Quaternion.identity);
         buttonPrefab.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(_menuType));
-        buttonPrefab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = _text;
-
+        buttonPrefab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = (_text == "") ? buttonTypes[_type] : _text;
+        
         buttonPrefab.GetComponent<ButtonScript>().SetType((CanvasManager.ButtonType)_type);
 
         buttonPrefab.GetComponent<Image>().sprite = (_sprite == null) ? Resources.Load<Sprite>("DefaultSprite") : _sprite;
@@ -202,9 +237,7 @@ public class SetupEditor : EditorWindow
             textPrefab.GetComponent<TextMeshProUGUI>().text += currencyName;
         }
         textPrefab.GetComponent<TextMeshProUGUI>().text += textTypeAdd[_type];
-
         textPrefab.GetComponent<TextMeshProUGUI>().text += _text;
-
         textPrefab.GetComponent<TextMeshProUGUI>().fontSize = _size;
     }
 

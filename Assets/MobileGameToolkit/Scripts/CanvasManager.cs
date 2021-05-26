@@ -14,8 +14,9 @@ public class CanvasManager : MonoBehaviour
         SocialMedia,
         Settings,
         Advert,
+        LootBox,
     };
-    public enum Menu
+    public enum MenuType
     {
         GameOver,
         Start,
@@ -23,6 +24,13 @@ public class CanvasManager : MonoBehaviour
         Shop,
         GamePlayScreen,
         ENUM_LENGTH,
+    };
+    public enum TextType
+    {
+        Info,
+        Currency,
+        Score,
+        Lives,
     };
 
     string[] menuTagStrings = { "GameOverMenu", "StartMenu", "SettingsMenu", "ShopMenu", "GamePlayScreen" };
@@ -40,16 +48,16 @@ public class CanvasManager : MonoBehaviour
             print("ERROR, player object not found");
         }
 
-        for (int i = 0; i < (int)Menu.ENUM_LENGTH; i++)
+        for (int i = 0; i < (int)MenuType.ENUM_LENGTH; i++)
         {
             menuObjList.Add(FindObject(menuTagStrings[i])[0]);
-            ShowMenuObject(false, (Menu)i);
+            ShowMenuObject(false, (MenuType)i);
         }
 
-        ShowMenuObject(true, Menu.Start);
+        ShowMenuObject(true, MenuType.Start);
     }
 
-    public void ShowMenuObject(bool _active, Menu _menuType)
+    public void ShowMenuObject(bool _active, MenuType _menuType)
     {
         UpdateCurrencyText(playerScript.nameOfCurrency, playerScript.currency);
         UpdateLivesText(playerScript.lives);
