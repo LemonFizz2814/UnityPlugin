@@ -11,10 +11,11 @@ TagManager:
   - Canvas
   - CurrencyText
   - Enemy
-  - GamePlayScreen
   - ScoreText
   - LivesText
   - Coin
+  - GamePlayMenu
+  - GameManager
   layers:
   - Default
   - TransparentFX

@@ -18,11 +18,11 @@ public class CanvasManager : MonoBehaviour
     };
     public enum MenuType
     {
-        GameOver,
         Start,
+        GameOver,
         Settings,
         Shop,
-        GamePlayScreen,
+        GamePlay,
         ENUM_LENGTH,
     };
     public enum TextType
@@ -33,15 +33,17 @@ public class CanvasManager : MonoBehaviour
         Lives,
     };
 
-    string[] menuTagStrings = { "GameOverMenu", "StartMenu", "SettingsMenu", "ShopMenu", "GamePlayScreen" };
+    string[] menuTagStrings = { "StartMenu", "GameOverMenu", "SettingsMenu", "ShopMenu", "GamePlayMenu" };
 
     List<GameObject> menuObjList = new List<GameObject>();
 
     PlayerScript playerScript;
+    GameManager gameManager;
 
     private void Start()
     {
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 
         if (playerScript == null)
         {
@@ -51,6 +53,7 @@ public class CanvasManager : MonoBehaviour
         for (int i = 0; i < (int)MenuType.ENUM_LENGTH; i++)
         {
             menuObjList.Add(FindObject(menuTagStrings[i])[0]);
+            //FindObject(menuTagStrings[i])[0].gameObject.SetActive(false);
             ShowMenuObject(false, (MenuType)i);
         }
 
@@ -122,6 +125,7 @@ public class CanvasManager : MonoBehaviour
 
     public void StartGame()
     {
-        playerScript.StartGame();
+        gameManager.StartGame();
+        //Instantiate(Resources.Load<GameObject>("GameManager"), new Vector3(0, 0, 0), Quaternion.identity);
     }
 }

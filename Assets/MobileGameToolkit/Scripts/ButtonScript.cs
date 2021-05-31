@@ -30,7 +30,7 @@ public class ButtonScript : MonoBehaviour
         {
             case CanvasManager.ButtonType.Play:
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().name); //restart scene
-                canvasManager.ShowMenuObject(true, CanvasManager.MenuType.GamePlayScreen);
+                canvasManager.ShowMenuObject(true, CanvasManager.MenuType.GamePlay);
                 canvasManager.StartGame();
                 break;
 
