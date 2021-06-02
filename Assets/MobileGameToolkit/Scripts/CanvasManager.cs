@@ -126,6 +126,7 @@ public class CanvasManager : MonoBehaviour
     public void StartGame()
     {
         gameManager.StartGame();
+        playerScript.StartGame();
         //Instantiate(Resources.Load<GameObject>("GameManager"), new Vector3(0, 0, 0), Quaternion.identity);
     }
 }

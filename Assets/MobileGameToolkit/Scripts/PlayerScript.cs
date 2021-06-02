@@ -17,15 +17,21 @@ public class PlayerScript : MonoBehaviour
 
     private CanvasManager canvasManager;
 
+    Rigidbody2D rg2D;
+
     private void Start()
     {
         canvasManager = GameObject.FindObjectOfType<Canvas>().GetComponent<CanvasManager>();
         canvasManager.UpdateCurrencyText(nameOfCurrency, currency);
+
+        rg2D = GetComponent<Rigidbody2D>();
+        rg2D.simulated = false;
     }
 
     //When play is pressed
     public void StartGame()
     {
+        rg2D.simulated = true;
         isDead = false;
     }
 
@@ -55,7 +61,7 @@ public class PlayerScript : MonoBehaviour
     {
         if(isDead)
         {
-            transform.position = new Vector3(0, 0, 0);
+            //transform.position = new Vector3(0, 0, 0);
         }
     }
 

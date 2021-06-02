@@ -23,7 +23,7 @@ public class SetupEditor : EditorWindow
     int playerLives = 0;
     int enemySpawnFrequency = 0;
     int coinSpawnFrequency = 0;
-    int lootBoxPrice;
+    int lootBoxPrice = 100;
 
     TMP_FontAsset textFont;
 
@@ -43,8 +43,25 @@ public class SetupEditor : EditorWindow
 
     string[] toolbarStrings = { "Add Menus setup", "Add Buttons setup", "Add Gameplay menu" };
 
+    public struct LootBoxItem
+    {
+        public int chances;
+        public Sprite sprite;
+        public bool beenPurchased;
+
+        public LootBoxItem(int _chances, Sprite _sprite, bool _beenPurchased)
+        {
+            this.chances = _chances;
+            this.sprite = _sprite;
+            this.beenPurchased = _beenPurchased;
+        }
+    }
+
+    List<LootBoxItem> lootboxList = new List<LootBoxItem>();
+
     List<GameObject> buttonList = new List<GameObject>();
     List<bool> buttonListDropDown = new List<bool>();
+    List<bool> lootboxDropDown = new List<bool>();
     List<string> buttonTextField = new List<string>();
     List<float> buttonScale = new List<float>();
 
@@ -155,7 +172,7 @@ public class SetupEditor : EditorWindow
                 EditorGUILayout.Space();
 
                 // EDIT PLAYER
-                GUILayout.Label("Edit Player", EditorStyles.whiteLabel);
+                GUILayout.Label("Edit Player", EditorStyles.largeLabel);
                 EditorGUI.indentLevel++;
                 playerLives = EditorGUILayout.IntField("Lives", playerLives);
                 playerSprite = (Sprite)EditorGUILayout.ObjectField("Player Sprite", playerSprite, typeof(Sprite), true);
@@ -163,7 +180,7 @@ public class SetupEditor : EditorWindow
                 //EditorGUILayout.Space();
 
                 // EDIT ENEMY
-                GUILayout.Label("Edit Enemy", EditorStyles.whiteLabel);
+                GUILayout.Label("Edit Enemy", EditorStyles.largeLabel);
                 EditorGUI.indentLevel++;
                 enemyDamage = EditorGUILayout.IntField("Damage", enemyDamage);
                 enemySpawnFrequency = EditorGUILayout.IntField("Spawn Frequency", enemySpawnFrequency);
@@ -172,7 +189,7 @@ public class SetupEditor : EditorWindow
                 //EditorGUILayout.Space();
 
                 // EDIT COIN
-                GUILayout.Label("Edit Coin", EditorStyles.whiteLabel);
+                GUILayout.Label("Edit Coin", EditorStyles.largeLabel);
                 EditorGUI.indentLevel++;
                 coinPoints = EditorGUILayout.IntField("Score Awarded", coinPoints);
                 coinSpawnFrequency = EditorGUILayout.IntField("Spawn Frequency", coinSpawnFrequency);
@@ -215,13 +232,16 @@ public class SetupEditor : EditorWindow
 
         buttonTextField[_i] = EditorGUILayout.TextField("Button Text", buttonTextField[_i]);
 
+        //additional
         if (EditorGUILayout.BeginFadeGroup(Convert.ToInt32(buttonSelected == 4))) //social media
         {
+            GUILayout.Label("Social Media Options", EditorStyles.label);
             socialMediaURL = EditorGUILayout.TextField("Social Media URL", "");
         }
         EditorGUILayout.EndFadeGroup();
         if (EditorGUILayout.BeginFadeGroup(Convert.ToInt32(buttonSelected == 7))) //lootbox
         {
+            GUILayout.Label("Lootbox Options", EditorStyles.label);
             ShowLootBoxEditOptions();
         }
         EditorGUILayout.EndFadeGroup();
@@ -249,11 +269,42 @@ public class SetupEditor : EditorWindow
 
     void ShowLootBoxEditOptions()
     {
-        lootBoxPrice = EditorGUILayout.IntField("Price for lootbox", 100);
+        lootBoxPrice = EditorGUILayout.IntField("Price for lootbox", lootBoxPrice);
 
         if (GUILayout.Button("Add New Item To Lootbox"))
         {
+            lootboxList.Add(new LootBoxItem(1, null, false));
+            lootboxDropDown.Add(false);
+        }
 
+        int totalPercentage = 0;
+
+        for (int i = 0; i < lootboxList.Count; i++)
+        {
+            totalPercentage += lootboxList[i].chances;
+        }
+
+        for (int i = 0; i < lootboxList.Count; i++)
+        {
+            lootboxDropDown[i] = EditorGUILayout.Foldout(lootboxDropDown[i], "Item " + i);
+            if (lootboxDropDown[i])
+            {
+                EditorGUI.indentLevel++;
+                //int ss = EditorGUILayout.IntField("Chance", lootboxList[i].chances);
+                lootboxList[i] = new LootBoxItem(EditorGUILayout.IntField("Chance " + lootboxList[i].chances + "/" + totalPercentage, lootboxList[i].chances), (Sprite)EditorGUILayout.ObjectField("Player Sprite", lootboxList[i].sprite, typeof(Sprite), true), lootboxList[i].beenPurchased);
+
+                if (GUILayout.Button("Delete Item " + i))
+                {
+                    lootboxDropDown.RemoveAt(i);
+                    lootboxList.RemoveAt(i);
+                }
+                EditorGUI.indentLevel--;
+            }
+        }
+        if (GUILayout.Button("Clear All Lootbox"))
+        {
+            lootboxList.Clear();
+            lootboxDropDown.Clear();
         }
 
         EditorGUILayout.Space();
