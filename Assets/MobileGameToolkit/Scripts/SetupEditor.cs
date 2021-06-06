@@ -13,6 +13,7 @@ public class SetupEditor : EditorWindow
     string currencyName;
 
     float textScale = 1.0f;
+    float playerJump = 400.0f;
 
     int buttonSelected = 0;
     int textSelected = 0;
@@ -31,6 +32,7 @@ public class SetupEditor : EditorWindow
     Sprite playerSprite;
     Sprite enemySprite;
     Sprite coinSprite;
+    Sprite platformSprite;
 
     string[] buttonTypes = new string[8] { "Play", "Exit", "Shop", "Back", "SocialMedia", "Settings", "Advert", "Lootbox" };
     string[] buttonInfo = new string[8] { "Starts game when presed", "Exits application when pressed", "Opens shop menu when pressed", "Goes back to start menu when pressed", "Opens a link to social media when pressed", "Opens the setting menu when pressed", "Plays an advertisement when pressed", "Opens a lootbox when pressed" };
@@ -41,7 +43,7 @@ public class SetupEditor : EditorWindow
     string[] textTypeAdd = new string[5] { "", ": ", "Score: ", "Lives: ", "" };
     string[] gameType = new string[2] { "Endless Runner", "Own Game~" };
 
-    string[] toolbarStrings = { "Add Menus setup", "Add Buttons setup", "Add Gameplay menu" };
+    string[] toolbarStrings = new string[4] { "Menus setup", "Buttons setup", "Gameplay menu", "Lootbox setup" };
 
     public struct LootBoxItem
     {
@@ -126,7 +128,7 @@ public class SetupEditor : EditorWindow
 
             case 1: //button setup
                 GUILayout.Label("Buttons Menu", EditorStyles.boldLabel);
-                for(int i = 0; i < buttonList.Count; i++)
+                for (int i = 0; i < buttonList.Count; i++)
                 {
                     buttonListDropDown[i] = EditorGUILayout.Foldout(buttonListDropDown[i], "Button " + i);
                     if (buttonListDropDown[i])
@@ -140,7 +142,7 @@ public class SetupEditor : EditorWindow
                         }
                         if (GUILayout.Button("UpdateButton"))
                         {
-                            UpdateButton(buttonSelected, buttonScale[i], buttonTextField[i], buttonSprite, buttonList[i]);                
+                            UpdateButton(buttonSelected, buttonScale[i], buttonTextField[i], buttonSprite, buttonList[i]);
                         }
                         EditorGUI.indentLevel--;
                     }
@@ -175,6 +177,7 @@ public class SetupEditor : EditorWindow
                 GUILayout.Label("Edit Player", EditorStyles.largeLabel);
                 EditorGUI.indentLevel++;
                 playerLives = EditorGUILayout.IntField("Lives", playerLives);
+                playerJump = EditorGUILayout.FloatField("Jump Height", playerJump);
                 playerSprite = (Sprite)EditorGUILayout.ObjectField("Player Sprite", playerSprite, typeof(Sprite), true);
                 EditorGUI.indentLevel--;
                 //EditorGUILayout.Space();
@@ -197,24 +200,26 @@ public class SetupEditor : EditorWindow
                 EditorGUI.indentLevel--;
                 //EditorGUILayout.Space();
 
+                // EDIT PLATFORM
+                GUILayout.Label("Edit Platforms", EditorStyles.largeLabel);
+                EditorGUI.indentLevel++;
+                platformSprite = (Sprite)EditorGUILayout.ObjectField("Platform Sprite", platformSprite, typeof(Sprite), true);
+                EditorGUI.indentLevel--;
+                //EditorGUILayout.Space();
+
                 /*if (GUILayout.Button("Add Player"))
                 {
                     Debug.Log("added player");
                     Instantiate(Resources.Load<GameObject>("PlayerPrefab"), new Vector3(0, 0, 0), Quaternion.identity);
-                }
-                if (GUILayout.Button("Add Enemy"))
-                {
-                    Debug.Log("added enemy");
-                    Instantiate(Resources.Load<GameObject>("EnemyPrefab"), new Vector3(0, 0, 0), Quaternion.identity);
-                }
-                if (GUILayout.Button("Add Coin"))
-                {
-                    Debug.Log("added enemy");
-                    Instantiate(Resources.Load<GameObject>("CoinPrefab"), new Vector3(0, 0, 0), Quaternion.identity);
                 }*/
                 break;
-        }
+            case 3: //lootbox setup
+                GUILayout.Label("Lootbox Setup", EditorStyles.boldLabel);
+                EditorGUILayout.Space();
 
+                ShowLootBoxEditOptions();
+                break;
+        }
     }
 
 

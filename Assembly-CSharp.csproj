@@ -63,6 +63,7 @@
     <Compile Include="Assets\MobileGameToolkit\Scripts\ButtonScript.cs" />
     <Compile Include="Assets\MobileGameToolkit\Scripts\PlayerScript.cs" />
     <Compile Include="Assets\MobileGameToolkit\Scripts\SetupEditor.cs" />
+    <Compile Include="Assets\MobileGameToolkit\Scripts\DataSave.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\MobileGameToolkit\TextMesh Pro\Shaders\TMPro.cginc" />

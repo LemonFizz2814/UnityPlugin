@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using UnityEngine;
+using TMPro;
 
 public class ButtonScript : MonoBehaviour
 {
@@ -64,9 +66,21 @@ public class ButtonScript : MonoBehaviour
                     playerScript.currency -= lootBoxPrice;
 
                     //buying lootbox
+                    GameObject displayPrizeObj = Instantiate(Resources.Load<GameObject>("DisplayPrize"), new Vector3(0, 0, 0), Quaternion.identity);
+                    displayPrizeObj.transform.SetParent(canvasManager.gameObject.transform);
+
+                    //pick random prize to grant
+                    DataSave dataSave = GameObject.Find("DataSave").GetComponent<DataSave>();
+                    int randPrize = Random.Range(0, dataSave.lootboxPrizes.Count);
+                    dataSave.lootboxPrizes[randPrize] = true;
+
+                    displayPrizeObj.transform.GetChild(1).GetComponent<Image>().sprite = null; //set sprite
+                    displayPrizeObj.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = ""; //set text
                 }
                 break;
-
+            case CanvasManager.ButtonType.ClosePrize:
+                Destroy(gameObject.transform.parent.gameObject);
+                break;
             default:
                 break;
         }

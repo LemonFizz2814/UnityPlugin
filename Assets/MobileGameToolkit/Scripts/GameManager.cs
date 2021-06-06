@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    float startPos = 6;
-    float startHeightMin = -5.5f;
-    float startHeightMax = -3.2f;
+    float startHeightMin = -6.0f;
+    float startHeightMax = -2.8f;
 
-    float platformLifeTime = 6.0f;
+    float platformSpawnTimeMin = 2.8f;
+    float platformSpawnTimeMax = 3.2f;
 
-    float platformSpawnTime = 4.0f;
+    float platformLifeTime = 7.0f;
 
-    Vector3 platformSpeed = new Vector3(3, 0, 0);
+    Vector3 playerSpeed = new Vector3(3, 0, 0);
 
     bool gameStarted = false;
 
@@ -20,12 +20,17 @@ public class GameManager : MonoBehaviour
 
     List<GameObject> platforms = new List<GameObject>();
 
+    GameObject mainCamera;
+
     public void StartGame()
     {
-        StartCoroutine(PlatformSpawnLoop());
         gameStarted = true;
         platformObj = Resources.Load<GameObject>("Platform");
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
+        StartCoroutine(PlatformSpawnLoop());
     }
+
     public void GameOver()
     {
         StopAllCoroutines();
@@ -36,7 +41,9 @@ public class GameManager : MonoBehaviour
     {
         if(gameStarted)
         {
-            for(int i = 0; i < platforms.Count; i++)
+            mainCamera.transform.position += playerSpeed * Time.deltaTime;
+
+            /*for(int i = 0; i < platforms.Count; i++)
             {
                 if(platforms[i] == null)
                 {
@@ -44,19 +51,22 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    platforms[i].transform.position -= platformSpeed * Time.deltaTime;
+                    platforms[i].transform.position += platformSpeed * Time.deltaTime;
                 }
-            }
+            }*/
         }
     }
 
     private IEnumerator PlatformSpawnLoop()
     {
-        yield return new WaitForSeconds(platformSpawnTime);
+        Vector3 spawnLoc = mainCamera.transform.GetChild(0).position;
+        spawnLoc = new Vector3(spawnLoc.x, Random.Range(startHeightMin, startHeightMax), spawnLoc.z);
 
-        GameObject _platformObj = Instantiate(platformObj, new Vector3(startPos, Random.Range(startHeightMin, startHeightMax), 0), Quaternion.identity);
-        platforms.Add(_platformObj);
+        GameObject _platformObj = Instantiate(platformObj, spawnLoc, Quaternion.identity);
+        //platforms.Add(_platformObj);
         Destroy(_platformObj, platformLifeTime);
+
+        yield return new WaitForSeconds(Random.Range(platformSpawnTimeMin, platformSpawnTimeMax));
 
         StartCoroutine(PlatformSpawnLoop());
     }

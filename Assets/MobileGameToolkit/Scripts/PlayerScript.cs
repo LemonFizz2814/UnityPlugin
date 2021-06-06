@@ -11,17 +11,21 @@ public class PlayerScript : MonoBehaviour
     public bool isDead;
     public bool gameStarted;
 
+    public float jumpForce;
+
     public string nameOfCurrency;
 
     public GameObject objectRenderer;
 
     private CanvasManager canvasManager;
+    private GameManager gameManager;
 
     Rigidbody2D rg2D;
 
     private void Start()
     {
-        canvasManager = GameObject.FindObjectOfType<Canvas>().GetComponent<CanvasManager>();
+        canvasManager = FindObjectOfType<Canvas>().GetComponent<CanvasManager>();
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         canvasManager.UpdateCurrencyText(nameOfCurrency, currency);
 
         rg2D = GetComponent<Rigidbody2D>();
@@ -42,12 +46,21 @@ public class PlayerScript : MonoBehaviour
         CheckLivesLeft();
     }
 
+    //pause game when player dies
+    public void GameOver()
+    {
+        canvasManager.ShowMenuObject(true, CanvasManager.MenuType.GameOver);
+        gameManager.GameOver();
+        rg2D.simulated = false;
+        isDead = true;
+    }
+
     void CheckLivesLeft()
     {
         if(lives <= 0) //gameover state here
         {
-            canvasManager.ShowMenuObject(true, CanvasManager.MenuType.GameOver);
-            isDead = true;
+            print("gameover");
+            GameOver();
         }
     }
 
@@ -59,13 +72,17 @@ public class PlayerScript : MonoBehaviour
 
     private void Update()
     {
-        if(isDead)
+        if(!isDead)
         {
-            //transform.position = new Vector3(0, 0, 0);
+            //controls
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                Jump();
+            }
         }
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.CompareTag("Enemy"))
         {
@@ -77,5 +94,10 @@ public class PlayerScript : MonoBehaviour
             IncreaseScore(other.gameObject.GetComponent<CoinScript>().points);
             Destroy(other.gameObject);
         }
+    }
+
+    void Jump()
+    {
+        gameObject.GetComponent<Rigidbody2D>().AddForce(transform.up * jumpForce);
     }
 }

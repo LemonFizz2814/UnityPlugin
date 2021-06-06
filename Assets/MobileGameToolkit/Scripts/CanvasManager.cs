@@ -15,6 +15,7 @@ public class CanvasManager : MonoBehaviour
         Settings,
         Advert,
         LootBox,
+        ClosePrize,
     };
     public enum MenuType
     {
@@ -23,7 +24,6 @@ public class CanvasManager : MonoBehaviour
         Settings,
         Shop,
         GamePlay,
-        ENUM_LENGTH,
     };
     public enum TextType
     {
@@ -31,6 +31,7 @@ public class CanvasManager : MonoBehaviour
         Currency,
         Score,
         Lives,
+        Highscore,
     };
 
     string[] menuTagStrings = { "StartMenu", "GameOverMenu", "SettingsMenu", "ShopMenu", "GamePlayMenu" };
@@ -50,7 +51,7 @@ public class CanvasManager : MonoBehaviour
             print("ERROR, player object not found");
         }
 
-        for (int i = 0; i < (int)MenuType.ENUM_LENGTH; i++)
+        for (int i = 0; i < System.Enum.GetValues(typeof(MenuType)).Length; i++)
         {
             menuObjList.Add(FindObject(menuTagStrings[i])[0]);
             //FindObject(menuTagStrings[i])[0].gameObject.SetActive(false);
