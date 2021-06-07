@@ -5,30 +5,83 @@ using System;
 
 public class DataSave : MonoBehaviour
 {
-    public int highscore;
-    public int currency;
-
-    public List<bool> lootboxPrizes = new List<bool>();
-
-    public void LoadData()
+    [Serializable]
+    public class GameDataSave
     {
-        for (int i = 0; i < lootboxPrizes.Count; i++)
-        {
-            lootboxPrizes[i] = (PlayerPrefs.GetInt("lootboxPrizes" + i) == 1) ? true: false;
-        }
+        public int highscore;
+        public int currency;
+        public List<bool> lootboxPrizes = new List<bool>();
+    }
+    [Serializable]
+    public class MenuSetupSave
+    {
 
-        highscore = PlayerPrefs.GetInt("highscore");
-        currency = PlayerPrefs.GetInt("currency");
+    }
+    [Serializable]
+    public class ButtonSetupSave
+    {
+
+    }
+    [Serializable]
+    public class GameplaySetupSave
+    {
+        public int lives;
+        //string currencyName;
+    }
+    [Serializable]
+    public class LootboxSetupSave
+    {
+        //int lootBoxPrice;
     }
 
-    public void SaveData()
-    {
-        PlayerPrefs.SetInt("highscore", highscore);
-        PlayerPrefs.SetInt("currency", currency);
+    //object classes
+    public GameDataSave gameDataObject = new GameDataSave();
+    public GameplaySetupSave gameplaySetupObject = new GameplaySetupSave();
 
-        for(int i = 0; i < lootboxPrizes.Count; i++)
+    //json strings
+    string jsonGameData;
+    string jsonGamePlaySetup;
+
+    private void Start()
+    {
+        LoadData();
+    }
+
+    //load data of json to objects
+    public void LoadData()
+    {
+        Debug.Log("Load Data");
+
+        if(jsonGameData == null)
         {
-            PlayerPrefs.SetInt("lootboxPrizes" + i, Convert.ToInt32(lootboxPrizes[i]));
+            Debug.Log("jsonGameData Is null");
+            SaveGameData(0, 0, null);
         }
+        if (jsonGamePlaySetup == null)
+        {
+            Debug.Log("jsonGamePlaySetup Is null");
+            SaveGamePlaySetup(3);
+        }
+
+        gameDataObject = JsonUtility.FromJson<GameDataSave>(jsonGameData);
+        gameplaySetupObject = JsonUtility.FromJson<GameplaySetupSave>(jsonGamePlaySetup);
+    }
+
+    //save data for game data
+    public void SaveGameData(int _currency, int _highscore, List<bool> _lootboxPrizes)
+    {
+        gameDataObject.currency = _currency;
+        gameDataObject.highscore = _highscore;
+        gameDataObject.lootboxPrizes = _lootboxPrizes;
+
+        jsonGameData = JsonUtility.ToJson(gameDataObject);
+    }
+
+    //save game play setup data
+    public void SaveGamePlaySetup(int _lives)
+    {
+        gameplaySetupObject.lives = _lives;
+
+        jsonGamePlaySetup = JsonUtility.ToJson(gameplaySetupObject);
     }
 }

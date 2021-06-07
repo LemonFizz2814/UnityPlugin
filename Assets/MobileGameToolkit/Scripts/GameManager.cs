@@ -17,16 +17,19 @@ public class GameManager : MonoBehaviour
     bool gameStarted = false;
 
     GameObject platformObj;
-
-    List<GameObject> platforms = new List<GameObject>();
-
     GameObject mainCamera;
+    GameObject playerObj;
+
+    DataSave dataSave;
 
     public void StartGame()
     {
         gameStarted = true;
         platformObj = Resources.Load<GameObject>("Platform");
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        playerObj = GameObject.FindGameObjectWithTag("Player");
+
+        dataSave = GameObject.FindGameObjectWithTag("DataSave").GetComponent<DataSave>();
 
         StartCoroutine(PlatformSpawnLoop());
     }
@@ -35,6 +38,7 @@ public class GameManager : MonoBehaviour
     {
         StopAllCoroutines();
         gameStarted = false;
+        CalculateHighScore();
     }
 
     private void FixedUpdate()
@@ -54,6 +58,15 @@ public class GameManager : MonoBehaviour
                     platforms[i].transform.position += platformSpeed * Time.deltaTime;
                 }
             }*/
+        }
+    }
+
+    void CalculateHighScore()
+    {
+        if (playerObj.GetComponent<PlayerScript>().GetScore() > dataSave.gameDataObject.highscore)
+        {
+            //save and show highscore
+            dataSave.SaveGameData(dataSave.gameDataObject.currency, playerObj.GetComponent<PlayerScript>().GetScore(), dataSave.gameDataObject.lootboxPrizes);
         }
     }
 

@@ -16,6 +16,7 @@ TagManager:
   - Coin
   - GamePlayMenu
   - GameManager
+  - DataSave
   layers:
   - Default
   - TransparentFX

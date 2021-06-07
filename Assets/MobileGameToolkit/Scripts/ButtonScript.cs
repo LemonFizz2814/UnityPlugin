@@ -70,9 +70,9 @@ public class ButtonScript : MonoBehaviour
                     displayPrizeObj.transform.SetParent(canvasManager.gameObject.transform);
 
                     //pick random prize to grant
-                    DataSave dataSave = GameObject.Find("DataSave").GetComponent<DataSave>();
-                    int randPrize = Random.Range(0, dataSave.lootboxPrizes.Count);
-                    dataSave.lootboxPrizes[randPrize] = true;
+                    DataSave dataSave = GameObject.FindGameObjectWithTag("DataSave").GetComponent<DataSave>();
+                    int randPrize = Random.Range(0, dataSave.gameDataObject.lootboxPrizes.Count);
+                    dataSave.gameDataObject.lootboxPrizes[randPrize] = true;
 
                     displayPrizeObj.transform.GetChild(1).GetComponent<Image>().sprite = null; //set sprite
                     displayPrizeObj.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = ""; //set text

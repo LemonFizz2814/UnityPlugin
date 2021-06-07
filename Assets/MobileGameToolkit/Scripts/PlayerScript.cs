@@ -100,4 +100,9 @@ public class PlayerScript : MonoBehaviour
     {
         gameObject.GetComponent<Rigidbody2D>().AddForce(transform.up * jumpForce);
     }
+
+    public int GetScore()
+    {
+        return score;
+    }
 }

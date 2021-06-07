@@ -15,16 +15,16 @@ public class SetupEditor : EditorWindow
     float textScale = 1.0f;
     float playerJump = 400.0f;
 
-    int buttonSelected = 0;
     int textSelected = 0;
     int gameSelected = 0;
     int toolbarInt = 0;
-    int enemyDamage = 0;
-    int coinPoints = 0;
-    int playerLives = 0;
+    int enemyDamage = 1;
+    int coinPoints = 10;
+    int playerLives = 3;
     int enemySpawnFrequency = 0;
     int coinSpawnFrequency = 0;
     int lootBoxPrice = 100;
+    Vector2 scrollPos;
 
     TMP_FontAsset textFont;
 
@@ -34,16 +34,21 @@ public class SetupEditor : EditorWindow
     Sprite coinSprite;
     Sprite platformSprite;
 
+    DataSave dataSave;
+
     string[] buttonTypes = new string[8] { "Play", "Exit", "Shop", "Back", "SocialMedia", "Settings", "Advert", "Lootbox" };
     string[] buttonInfo = new string[8] { "Starts game when presed", "Exits application when pressed", "Opens shop menu when pressed", "Goes back to start menu when pressed", "Opens a link to social media when pressed", "Opens the setting menu when pressed", "Plays an advertisement when pressed", "Opens a lootbox when pressed" };
     string[] menuTypes = new string[5] { "Start", "GameOver", "Settings", "Shop", "GamePlay" };
     string[] menuTitle = new string[5] { "Add", "Add", "Add", "Add", "Add" };
-    bool[] startEnabled = new bool[5] { false, false, false, false, false };
     string[] textTypes = new string[4] { "Info", "Currency", "Score", "Lives" };
     string[] textTypeAdd = new string[5] { "", ": ", "Score: ", "Lives: ", "" };
     string[] gameType = new string[2] { "Endless Runner", "Own Game~" };
 
     string[] toolbarStrings = new string[4] { "Menus setup", "Buttons setup", "Gameplay menu", "Lootbox setup" };
+
+    bool[] startEnabled = new bool[5] { false, false, false, false, false };
+
+    bool startup = true;
 
     public struct LootBoxItem
     {
@@ -62,19 +67,33 @@ public class SetupEditor : EditorWindow
     List<LootBoxItem> lootboxList = new List<LootBoxItem>();
 
     List<GameObject> buttonList = new List<GameObject>();
-    List<bool> buttonListDropDown = new List<bool>();
     List<bool> lootboxDropDown = new List<bool>();
+    List<bool> buttonListDropDown = new List<bool>();
     List<string> buttonTextField = new List<string>();
     List<float> buttonScale = new List<float>();
+    List<int> buttonSelected = new List<int>();
+    List<int> buttonParent = new List<int>();
 
     [MenuItem("Window/Mobile Setup")]
     public static void ShowWindow()
     {
+        Debug.Log("check");
         GetWindow<SetupEditor>("Setup Editor");
     }
 
     private void OnGUI()
     {
+        if(startup)
+        {
+            dataSave = GameObject.FindGameObjectWithTag("DataSave").GetComponent<DataSave>();
+            dataSave.LoadData();
+            Debug.Log("dataSave.gameplaySetupObject.lives " + dataSave.gameplaySetupObject.lives);
+            playerLives = 3;//dataSave.gameplaySetupObject.lives;
+            Debug.Log("playerLives " + playerLives);
+
+            startup = false;
+        }
+
         toolbarInt = GUILayout.Toolbar(toolbarInt, toolbarStrings);
         switch (toolbarInt)
         {
@@ -128,31 +147,12 @@ public class SetupEditor : EditorWindow
 
             case 1: //button setup
                 GUILayout.Label("Buttons Menu", EditorStyles.boldLabel);
-                for (int i = 0; i < buttonList.Count; i++)
-                {
-                    buttonListDropDown[i] = EditorGUILayout.Foldout(buttonListDropDown[i], "Button " + i);
-                    if (buttonListDropDown[i])
-                    {
-                        EditorGUI.indentLevel++;
-                        ShowButtonEditOptions(i);
-
-                        if (GUILayout.Button("Delete Button " + i))
-                        {
-                            DestroyButton(i);
-                        }
-                        if (GUILayout.Button("UpdateButton"))
-                        {
-                            UpdateButton(buttonSelected, buttonScale[i], buttonTextField[i], buttonSprite, buttonList[i]);
-                        }
-                        EditorGUI.indentLevel--;
-                    }
-                }
 
                 EditorGUILayout.Space();
 
                 if (GUILayout.Button("Add New Button"))
                 {
-                    buttonList.Add(AddButton(buttonSelected, 0, 1, "New Text", buttonSprite));
+                    buttonList.Add(AddButton(0, 0, 1, "New Text", buttonSprite));
                 }
                 if (GUILayout.Button("Clear All"))
                 {
@@ -163,15 +163,37 @@ public class SetupEditor : EditorWindow
                     buttonList.Clear();
                 }
 
+                EditorGUILayout.BeginVertical();
+                scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(600), GUILayout.Height(300));
+
+                for (int i = 0; i < buttonList.Count; i++)
+                {
+                    buttonListDropDown[i] = EditorGUILayout.Foldout(buttonListDropDown[i], "Button " + i);
+                    if (buttonListDropDown[i])
+                    {
+                        EditorGUI.indentLevel++;
+                        ShowButtonEditOptions(i);
+                        EditorGUI.indentLevel--;
+                    }
+                }
+                EditorGUILayout.EndScrollView();
+                EditorGUILayout.EndVertical();
+
+                EditorGUILayout.Space();
+
                 break;
 
             case 2: //gameplay setup
                 GUILayout.Label("Gameplay Menu", EditorStyles.boldLabel);
                 EditorGUILayout.Space();
+                EditorGUILayout.BeginVertical();
 
                 gameSelected = EditorGUILayout.Popup("Game Type", gameSelected, gameType);
 
                 EditorGUILayout.Space();
+
+                EditorGUILayout.BeginVertical();
+                scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(700), GUILayout.Height(500));
 
                 // EDIT PLAYER
                 GUILayout.Label("Edit Player", EditorStyles.largeLabel);
@@ -212,6 +234,13 @@ public class SetupEditor : EditorWindow
                     Debug.Log("added player");
                     Instantiate(Resources.Load<GameObject>("PlayerPrefab"), new Vector3(0, 0, 0), Quaternion.identity);
                 }*/
+                EditorGUILayout.EndScrollView();
+                EditorGUILayout.EndVertical();
+
+                if(GUI.changed)
+                {
+                    dataSave.SaveGamePlaySetup(playerLives);
+                }
                 break;
             case 3: //lootbox setup
                 GUILayout.Label("Lootbox Setup", EditorStyles.boldLabel);
@@ -229,27 +258,32 @@ public class SetupEditor : EditorWindow
     {
         //Add new button
 
-        buttonSelected = EditorGUILayout.Popup("Button Type", buttonSelected, buttonTypes);
-        GUILayout.Label(buttonInfo[buttonSelected], EditorStyles.label);
+        buttonSelected[_i] = EditorGUILayout.Popup("Button Type", buttonSelected[_i], buttonTypes);
+        buttonParent[_i] = EditorGUILayout.Popup("Menu", buttonParent[_i], menuTypes);
+        GUILayout.Label(buttonInfo[buttonSelected[_i]], EditorStyles.label);
         buttonScale[_i] = EditorGUILayout.Slider("Scale", buttonScale[_i], 0, 4);
 
         buttonSprite = (Sprite)EditorGUILayout.ObjectField("Button Sprite", buttonSprite, typeof(Sprite), true);
 
         buttonTextField[_i] = EditorGUILayout.TextField("Button Text", buttonTextField[_i]);
 
-        //additional
-        if (EditorGUILayout.BeginFadeGroup(Convert.ToInt32(buttonSelected == 4))) //social media
+        //additional changes for buttons
+        if (EditorGUILayout.BeginFadeGroup(Convert.ToInt32(buttonSelected[_i] == 4))) //social media
         {
             GUILayout.Label("Social Media Options", EditorStyles.label);
             socialMediaURL = EditorGUILayout.TextField("Social Media URL", "");
         }
         EditorGUILayout.EndFadeGroup();
-        if (EditorGUILayout.BeginFadeGroup(Convert.ToInt32(buttonSelected == 7))) //lootbox
+        //EditorGUILayout.EndFadeGroup();
+
+        if (GUILayout.Button("Delete Button " + _i))
         {
-            GUILayout.Label("Lootbox Options", EditorStyles.label);
-            ShowLootBoxEditOptions();
+            DestroyButton(_i);
         }
-        EditorGUILayout.EndFadeGroup();
+        if (GUI.changed)//GUILayout.Button("UpdateButton"))
+        {
+            UpdateButton(buttonSelected[_i], buttonScale[_i], buttonTextField[_i], buttonSprite, buttonList[_i], buttonParent[_i]);
+        }
 
         EditorGUILayout.Space();
     }
@@ -276,18 +310,26 @@ public class SetupEditor : EditorWindow
     {
         lootBoxPrice = EditorGUILayout.IntField("Price for lootbox", lootBoxPrice);
 
-        if (GUILayout.Button("Add New Item To Lootbox"))
-        {
-            lootboxList.Add(new LootBoxItem(1, null, false));
-            lootboxDropDown.Add(false);
-        }
-
         int totalPercentage = 0;
 
         for (int i = 0; i < lootboxList.Count; i++)
         {
             totalPercentage += lootboxList[i].chances;
         }
+
+        if (GUILayout.Button("Add New Item To Lootbox"))
+        {
+            lootboxList.Add(new LootBoxItem(1, null, false));
+            lootboxDropDown.Add(false);
+        }
+        if (GUILayout.Button("Clear All Lootbox"))
+        {
+            lootboxList.Clear();
+            lootboxDropDown.Clear();
+        }
+
+        EditorGUILayout.BeginVertical();
+        scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(600), GUILayout.Height(300));
 
         for (int i = 0; i < lootboxList.Count; i++)
         {
@@ -296,7 +338,7 @@ public class SetupEditor : EditorWindow
             {
                 EditorGUI.indentLevel++;
                 //int ss = EditorGUILayout.IntField("Chance", lootboxList[i].chances);
-                lootboxList[i] = new LootBoxItem(EditorGUILayout.IntField("Chance " + lootboxList[i].chances + "/" + totalPercentage, lootboxList[i].chances), (Sprite)EditorGUILayout.ObjectField("Player Sprite", lootboxList[i].sprite, typeof(Sprite), true), lootboxList[i].beenPurchased);
+                lootboxList[i] = new LootBoxItem(EditorGUILayout.IntField("Chance " + lootboxList[i].chances + "/" + totalPercentage, lootboxList[i].chances), (Sprite)EditorGUILayout.ObjectField("Player Sprite Award", lootboxList[i].sprite, typeof(Sprite), true), lootboxList[i].beenPurchased);
 
                 if (GUILayout.Button("Delete Item " + i))
                 {
@@ -306,11 +348,9 @@ public class SetupEditor : EditorWindow
                 EditorGUI.indentLevel--;
             }
         }
-        if (GUILayout.Button("Clear All Lootbox"))
-        {
-            lootboxList.Clear();
-            lootboxDropDown.Clear();
-        }
+
+        EditorGUILayout.EndScrollView();
+        EditorGUILayout.EndVertical();
 
         EditorGUILayout.Space();
     }
@@ -318,7 +358,7 @@ public class SetupEditor : EditorWindow
 
     // BUTTONS
 
-    void UpdateButton(int _type, float _scale, string _text, Sprite _sprite, GameObject _buttonPrefab)
+    void UpdateButton(int _type, float _scale, string _text, Sprite _sprite, GameObject _buttonPrefab, int _parent)
     {
         _buttonPrefab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = (_text == "") ? buttonTypes[_type] : _text;
         if (GUI.changed) {EditorUtility.SetDirty(_buttonPrefab.transform.GetChild(0));}
@@ -327,6 +367,8 @@ public class SetupEditor : EditorWindow
 
         _buttonPrefab.GetComponent<Image>().sprite = (_sprite == null) ? Resources.Load<Sprite>("DefaultSprite") : _sprite;
         _buttonPrefab.GetComponent<RectTransform>().localScale = new Vector3(_scale, _scale, 1);
+
+        _buttonPrefab.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(_parent).GetChild(0));
     }
 
     GameObject AddButton(int _type, int _menuType, float _scale, string _text, Sprite _sprite)
@@ -344,6 +386,8 @@ public class SetupEditor : EditorWindow
         buttonTextField.Add("new text");
         buttonScale.Add(_scale);
         buttonListDropDown.Add(false);
+        buttonSelected.Add(_type);
+        buttonParent.Add(_type);
 
         return buttonPrefab;
     }
@@ -354,6 +398,8 @@ public class SetupEditor : EditorWindow
         buttonList.RemoveAt(_i);
         buttonTextField.RemoveAt(_i);
         buttonScale.RemoveAt(_i);
+        buttonSelected.RemoveAt(_i);
+        buttonParent.RemoveAt(_i);
     }
 
 
