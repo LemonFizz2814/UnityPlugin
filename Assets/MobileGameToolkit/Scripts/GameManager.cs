@@ -19,8 +19,22 @@ public class GameManager : MonoBehaviour
     GameObject platformObj;
     GameObject mainCamera;
     GameObject playerObj;
+    GameObject enemyObj;
+    GameObject coinObj;
 
     DataSave dataSave;
+
+    AudioClip gameBackgroundMusic;
+    AudioClip menuBackgroundMusic;
+
+    AudioSource audioSource;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+
+        PlaySound(menuBackgroundMusic);
+    }
 
     public void StartGame()
     {
@@ -31,6 +45,11 @@ public class GameManager : MonoBehaviour
 
         dataSave = GameObject.FindGameObjectWithTag("DataSave").GetComponent<DataSave>();
 
+        enemyObj = Resources.Load<GameObject>("EnemyPrefab");
+        coinObj = Resources.Load<GameObject>("CoinPrefab");
+
+        PlaySound(gameBackgroundMusic);
+
         StartCoroutine(PlatformSpawnLoop());
     }
 
@@ -39,6 +58,17 @@ public class GameManager : MonoBehaviour
         StopAllCoroutines();
         gameStarted = false;
         CalculateHighScore();
+
+        PlaySound(menuBackgroundMusic);
+    }
+
+    public void PlaySound(AudioClip _audio)
+    {
+        if(_audio != null)
+        {
+            audioSource.clip = _audio;
+            audioSource.Play();
+        }
     }
 
     private void FixedUpdate()
@@ -76,11 +106,17 @@ public class GameManager : MonoBehaviour
         spawnLoc = new Vector3(spawnLoc.x, Random.Range(startHeightMin, startHeightMax), spawnLoc.z);
 
         GameObject _platformObj = Instantiate(platformObj, spawnLoc, Quaternion.identity);
+        GameObject _enemyObj = Instantiate(enemyObj, new Vector3(spawnLoc.x, spawnLoc.y + 5, spawnLoc.z), Quaternion.identity);
         //platforms.Add(_platformObj);
         Destroy(_platformObj, platformLifeTime);
 
         yield return new WaitForSeconds(Random.Range(platformSpawnTimeMin, platformSpawnTimeMax));
 
         StartCoroutine(PlatformSpawnLoop());
+    }
+
+    public void ApplicationQuit()
+    {
+        Application.Quit();
     }
 }

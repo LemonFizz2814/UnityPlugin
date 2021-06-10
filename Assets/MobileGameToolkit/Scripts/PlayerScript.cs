@@ -13,7 +13,7 @@ public class PlayerScript : MonoBehaviour
 
     public float jumpForce;
 
-    public string nameOfCurrency;
+    string nameOfCurrency;
 
     public GameObject objectRenderer;
 
@@ -26,10 +26,12 @@ public class PlayerScript : MonoBehaviour
     {
         canvasManager = FindObjectOfType<Canvas>().GetComponent<CanvasManager>();
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        canvasManager.UpdateCurrencyText(nameOfCurrency, currency);
+        //canvasManager.UpdateCurrencyText(nameOfCurrency, currency);
 
         rg2D = GetComponent<Rigidbody2D>();
         rg2D.simulated = false;
+
+        currency = PlayerPrefs.GetInt("currency");
     }
 
     //When play is pressed
@@ -53,15 +55,30 @@ public class PlayerScript : MonoBehaviour
         gameManager.GameOver();
         rg2D.simulated = false;
         isDead = true;
+
+        //save currency
+        PlayerPrefs.SetInt("currency", currency);
     }
 
     void CheckLivesLeft()
     {
+        canvasManager.UpdateLivesText(lives);
+
         if(lives <= 0) //gameover state here
         {
             print("gameover");
             GameOver();
         }
+    }
+
+    public void UpdateVariables(string _nameOfCurrency, int _lives, Sprite _sprite)
+    {
+        nameOfCurrency = _nameOfCurrency;
+        lives = _lives;
+        gameObject.transform.GetComponent<SpriteRenderer>().sprite = _sprite;
+
+        canvasManager.UpdateCurrencyText(nameOfCurrency, currency);
+        canvasManager.UpdateLivesText(lives);
     }
 
     void IncreaseScore(int _points)
@@ -104,5 +121,10 @@ public class PlayerScript : MonoBehaviour
     public int GetScore()
     {
         return score;
+    }
+
+    public string GetNameOfCurrency()
+    {
+        return nameOfCurrency;
     }
 }

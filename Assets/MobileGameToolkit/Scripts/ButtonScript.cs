@@ -37,7 +37,7 @@ public class ButtonScript : MonoBehaviour
                 break;
 
             case CanvasManager.ButtonType.Exit:
-                Application.Quit(); //exit application
+                GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().ApplicationQuit();
                 break;
 
             case CanvasManager.ButtonType.Shop:

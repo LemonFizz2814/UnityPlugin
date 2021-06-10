@@ -50,6 +50,14 @@ public class SetupEditor : EditorWindow
 
     bool startup = true;
 
+    AudioClip menuBackgroundMusic;
+    AudioClip gameBackgroundMusic;
+    AudioClip buttonClickSound;
+    AudioClip prizeSound;
+    AudioClip playerJumpSound;
+    AudioClip coinCollectSound;
+    AudioClip playerHurtSound;
+
     public struct LootBoxItem
     {
         public int chances;
@@ -79,6 +87,13 @@ public class SetupEditor : EditorWindow
     {
         Debug.Log("check");
         GetWindow<SetupEditor>("Setup Editor");
+    }
+
+    void SaveVariables()
+    {
+        PlayerPrefs.SetInt("lives", playerLives);
+
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>().UpdateVariables(currencyName, playerLives, playerSprite);
     }
 
     private void OnGUI()
@@ -195,12 +210,17 @@ public class SetupEditor : EditorWindow
                 EditorGUILayout.BeginVertical();
                 scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(700), GUILayout.Height(500));
 
+                menuBackgroundMusic = (AudioClip)EditorGUILayout.ObjectField("Menu Background Music", menuBackgroundMusic, typeof(AudioClip), true);
+                gameBackgroundMusic = (AudioClip)EditorGUILayout.ObjectField("Game Background Music", gameBackgroundMusic, typeof(AudioClip), true);
+
                 // EDIT PLAYER
                 GUILayout.Label("Edit Player", EditorStyles.largeLabel);
                 EditorGUI.indentLevel++;
                 playerLives = EditorGUILayout.IntField("Lives", playerLives);
                 playerJump = EditorGUILayout.FloatField("Jump Height", playerJump);
                 playerSprite = (Sprite)EditorGUILayout.ObjectField("Player Sprite", playerSprite, typeof(Sprite), true);
+                playerHurtSound = (AudioClip)EditorGUILayout.ObjectField("Player Hurt Sound", playerHurtSound, typeof(AudioClip), true);
+                playerJumpSound = (AudioClip)EditorGUILayout.ObjectField("Player Jump Sound", playerJumpSound, typeof(AudioClip), true);
                 EditorGUI.indentLevel--;
                 //EditorGUILayout.Space();
 
@@ -219,6 +239,7 @@ public class SetupEditor : EditorWindow
                 coinPoints = EditorGUILayout.IntField("Score Awarded", coinPoints);
                 coinSpawnFrequency = EditorGUILayout.IntField("Spawn Frequency", coinSpawnFrequency);
                 coinSprite = (Sprite)EditorGUILayout.ObjectField("Coin Sprite", coinSprite, typeof(Sprite), true);
+                coinCollectSound = (AudioClip)EditorGUILayout.ObjectField("Coin Collect Sound", coinCollectSound, typeof(AudioClip), true);
                 EditorGUI.indentLevel--;
                 //EditorGUILayout.Space();
 
@@ -227,7 +248,7 @@ public class SetupEditor : EditorWindow
                 EditorGUI.indentLevel++;
                 platformSprite = (Sprite)EditorGUILayout.ObjectField("Platform Sprite", platformSprite, typeof(Sprite), true);
                 EditorGUI.indentLevel--;
-                //EditorGUILayout.Space();
+                EditorGUILayout.Space();
 
                 /*if (GUILayout.Button("Add Player"))
                 {
@@ -239,6 +260,7 @@ public class SetupEditor : EditorWindow
 
                 if(GUI.changed)
                 {
+                    SaveVariables();
                     dataSave.SaveGamePlaySetup(playerLives);
                 }
                 break;
@@ -264,6 +286,8 @@ public class SetupEditor : EditorWindow
         buttonScale[_i] = EditorGUILayout.Slider("Scale", buttonScale[_i], 0, 4);
 
         buttonSprite = (Sprite)EditorGUILayout.ObjectField("Button Sprite", buttonSprite, typeof(Sprite), true);
+
+        buttonClickSound = (AudioClip)EditorGUILayout.ObjectField("Click Sound", buttonClickSound, typeof(AudioClip), true);
 
         buttonTextField[_i] = EditorGUILayout.TextField("Button Text", buttonTextField[_i]);
 
@@ -309,6 +333,8 @@ public class SetupEditor : EditorWindow
     void ShowLootBoxEditOptions()
     {
         lootBoxPrice = EditorGUILayout.IntField("Price for lootbox", lootBoxPrice);
+
+        prizeSound = (AudioClip)EditorGUILayout.ObjectField("Prize Awarded Sound", prizeSound, typeof(AudioClip), true);
 
         int totalPercentage = 0;
 
@@ -432,6 +458,7 @@ public class SetupEditor : EditorWindow
             GameObject menuPrefab = Instantiate(Resources.Load<GameObject>("MenuPrefab"), new Vector3(0, 0, 0), Quaternion.identity);
             menuPrefab.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform);
             menuPrefab.transform.tag = menuTypes[_i] + "Menu";
+            menuPrefab.name = menuTypes[_i] + "MenuObject";
         }
         else
         {

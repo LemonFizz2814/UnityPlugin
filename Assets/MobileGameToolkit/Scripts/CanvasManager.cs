@@ -53,7 +53,11 @@ public class CanvasManager : MonoBehaviour
 
         for (int i = 0; i < System.Enum.GetValues(typeof(MenuType)).Length; i++)
         {
-            menuObjList.Add(FindObject(menuTagStrings[i])[0]);
+            //menuObjList.Add(FindObject(menuTagStrings[i])[0]);
+            if (FindObject(menuTagStrings[i])[0] != null)
+            {
+                menuObjList.Add(FindObject(menuTagStrings[i])[0]);
+            }
             //FindObject(menuTagStrings[i])[0].gameObject.SetActive(false);
             ShowMenuObject(false, (MenuType)i);
         }
@@ -63,7 +67,7 @@ public class CanvasManager : MonoBehaviour
 
     public void ShowMenuObject(bool _active, MenuType _menuType)
     {
-        UpdateCurrencyText(playerScript.nameOfCurrency, playerScript.currency);
+        UpdateCurrencyText(playerScript.GetNameOfCurrency(), playerScript.currency);
         UpdateLivesText(playerScript.lives);
         UpdateScoreText(playerScript.score);
 
@@ -97,7 +101,6 @@ public class CanvasManager : MonoBehaviour
                 //return child.gameObject;
             }
         }
-        //return null;
         return listOfChildren;
     }
 
