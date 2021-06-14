@@ -64,16 +64,42 @@ public class SetupEditor : EditorWindow
         public int chances;
         public Sprite sprite;
         public bool beenPurchased;
+        public AudioClip prizeSound;
 
-        public LootBoxItem(int _chances, Sprite _sprite, bool _beenPurchased)
+        public LootBoxItem(int _chances, Sprite _sprite, bool _beenPurchased, AudioClip _prizeSound)
         {
             this.chances = _chances;
             this.sprite = _sprite;
             this.beenPurchased = _beenPurchased;
+            this.prizeSound = _prizeSound;
+        }
+    }
+
+    //buton object
+    public struct ButtonItem
+    {
+        public GameObject obj;
+        public bool dropDown;
+        public string textField;
+        public float scale;
+        public int parent;
+        public int type;
+        public AudioClip buttonClickSound;
+
+        public ButtonItem(GameObject _obj, bool _dropDown, string _textField, float _scale, int _parent, int _type, AudioClip _buttonClickSound)
+        {
+            this.obj = _obj;
+            this.dropDown = _dropDown;
+            this.textField = _textField;
+            this.scale = _scale;
+            this.parent = _parent;
+            this.type = _type;
+            this.buttonClickSound = _buttonClickSound;
         }
     }
 
     List<LootBoxItem> lootboxList = new List<LootBoxItem>();
+    List<ButtonItem> buttonList2 = new List<ButtonItem>();
 
     List<GameObject> buttonList = new List<GameObject>();
     List<bool> lootboxDropDown = new List<bool>();
@@ -291,7 +317,7 @@ public class SetupEditor : EditorWindow
         }
         if (GUI.changed)//GUILayout.Button("UpdateButton"))
         {
-            UpdateButton(buttonSelected[_i], buttonScale[_i], buttonTextField[_i], buttonSprite, buttonList[_i], buttonParent[_i]);
+            UpdateButton(_i, buttonSelected[_i], buttonScale[_i], buttonTextField[_i], buttonSprite, buttonList[_i], buttonParent[_i]);
         }
 
         EditorGUILayout.Space();
@@ -333,7 +359,7 @@ public class SetupEditor : EditorWindow
         //button for adding new lootbox item to list
         if (GUILayout.Button("Add New Item To Lootbox"))
         {
-            lootboxList.Add(new LootBoxItem(1, null, false));
+            lootboxList.Add(new LootBoxItem(1, null, false, null));
             lootboxDropDown.Add(false);
         }
         //button for clear every lootbox item from list
@@ -353,7 +379,7 @@ public class SetupEditor : EditorWindow
             {
                 EditorGUI.indentLevel++;
                 //int ss = EditorGUILayout.IntField("Chance", lootboxList[i].chances);
-                lootboxList[i] = new LootBoxItem(EditorGUILayout.IntField("Chance " + lootboxList[i].chances + "/" + totalPercentage, lootboxList[i].chances), (Sprite)EditorGUILayout.ObjectField("Player Sprite Award", lootboxList[i].sprite, typeof(Sprite), true), lootboxList[i].beenPurchased);
+                lootboxList[i] = new LootBoxItem(EditorGUILayout.IntField("Chance " + lootboxList[i].chances + "/" + totalPercentage, lootboxList[i].chances), (Sprite)EditorGUILayout.ObjectField("Player Sprite Award", lootboxList[i].sprite, typeof(Sprite), true), lootboxList[i].beenPurchased, lootboxList[i].prizeSound);
 
                 if (GUILayout.Button("Delete Item " + i))
                 {
@@ -373,7 +399,7 @@ public class SetupEditor : EditorWindow
 
     // BUTTONS
     //update button variables
-    void UpdateButton(int _type, float _scale, string _text, Sprite _sprite, GameObject _buttonPrefab, int _parent)
+    void UpdateButton(int _i, int _type, float _scale, string _text, Sprite _sprite, GameObject _buttonPrefab, int _parent)
     {
         _buttonPrefab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = (_text == "") ? buttonTypes[_type] : _text;
         //force update text in inspector
@@ -392,6 +418,9 @@ public class SetupEditor : EditorWindow
         {
             _buttonPrefab.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0).GetChild(0));
         }
+
+        buttonList2[_i] = new ButtonItem(_buttonPrefab, buttonList2[_i].dropDown, _text, _scale, _parent, _type, buttonList2[_i].buttonClickSound);
+        dataSave.SaveButtons(_i, buttonList2[_i]);
     }
 
     //add a new button object
@@ -414,6 +443,8 @@ public class SetupEditor : EditorWindow
         buttonSelected.Add(_type);
         buttonParent.Add(_type);
 
+        buttonList2.Add(new ButtonItem(buttonPrefab, false, "new text", _scale, _type, _type, null));
+
         return buttonPrefab;
     }
 
@@ -421,11 +452,15 @@ public class SetupEditor : EditorWindow
     void DestroyButton(int _i)
     {
         DestroyImmediate(buttonList[_i]);
+
         buttonList.RemoveAt(_i);
         buttonTextField.RemoveAt(_i);
         buttonScale.RemoveAt(_i);
         buttonSelected.RemoveAt(_i);
         buttonParent.RemoveAt(_i);
+
+        DestroyImmediate(buttonList2[_i].obj);
+        buttonList2.RemoveAt(_i);
     }
 
 

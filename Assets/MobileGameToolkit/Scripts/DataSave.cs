@@ -21,7 +21,7 @@ public class DataSave : MonoBehaviour
     [Serializable]
     public class ButtonSetupSave
     {
-        public List<GameObject> buttonList = new List<GameObject>();
+        public List<SetupEditor.ButtonItem> buttonItems = new List<SetupEditor.ButtonItem>();
     }
     [Serializable]
     public class GameplaySetupSave
@@ -32,28 +32,25 @@ public class DataSave : MonoBehaviour
         public int enemyDamage;
         public int enemySpawnFrequency;
         public int coinSpawnFrequency;
-        //string currencyName;
+        public string currencyName;
+        public AudioClip menuBackgroundMusic;
+        public AudioClip gameBackgroundMusic;
+        public AudioClip coinCollectSound;
+        public AudioClip playerJumpSound;
+        public AudioClip playerHurtSound;
     }
     [Serializable]
     public class LootboxSetupSave
     {
-        //int lootBoxPrice;
-    }
-    [Serializable]
-    public class AudioSave
-    {
-        AudioClip menuBackgroundMusic;
-        AudioClip gameBackgroundMusic;
-        AudioClip buttonClickSound;
-        AudioClip prizeSound;
-        AudioClip playerJumpSound;
-        AudioClip coinCollectSound;
-        AudioClip playerHurtSound;
+        public List<SetupEditor.LootBoxItem> lootBoxItems = new List<SetupEditor.LootBoxItem>();
     }
 
     //object classes
     public GameDataSave gameDataObject = new GameDataSave();
     public GameplaySetupSave gameplaySetupObject = new GameplaySetupSave();
+    public MenuSetupSave menuSetupObject = new MenuSetupSave();
+    public ButtonSetupSave buttonSetupObject = new ButtonSetupSave();
+    public LootboxSetupSave lootboxSetupObject = new LootboxSetupSave();
 
     //json strings
     string jsonGameData;
@@ -100,5 +97,27 @@ public class DataSave : MonoBehaviour
         gameplaySetupObject.lives = _lives;
 
         jsonGamePlaySetup = JsonUtility.ToJson(gameplaySetupObject);
+    }
+
+    //save menu setup data
+    public void SaveMenuSetup()
+    {
+
+    }
+
+    //save button data
+    public void SaveButtons(int _i, SetupEditor.ButtonItem _buttonItem)
+    {
+        if (_i > buttonSetupObject.buttonItems.Count)
+        {
+            buttonSetupObject.buttonItems.Add(_buttonItem);
+        }
+        buttonSetupObject.buttonItems[_i] = _buttonItem;
+    }
+
+    //save lootbox data
+    public void SaveLootboxs(int _i, SetupEditor.LootBoxItem _lootboxItem)
+    {
+        lootboxSetupObject.lootBoxItems[_i] = _lootboxItem;
     }
 }
