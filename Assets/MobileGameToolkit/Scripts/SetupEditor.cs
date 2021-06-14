@@ -20,15 +20,15 @@ public class SetupEditor : EditorWindow
     int toolbarInt = 0;
     int enemyDamage = 1;
     int coinPoints = 10;
-    int playerLives = 3;
+    int playerLives = 2;
     int enemySpawnFrequency = 0;
     int coinSpawnFrequency = 0;
     int lootBoxPrice = 100;
     Vector2 scrollPos;
 
-    TMP_FontAsset textFont;
+    TMP_FontAsset defaultFont;
 
-    Sprite buttonSprite;
+    Sprite defaultButtonSprite;
     Sprite playerSprite;
     Sprite enemySprite;
     Sprite coinSprite;
@@ -44,7 +44,7 @@ public class SetupEditor : EditorWindow
     string[] textTypeAdd = new string[5] { "", ": ", "Score: ", "Lives: ", "" };
     string[] gameType = new string[2] { "Endless Runner", "Own Game~" };
 
-    string[] toolbarStrings = new string[4] { "Menus setup", "Buttons setup", "Gameplay menu", "Lootbox setup" };
+    string[] toolbarStrings = new string[5] { "Menus setup", "Buttons setup", "Text setup", "Gameplay menu", "Lootbox setup" };
 
     bool[] startEnabled = new bool[5] { false, false, false, false, false };
 
@@ -59,7 +59,7 @@ public class SetupEditor : EditorWindow
     AudioClip playerHurtSound;
 
     //loot box object
-    public struct LootBoxItem
+    public class LootBoxItem
     {
         public int chances;
         public Sprite sprite;
@@ -75,8 +75,33 @@ public class SetupEditor : EditorWindow
         }
     }
 
+    //text object
+    public class TextItem
+    {
+        public int type;
+        public TMP_FontAsset textFont;
+        public float scale;
+        public GameObject obj;
+        public bool dropDown;
+        public string textField;
+        public int parent;
+        //public string currenyName;
+
+        public TextItem(int _type, TMP_FontAsset _textFont, float _scale, GameObject _obj, bool _dropDown, string _textField, int _parent)
+        {
+            this.type = _type;
+            this.textFont = _textFont;
+            this.scale = _scale;
+            this.obj = _obj;
+            this.dropDown = _dropDown;
+            this.textField = _textField;
+            this.parent = _parent;
+            //this.currenyName = _currenyName;
+        }
+    }
+
     //buton object
-    public struct ButtonItem
+    public class ButtonItem
     {
         public GameObject obj;
         public bool dropDown;
@@ -85,8 +110,9 @@ public class SetupEditor : EditorWindow
         public int parent;
         public int type;
         public AudioClip buttonClickSound;
+        public Sprite sprite;
 
-        public ButtonItem(GameObject _obj, bool _dropDown, string _textField, float _scale, int _parent, int _type, AudioClip _buttonClickSound)
+        public ButtonItem(GameObject _obj, bool _dropDown, string _textField, float _scale, int _parent, int _type, AudioClip _buttonClickSound, Sprite _sprite)
         {
             this.obj = _obj;
             this.dropDown = _dropDown;
@@ -95,19 +121,20 @@ public class SetupEditor : EditorWindow
             this.parent = _parent;
             this.type = _type;
             this.buttonClickSound = _buttonClickSound;
+            this.sprite = _sprite;
         }
     }
 
     List<LootBoxItem> lootboxList = new List<LootBoxItem>();
-    List<ButtonItem> buttonList2 = new List<ButtonItem>();
+    List<ButtonItem> buttonList = new List<ButtonItem>();
+    List<TextItem> textList = new List<TextItem>();
 
-    List<GameObject> buttonList = new List<GameObject>();
     List<bool> lootboxDropDown = new List<bool>();
-    List<bool> buttonListDropDown = new List<bool>();
+    /*List<GameObject> buttonList = new List<GameObject>();
     List<string> buttonTextField = new List<string>();
     List<float> buttonScale = new List<float>();
     List<int> buttonSelected = new List<int>();
-    List<int> buttonParent = new List<int>();
+    List<int> buttonParent = new List<int>();*/
 
     [MenuItem("Window/Mobile Setup")]
     public static void ShowWindow()
@@ -120,7 +147,6 @@ public class SetupEditor : EditorWindow
     void SaveVariables()
     {
         PlayerPrefs.SetInt("lives", playerLives);
-
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>().UpdateVariables(currencyName, playerLives, playerSprite);
     }
 
@@ -131,9 +157,11 @@ public class SetupEditor : EditorWindow
         if(startup)
         {
             dataSave = GameObject.FindGameObjectWithTag("DataSave").GetComponent<DataSave>();
+            defaultButtonSprite = Resources.Load<Sprite>("DefaultSprite");
+            defaultFont = Resources.Load<TMP_FontAsset>("LEMONMILK-Regular SDF");
             dataSave.LoadData();
             Debug.Log("dataSave.gameplaySetupObject.lives " + dataSave.gameplaySetupObject.lives);
-            playerLives = 3;//dataSave.gameplaySetupObject.lives;
+            playerLives = dataSave.gameplaySetupObject.lives;
             Debug.Log("playerLives " + playerLives);
 
             startup = false;
@@ -175,7 +203,8 @@ public class SetupEditor : EditorWindow
                 //button to add a new button and add create a list of buttons
                 if (GUILayout.Button("Add New Button"))
                 {
-                    buttonList.Add(AddButton(0, 0, 1, "New Text", buttonSprite));
+                    //buttonList.Add(AddButton(0, 0, 1, "New Text", buttonSprite));
+                    AddButton(0, 0, 1, "New Text", defaultButtonSprite);
                 }
                 //clear every button from the list
                 if (GUILayout.Button("Clear All"))
@@ -183,20 +212,20 @@ public class SetupEditor : EditorWindow
                     //destroy objects
                     for (int i = 0; i < buttonList.Count; i++)
                     {
-                        DestroyImmediate(buttonList[i]);
+                        DestroyImmediate(buttonList[i].obj);
                     }
                     buttonList.Clear();
                 }
 
                 EditorGUILayout.BeginVertical();
-                scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(600), GUILayout.Height(300));
+                scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(position.width), GUILayout.Height(position.height - 100));
 
                 //display all the buttons in the list
                 for (int i = 0; i < buttonList.Count; i++)
                 {
-                    buttonListDropDown[i] = EditorGUILayout.Foldout(buttonListDropDown[i], "Button " + i);
+                    buttonList[i].dropDown = EditorGUILayout.Foldout(buttonList[i].dropDown, "Button " + i);
                     //if dropdown opened then display buttons edit contents
-                    if (buttonListDropDown[i])
+                    if (buttonList[i].dropDown)
                     {
                         EditorGUI.indentLevel++;
                         ShowButtonEditOptions(i);
@@ -209,18 +238,58 @@ public class SetupEditor : EditorWindow
                 EditorGUILayout.Space();
 
                 break;
+            case 2: //text setup
+                GUILayout.Label("Text Menu", EditorStyles.boldLabel);
 
-            case 2: //gameplay setup
+                EditorGUILayout.Space();
+
+                //button to add a new button and add create a list of buttons
+                if (GUILayout.Button("Add New Text"))
+                {
+                    AddText(0, 0, "New Text", 1, defaultFont, 0);
+                }
+                //clear every button from the list
+                if (GUILayout.Button("Clear All"))
+                {
+                    //destroy objects
+                    for (int i = 0; i < textList.Count; i++)
+                    {
+                        DestroyImmediate(textList[i].obj);
+                    }
+                    textList.Clear();
+                }
+
+                EditorGUILayout.BeginVertical();
+                scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(position.width), GUILayout.Height(position.height - 100));
+
+                //display all the buttons in the list
+                for (int i = 0; i < textList.Count; i++)
+                {
+                    textList[i].dropDown = EditorGUILayout.Foldout(textList[i].dropDown, "Text " + i);
+                    //if dropdown opened then display buttons edit contents
+                    if (textList[i].dropDown)
+                    {
+                        EditorGUI.indentLevel++;
+                        ShowTextEditOptions(i);
+                        EditorGUI.indentLevel--;
+                    }
+                }
+                EditorGUILayout.EndScrollView();
+                EditorGUILayout.EndVertical();
+
+                EditorGUILayout.Space();
+                break;
+
+            case 3: //gameplay setup
                 GUILayout.Label("Gameplay Menu", EditorStyles.boldLabel);
                 EditorGUILayout.Space();
-                EditorGUILayout.BeginVertical();
 
                 gameSelected = EditorGUILayout.Popup("Game Type", gameSelected, gameType);
 
                 EditorGUILayout.Space();
 
                 EditorGUILayout.BeginVertical();
-                scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(700), GUILayout.Height(500));
+                scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(position.width), GUILayout.Height(position.height - 100));
 
                 menuBackgroundMusic = (AudioClip)EditorGUILayout.ObjectField("Menu Background Music", menuBackgroundMusic, typeof(AudioClip), true);
                 gameBackgroundMusic = (AudioClip)EditorGUILayout.ObjectField("Game Background Music", gameBackgroundMusic, typeof(AudioClip), true);
@@ -276,7 +345,7 @@ public class SetupEditor : EditorWindow
                     dataSave.SaveGamePlaySetup(playerLives);
                 }
                 break;
-            case 3: //lootbox setup
+            case 4: //lootbox setup
                 GUILayout.Label("Lootbox Setup", EditorStyles.boldLabel);
                 EditorGUILayout.Space();
 
@@ -291,19 +360,19 @@ public class SetupEditor : EditorWindow
     void ShowButtonEditOptions(int _i)
     {
         //Add new button
-        buttonSelected[_i] = EditorGUILayout.Popup("Button Type", buttonSelected[_i], buttonTypes);
-        buttonParent[_i] = EditorGUILayout.Popup("Menu", buttonParent[_i], menuTypes);
-        GUILayout.Label(buttonInfo[buttonSelected[_i]], EditorStyles.label);
-        buttonScale[_i] = EditorGUILayout.Slider("Scale", buttonScale[_i], 0, 4);
+        buttonList[_i].type = EditorGUILayout.Popup("Button Type", buttonList[_i].type, buttonTypes);
+        buttonList[_i].parent = EditorGUILayout.Popup("Menu Parent", buttonList[_i].parent, menuTypes);
+        GUILayout.Label(buttonInfo[buttonList[_i].type], EditorStyles.label);
+        buttonList[_i].scale = EditorGUILayout.Slider("Scale", buttonList[_i].scale, 0, 4);
 
-        buttonSprite = (Sprite)EditorGUILayout.ObjectField("Button Sprite", buttonSprite, typeof(Sprite), true);
+        buttonList[_i].sprite = (Sprite)EditorGUILayout.ObjectField("Button Sprite", buttonList[_i].sprite, typeof(Sprite), true);
 
         buttonClickSound = (AudioClip)EditorGUILayout.ObjectField("Click Sound", buttonClickSound, typeof(AudioClip), true);
 
-        buttonTextField[_i] = EditorGUILayout.TextField("Button Text", buttonTextField[_i]);
+        buttonList[_i].textField = EditorGUILayout.TextField("Button Text", buttonList[_i].textField);
 
         //additional changes for buttons
-        if (EditorGUILayout.BeginFadeGroup(Convert.ToInt32(buttonSelected[_i] == 4))) //social media
+        if (EditorGUILayout.BeginFadeGroup(Convert.ToInt32(buttonList[_i].type == 4))) //social media
         {
             GUILayout.Label("Social Media Options", EditorStyles.label);
             socialMediaURL = EditorGUILayout.TextField("Social Media URL", "");
@@ -317,29 +386,34 @@ public class SetupEditor : EditorWindow
         }
         if (GUI.changed)//GUILayout.Button("UpdateButton"))
         {
-            UpdateButton(_i, buttonSelected[_i], buttonScale[_i], buttonTextField[_i], buttonSprite, buttonList[_i], buttonParent[_i]);
+            UpdateButton(_i, buttonList[_i].type, buttonList[_i].scale, buttonList[_i].textField, buttonList[_i].sprite, buttonList[_i].obj, buttonList[_i].parent);
         }
 
         EditorGUILayout.Space();
     }
 
     //edit options for text objects
-    void ShowTextEditOptions()
+    void ShowTextEditOptions(int _i)
     {
-        textSelected = EditorGUILayout.Popup("Text Type", textSelected, textTypes);
-        textField = EditorGUILayout.TextField("Text", "new text");
-        textScale = EditorGUILayout.Slider("Font size", textScale, 0, 400);
-        textFont = (TMP_FontAsset)EditorGUILayout.ObjectField("Button Sprite", textFont, typeof(TMP_FontAsset), true);
+        textList[_i].type = EditorGUILayout.Popup("Text Type", textList[_i].type, textTypes);
+        textList[_i].textField = EditorGUILayout.TextField("Text", textList[_i].textField);
+        textList[_i].scale = EditorGUILayout.Slider("Font size", textList[_i].scale, 0, 400);
+        textList[_i].textFont = (TMP_FontAsset)EditorGUILayout.ObjectField("Button Sprite", textList[_i].textFont, typeof(TMP_FontAsset), true);
 
-        if (EditorGUILayout.BeginFadeGroup(Convert.ToInt32(textSelected == 1))) //currency
+        if (EditorGUILayout.BeginFadeGroup(Convert.ToInt32(textList[_i].type == 1))) //currency
         {
-            currencyName = EditorGUILayout.TextField("Currency Name", "Currency");
+            currencyName = EditorGUILayout.TextField("Currency Name", currencyName);
+        }
+
+        if (GUILayout.Button("Delete Text " + _i))
+        {
+            DestroyText(_i);
+        }
+        if (GUI.changed)//when GUI has been updated
+        {
+            UpdateText(_i, textList[_i].obj, textList[_i].type, textList[_i].textField, textList[_i].scale, textList[_i].textFont, textList[_i].type);
         }
         EditorGUILayout.EndFadeGroup();
-        if (GUILayout.Button("Add New Text"))
-        {
-            AddText(textSelected, 0, textField, textScale);
-        }
     }
 
     //edit options for lootbox objects
@@ -370,8 +444,9 @@ public class SetupEditor : EditorWindow
         }
 
         EditorGUILayout.BeginVertical();
-        scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(600), GUILayout.Height(300));
+        scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(position.width), GUILayout.Height(position.height - 100));
 
+        //display lootbox list of items
         for (int i = 0; i < lootboxList.Count; i++)
         {
             lootboxDropDown[i] = EditorGUILayout.Foldout(lootboxDropDown[i], "Item " + i);
@@ -419,8 +494,8 @@ public class SetupEditor : EditorWindow
             _buttonPrefab.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0).GetChild(0));
         }
 
-        buttonList2[_i] = new ButtonItem(_buttonPrefab, buttonList2[_i].dropDown, _text, _scale, _parent, _type, buttonList2[_i].buttonClickSound);
-        dataSave.SaveButtons(_i, buttonList2[_i]);
+        buttonList[_i] = new ButtonItem(_buttonPrefab, buttonList[_i].dropDown, _text, _scale, _parent, _type, buttonList[_i].buttonClickSound, _sprite);
+        dataSave.SaveButtons(_i, buttonList[_i]);
     }
 
     //add a new button object
@@ -437,13 +512,13 @@ public class SetupEditor : EditorWindow
         buttonPrefab.GetComponent<RectTransform>().localScale = new Vector3(_scale, _scale, 1);
 
         //add to lists of button parameters
-        buttonTextField.Add("new text");
+        /*buttonTextField.Add("new text");
         buttonScale.Add(_scale);
         buttonListDropDown.Add(false);
         buttonSelected.Add(_type);
-        buttonParent.Add(_type);
+        buttonParent.Add(_type);*/
 
-        buttonList2.Add(new ButtonItem(buttonPrefab, false, "new text", _scale, _type, _type, null));
+        buttonList.Add(new ButtonItem(buttonPrefab, false, "new text", _scale, _type, _type, null, defaultButtonSprite));
 
         return buttonPrefab;
     }
@@ -451,22 +526,13 @@ public class SetupEditor : EditorWindow
     //destroy a button object
     void DestroyButton(int _i)
     {
-        DestroyImmediate(buttonList[_i]);
-
+        DestroyImmediate(buttonList[_i].obj);
         buttonList.RemoveAt(_i);
-        buttonTextField.RemoveAt(_i);
-        buttonScale.RemoveAt(_i);
-        buttonSelected.RemoveAt(_i);
-        buttonParent.RemoveAt(_i);
-
-        DestroyImmediate(buttonList2[_i].obj);
-        buttonList2.RemoveAt(_i);
     }
-
 
     // TEXT
     //add a new text object
-    void AddText(int _type, int _menuType, string _text, float _size)
+    void AddText(int _type, int _menuType, string _text, float _scale, TMP_FontAsset _font, int _parent)
     {
         GameObject textPrefab = Instantiate(Resources.Load<GameObject>("TextPrefab"), new Vector3(0, 0, 0), Quaternion.identity);
         textPrefab.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(_menuType).GetChild(0));
@@ -476,7 +542,39 @@ public class SetupEditor : EditorWindow
         }
         textPrefab.GetComponent<TextMeshProUGUI>().text += textTypeAdd[_type];
         textPrefab.GetComponent<TextMeshProUGUI>().text += _text;
-        textPrefab.GetComponent<TextMeshProUGUI>().fontSize = _size;
+        textPrefab.GetComponent<TextMeshProUGUI>().fontSize = _scale;
+
+        textList.Add(new TextItem(_type, _font, _scale, textPrefab, false, "new text", _type));
+    }
+    void UpdateText(int _i, GameObject _textPrefab, int _type, string _text, float _scale, TMP_FontAsset _font, int _parent)
+    {
+        _textPrefab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = (_text == "") ? buttonTypes[_type] : _text;
+        _textPrefab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().font = _font;
+        //force update text in inspector
+        if (GUI.changed) { EditorUtility.SetDirty(_textPrefab.transform.GetChild(0)); }
+
+        _textPrefab.GetComponent<ButtonScript>().SetType((CanvasManager.ButtonType)_type);
+        
+        _textPrefab.GetComponent<RectTransform>().localScale = new Vector3(_scale, _scale, 1);
+
+        if (GameObject.FindGameObjectWithTag(menuTypes[_parent] + "Menu") != null)
+        {
+            _textPrefab.transform.SetParent(GameObject.FindGameObjectWithTag(menuTypes[_parent] + "Menu").transform.GetChild(0));//GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(_parent).GetChild(0));
+        }
+        else
+        {
+            _textPrefab.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0).GetChild(0));
+        }
+
+        textList[_i] = new TextItem(_type, _font, _scale, _textPrefab, textList[_i].dropDown, _text, _parent);
+        dataSave.SaveText(_i, textList[_i]);
+    }
+
+    //destroy a text object
+    void DestroyText(int _i)
+    {
+        DestroyImmediate(textList[_i].obj);
+        textList.RemoveAt(_i);
     }
 
 

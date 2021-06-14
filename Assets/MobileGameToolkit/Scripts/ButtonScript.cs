@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityEngine.Advertisements;
 using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
@@ -58,6 +59,10 @@ public class ButtonScript : MonoBehaviour
 
             case CanvasManager.ButtonType.Advert:
                 //play advert here
+                if(Advertisement.IsReady())
+                {
+                    Advertisement.Show();
+                }
                 break;
 
             case CanvasManager.ButtonType.LootBox:

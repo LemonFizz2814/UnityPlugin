@@ -12,6 +12,12 @@ public class GameManager : MonoBehaviour
 
     float platformLifeTime = 7.0f;
 
+    float amountOfCoinsSpawned = 4;
+    float coinSpawnHeight = 5;
+    float coinplatformWidth = 3;
+
+    float enemySpawnHeight = 5;
+
     Vector3 playerSpeed = new Vector3(3, 0, 0);
 
     bool gameStarted = false;
@@ -29,6 +35,15 @@ public class GameManager : MonoBehaviour
 
     AudioSource audioSource;
 
+    enum EPLATFORMTYPES
+    {
+        NORMAL,
+        ENEMY,
+        COIN,
+    }
+
+    EPLATFORMTYPES platformType;
+
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -36,6 +51,7 @@ public class GameManager : MonoBehaviour
         PlaySound(menuBackgroundMusic);
     }
 
+    //when game has started
     public void StartGame()
     {
         gameStarted = true;
@@ -53,6 +69,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(PlatformSpawnLoop());
     }
 
+    //when the game scene has ended
     public void GameOver()
     {
         StopAllCoroutines();
@@ -62,6 +79,7 @@ public class GameManager : MonoBehaviour
         PlaySound(menuBackgroundMusic);
     }
 
+    //play audio
     public void PlaySound(AudioClip _audio)
     {
         if(_audio != null)
@@ -91,6 +109,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //check if highscore has been reached
     void CalculateHighScore()
     {
         if (playerObj.GetComponent<PlayerScript>().GetScore() > dataSave.gameDataObject.highscore)
@@ -100,16 +119,39 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //loop through platform spawning
     private IEnumerator PlatformSpawnLoop()
     {
         Vector3 spawnLoc = mainCamera.transform.GetChild(0).position;
         spawnLoc = new Vector3(spawnLoc.x, Random.Range(startHeightMin, startHeightMax), spawnLoc.z);
 
         GameObject _platformObj = Instantiate(platformObj, spawnLoc, Quaternion.identity);
-        GameObject _enemyObj = Instantiate(enemyObj, new Vector3(spawnLoc.x, spawnLoc.y + 5, spawnLoc.z), Quaternion.identity);
-        //platforms.Add(_platformObj);
         Destroy(_platformObj, platformLifeTime);
-        Destroy(_enemyObj, platformLifeTime);
+
+        //make random platform type
+        platformType = (EPLATFORMTYPES)Random.Range(0, System.Enum.GetValues(typeof(EPLATFORMTYPES)).Length);
+
+        switch (platformType)
+        {
+            case EPLATFORMTYPES.NORMAL:
+                //put anything else in here for normal if wanted
+                break;
+
+            case EPLATFORMTYPES.COIN:
+                //spawn coins on platform
+                for (int i = 0; i < amountOfCoinsSpawned; i++)
+                {
+                    GameObject _coinObj = Instantiate(enemyObj, new Vector3(spawnLoc.x + (-coinplatformWidth + (i * 2)), spawnLoc.y + coinSpawnHeight, spawnLoc.z), Quaternion.identity);
+                    Destroy(_coinObj, platformLifeTime);
+                }
+                break;
+
+            case EPLATFORMTYPES.ENEMY:
+                //spawn enemy on platform
+                GameObject _enemyObj = Instantiate(enemyObj, new Vector3(spawnLoc.x, spawnLoc.y + enemySpawnHeight, spawnLoc.z), Quaternion.identity);
+                Destroy(_enemyObj, platformLifeTime);
+                break;
+        }
 
         yield return new WaitForSeconds(Random.Range(platformSpawnTimeMin, platformSpawnTimeMax));
 

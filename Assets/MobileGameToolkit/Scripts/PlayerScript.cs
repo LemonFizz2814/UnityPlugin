@@ -26,7 +26,8 @@ public class PlayerScript : MonoBehaviour
     {
         canvasManager = FindObjectOfType<Canvas>().GetComponent<CanvasManager>();
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        //canvasManager.UpdateCurrencyText(nameOfCurrency, currency);
+        canvasManager.UpdateCurrencyText(nameOfCurrency, currency);
+        canvasManager.UpdateLivesText(lives);
 
         rg2D = GetComponent<Rigidbody2D>();
         rg2D.simulated = false;
@@ -77,8 +78,8 @@ public class PlayerScript : MonoBehaviour
         lives = _lives;
         gameObject.transform.GetComponent<SpriteRenderer>().sprite = _sprite;
 
-        canvasManager.UpdateCurrencyText(nameOfCurrency, currency);
-        canvasManager.UpdateLivesText(lives);
+        //canvasManager.UpdateCurrencyText(nameOfCurrency, currency);
+        //canvasManager.UpdateLivesText(lives);
     }
 
     void IncreaseScore(int _points)

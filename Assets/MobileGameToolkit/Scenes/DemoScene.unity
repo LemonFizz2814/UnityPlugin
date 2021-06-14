@@ -1497,9 +1497,23 @@ MonoBehaviour:
   gameDataObject:
     highscore: 0
     currency: 0
+    selectedSprite: {fileID: 0}
     lootboxPrizes: 
   gameplaySetupObject:
-    lives: 3
+    lives: 0
+    playerJump: 0
+    cointPoints: 0
+    enemyDamage: 0
+    enemySpawnFrequency: 0
+    coinSpawnFrequency: 0
+    currencyName: 
+    menuBackgroundMusic: {fileID: 0}
+    gameBackgroundMusic: {fileID: 0}
+    coinCollectSound: {fileID: 0}
+    playerJumpSound: {fileID: 0}
+    playerHurtSound: {fileID: 0}
+  menuSetupObject:
+    menuList: []
 --- !u!4 &1561693547
 Transform:
   m_ObjectHideFlags: 0
@@ -1958,6 +1972,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2029635228}
     m_Modifications:
+    - target: {fileID: 1578774415614805545, guid: 192b121eafb8d89419b9cdaa3e5b17dd, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 1578774415614805545, guid: 192b121eafb8d89419b9cdaa3e5b17dd, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8092550301696352181, guid: 192b121eafb8d89419b9cdaa3e5b17dd, type: 3}
       propertyPath: m_Name
       value: PlayerPrefab

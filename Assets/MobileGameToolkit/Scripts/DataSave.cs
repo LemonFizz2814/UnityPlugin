@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using System.Text;
 using System;
 
 public class DataSave : MonoBehaviour
@@ -24,11 +26,16 @@ public class DataSave : MonoBehaviour
         public List<SetupEditor.ButtonItem> buttonItems = new List<SetupEditor.ButtonItem>();
     }
     [Serializable]
+    public class TextSetupSave
+    {
+        public List<SetupEditor.TextItem> textItems = new List<SetupEditor.TextItem>();
+    }
+    [Serializable]
     public class GameplaySetupSave
     {
         public int lives;
         public int playerJump;
-        public int cointPoints;
+        public int coinPoints;
         public int enemyDamage;
         public int enemySpawnFrequency;
         public int coinSpawnFrequency;
@@ -66,19 +73,29 @@ public class DataSave : MonoBehaviour
     {
         Debug.Log("Load Data");
 
-        if(jsonGameData == null)
+        /*if (JsonUtility.ToJson(gameDataObject) == null)
         {
-            Debug.Log("jsonGameData Is null");
+            Debug.Log("gameDataObject Is null");
             SaveGameData(0, 0, null);
         }
-        if (jsonGamePlaySetup == null)
+        if (JsonUtility.ToJson(gameplaySetupObject) == null)
         {
             Debug.Log("jsonGamePlaySetup Is null");
             SaveGamePlaySetup(3);
+        }*/
+        if (!File.Exists(Application.persistentDataPath + "/saveload.json"))
+        {
+            Debug.Log("Doesn't exist");
+            jsonGameData = JsonUtility.ToJson(gameDataObject);
+            File.WriteAllText(Application.persistentDataPath + "/saveload.json", jsonGameData, Encoding.UTF8);
         }
+        gameplaySetupObject = JsonUtility.FromJson<GameplaySetupSave>(File.ReadAllText(Application.persistentDataPath + "/saveload.json"));
+
+        jsonGameData = JsonUtility.ToJson(gameDataObject);
+        //jsonGamePlaySetup = JsonUtility.ToJson(gameplaySetupObject);
 
         gameDataObject = JsonUtility.FromJson<GameDataSave>(jsonGameData);
-        gameplaySetupObject = JsonUtility.FromJson<GameplaySetupSave>(jsonGamePlaySetup);
+        //gameplaySetupObject = JsonUtility.FromJson<GameplaySetupSave>(jsonGamePlaySetup);
     }
 
     //save data for game data
@@ -92,11 +109,26 @@ public class DataSave : MonoBehaviour
     }
 
     //save game play setup data
-    public void SaveGamePlaySetup(int _lives)
+    public void SaveGamePlaySetup(int _lives, int _playerJump, int _coinPoints, int _enemyDamage, string _currencyName,
+        AudioClip _menuBackgroundMusic, AudioClip _gameBackgroundMusic, AudioClip _coinCollectSound, AudioClip _playerJumpSound, AudioClip _playerHurtSound)
     {
         gameplaySetupObject.lives = _lives;
+        gameplaySetupObject.playerJump = _playerJump;
+        gameplaySetupObject.coinPoints = _coinPoints;
+        gameplaySetupObject.enemyDamage = _enemyDamage;
+        gameplaySetupObject.currencyName = _currencyName;
+        gameplaySetupObject.menuBackgroundMusic = _menuBackgroundMusic;
+        gameplaySetupObject.gameBackgroundMusic = _gameBackgroundMusic;
+        gameplaySetupObject.coinCollectSound = _coinCollectSound;
+        gameplaySetupObject.playerJumpSound = _playerJumpSound;
+        gameplaySetupObject.playerHurtSound = _playerHurtSound;
 
-        jsonGamePlaySetup = JsonUtility.ToJson(gameplaySetupObject);
+    //jsonGamePlaySetup = JsonUtility.ToJson(gameplaySetupObject);
+    //gameplaySetupObject = JsonUtility.FromJson<GameplaySetupSave>(jsonGamePlaySetup);
+    Debug.Log("gameplaySetupObject.lives " + gameplaySetupObject.lives);
+
+        string jsonData = JsonUtility.ToJson(gameplaySetupObject, true);
+        File.WriteAllText(Application.persistentDataPath + "/saveload.json", jsonData);
     }
 
     //save menu setup data
@@ -119,5 +151,11 @@ public class DataSave : MonoBehaviour
     public void SaveLootboxs(int _i, SetupEditor.LootBoxItem _lootboxItem)
     {
         lootboxSetupObject.lootBoxItems[_i] = _lootboxItem;
+    }
+
+    //save text
+    public void SaveText(int _i, SetupEditor.TextItem _textItem)
+    {
+        //lootboxSetupObject.lootBoxItems[_i] = _textItem;
     }
 }
