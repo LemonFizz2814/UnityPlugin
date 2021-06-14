@@ -109,6 +109,7 @@ public class GameManager : MonoBehaviour
         GameObject _enemyObj = Instantiate(enemyObj, new Vector3(spawnLoc.x, spawnLoc.y + 5, spawnLoc.z), Quaternion.identity);
         //platforms.Add(_platformObj);
         Destroy(_platformObj, platformLifeTime);
+        Destroy(_enemyObj, platformLifeTime);
 
         yield return new WaitForSeconds(Random.Range(platformSpawnTimeMin, platformSpawnTimeMax));
 

@@ -10,28 +10,45 @@ public class DataSave : MonoBehaviour
     {
         public int highscore;
         public int currency;
+        public Sprite selectedSprite;
         public List<bool> lootboxPrizes = new List<bool>();
     }
     [Serializable]
     public class MenuSetupSave
     {
-
+        public List<GameObject> menuList = new List<GameObject>();
     }
     [Serializable]
     public class ButtonSetupSave
     {
-
+        public List<GameObject> buttonList = new List<GameObject>();
     }
     [Serializable]
     public class GameplaySetupSave
     {
         public int lives;
+        public int playerJump;
+        public int cointPoints;
+        public int enemyDamage;
+        public int enemySpawnFrequency;
+        public int coinSpawnFrequency;
         //string currencyName;
     }
     [Serializable]
     public class LootboxSetupSave
     {
         //int lootBoxPrice;
+    }
+    [Serializable]
+    public class AudioSave
+    {
+        AudioClip menuBackgroundMusic;
+        AudioClip gameBackgroundMusic;
+        AudioClip buttonClickSound;
+        AudioClip prizeSound;
+        AudioClip playerJumpSound;
+        AudioClip coinCollectSound;
+        AudioClip playerHurtSound;
     }
 
     //object classes

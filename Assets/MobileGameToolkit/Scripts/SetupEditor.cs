@@ -58,6 +58,7 @@ public class SetupEditor : EditorWindow
     AudioClip coinCollectSound;
     AudioClip playerHurtSound;
 
+    //loot box object
     public struct LootBoxItem
     {
         public int chances;
@@ -89,6 +90,7 @@ public class SetupEditor : EditorWindow
         GetWindow<SetupEditor>("Setup Editor");
     }
 
+    //saving variables
     void SaveVariables()
     {
         PlayerPrefs.SetInt("lives", playerLives);
@@ -96,8 +98,10 @@ public class SetupEditor : EditorWindow
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>().UpdateVariables(currencyName, playerLives, playerSprite);
     }
 
+    //display GUI
     private void OnGUI()
     {
+        //do when editor or game is first opened
         if(startup)
         {
             dataSave = GameObject.FindGameObjectWithTag("DataSave").GetComponent<DataSave>();
@@ -109,6 +113,7 @@ public class SetupEditor : EditorWindow
             startup = false;
         }
 
+        //menu toolbar
         toolbarInt = GUILayout.Toolbar(toolbarInt, toolbarStrings);
         switch (toolbarInt)
         {
@@ -116,32 +121,7 @@ public class SetupEditor : EditorWindow
                 GUILayout.Label("Menu setup", EditorStyles.boldLabel);
                 EditorGUILayout.Space();
 
-                /*if (GUILayout.Button(buttonTitle + " Start Menu"))
-                {
-                    //ShowNotification(new GUIContent("Start Menu Added"));
-
-                    buttonTitle = (startEnabled) ? add : remove;
-                    startEnabled = !startEnabled;
-                }
-
-                if (EditorGUILayout.BeginFadeGroup(Convert.ToInt32(startEnabled)))
-                {
-                    EditorGUI.indentLevel++;
-
-                    //ShowButtonEditOptions();
-                    //------------------------------------------------
-
-                    //Add new text
-                    ShowTextEditOptions();
-
-                    EditorGUILayout.Space();
-                    var style = new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter };
-                    EditorGUILayout.LabelField("------------------------------------------------------------------------", style, GUILayout.ExpandWidth(true));
-                    EditorGUILayout.Space();
-                    EditorGUI.indentLevel--;
-                }
-                EditorGUILayout.EndFadeGroup();*/
-
+                //display menus
                 for (int i = 0; i < menuTypes.Length; i++)
                 {
                     if (GUILayout.Button("" + menuTitle[i] + " " + menuTypes[i] + " Menu"))
@@ -154,6 +134,7 @@ public class SetupEditor : EditorWindow
 
                 EditorGUILayout.Space();
 
+                //button to add a new menu
                 if (GUILayout.Button("Add New Menu Type"))
                 {
                     Debug.Log("pressed");
@@ -165,12 +146,15 @@ public class SetupEditor : EditorWindow
 
                 EditorGUILayout.Space();
 
+                //button to add a new button and add create a list of buttons
                 if (GUILayout.Button("Add New Button"))
                 {
                     buttonList.Add(AddButton(0, 0, 1, "New Text", buttonSprite));
                 }
+                //clear every button from the list
                 if (GUILayout.Button("Clear All"))
                 {
+                    //destroy objects
                     for (int i = 0; i < buttonList.Count; i++)
                     {
                         DestroyImmediate(buttonList[i]);
@@ -181,9 +165,11 @@ public class SetupEditor : EditorWindow
                 EditorGUILayout.BeginVertical();
                 scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(600), GUILayout.Height(300));
 
+                //display all the buttons in the list
                 for (int i = 0; i < buttonList.Count; i++)
                 {
                     buttonListDropDown[i] = EditorGUILayout.Foldout(buttonListDropDown[i], "Button " + i);
+                    //if dropdown opened then display buttons edit contents
                     if (buttonListDropDown[i])
                     {
                         EditorGUI.indentLevel++;
@@ -213,7 +199,7 @@ public class SetupEditor : EditorWindow
                 menuBackgroundMusic = (AudioClip)EditorGUILayout.ObjectField("Menu Background Music", menuBackgroundMusic, typeof(AudioClip), true);
                 gameBackgroundMusic = (AudioClip)EditorGUILayout.ObjectField("Game Background Music", gameBackgroundMusic, typeof(AudioClip), true);
 
-                // EDIT PLAYER
+                // EDIT PLAYER OPTIONS
                 GUILayout.Label("Edit Player", EditorStyles.largeLabel);
                 EditorGUI.indentLevel++;
                 playerLives = EditorGUILayout.IntField("Lives", playerLives);
@@ -224,7 +210,7 @@ public class SetupEditor : EditorWindow
                 EditorGUI.indentLevel--;
                 //EditorGUILayout.Space();
 
-                // EDIT ENEMY
+                // EDIT ENEMY OPTIONS
                 GUILayout.Label("Edit Enemy", EditorStyles.largeLabel);
                 EditorGUI.indentLevel++;
                 enemyDamage = EditorGUILayout.IntField("Damage", enemyDamage);
@@ -233,7 +219,7 @@ public class SetupEditor : EditorWindow
                 EditorGUI.indentLevel--;
                 //EditorGUILayout.Space();
 
-                // EDIT COIN
+                // EDIT COIN OPTIONS
                 GUILayout.Label("Edit Coin", EditorStyles.largeLabel);
                 EditorGUI.indentLevel++;
                 coinPoints = EditorGUILayout.IntField("Score Awarded", coinPoints);
@@ -275,11 +261,10 @@ public class SetupEditor : EditorWindow
 
 
     // OPTIONS
-
+    //edit options for button objects
     void ShowButtonEditOptions(int _i)
     {
         //Add new button
-
         buttonSelected[_i] = EditorGUILayout.Popup("Button Type", buttonSelected[_i], buttonTypes);
         buttonParent[_i] = EditorGUILayout.Popup("Menu", buttonParent[_i], menuTypes);
         GUILayout.Label(buttonInfo[buttonSelected[_i]], EditorStyles.label);
@@ -312,6 +297,7 @@ public class SetupEditor : EditorWindow
         EditorGUILayout.Space();
     }
 
+    //edit options for text objects
     void ShowTextEditOptions()
     {
         textSelected = EditorGUILayout.Popup("Text Type", textSelected, textTypes);
@@ -330,24 +316,27 @@ public class SetupEditor : EditorWindow
         }
     }
 
+    //edit options for lootbox objects
     void ShowLootBoxEditOptions()
     {
         lootBoxPrice = EditorGUILayout.IntField("Price for lootbox", lootBoxPrice);
 
         prizeSound = (AudioClip)EditorGUILayout.ObjectField("Prize Awarded Sound", prizeSound, typeof(AudioClip), true);
 
+        //get a collective of the percentage
         int totalPercentage = 0;
-
         for (int i = 0; i < lootboxList.Count; i++)
         {
             totalPercentage += lootboxList[i].chances;
         }
 
+        //button for adding new lootbox item to list
         if (GUILayout.Button("Add New Item To Lootbox"))
         {
             lootboxList.Add(new LootBoxItem(1, null, false));
             lootboxDropDown.Add(false);
         }
+        //button for clear every lootbox item from list
         if (GUILayout.Button("Clear All Lootbox"))
         {
             lootboxList.Clear();
@@ -383,10 +372,11 @@ public class SetupEditor : EditorWindow
 
 
     // BUTTONS
-
+    //update button variables
     void UpdateButton(int _type, float _scale, string _text, Sprite _sprite, GameObject _buttonPrefab, int _parent)
     {
         _buttonPrefab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = (_text == "") ? buttonTypes[_type] : _text;
+        //force update text in inspector
         if (GUI.changed) {EditorUtility.SetDirty(_buttonPrefab.transform.GetChild(0));}
 
         _buttonPrefab.GetComponent<ButtonScript>().SetType((CanvasManager.ButtonType)_type);
@@ -394,9 +384,17 @@ public class SetupEditor : EditorWindow
         _buttonPrefab.GetComponent<Image>().sprite = (_sprite == null) ? Resources.Load<Sprite>("DefaultSprite") : _sprite;
         _buttonPrefab.GetComponent<RectTransform>().localScale = new Vector3(_scale, _scale, 1);
 
-        _buttonPrefab.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(_parent).GetChild(0));
+        if(GameObject.FindGameObjectWithTag(menuTypes[_parent] + "Menu") != null)
+        {
+            _buttonPrefab.transform.SetParent(GameObject.FindGameObjectWithTag(menuTypes[_parent] + "Menu").transform.GetChild(0));//GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(_parent).GetChild(0));
+        }
+        else
+        {
+            _buttonPrefab.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0).GetChild(0));
+        }
     }
 
+    //add a new button object
     GameObject AddButton(int _type, int _menuType, float _scale, string _text, Sprite _sprite)
     {
         GameObject buttonPrefab = Instantiate(Resources.Load<GameObject>("ButtonPrefab"), new Vector3(0, 0, 0), Quaternion.identity);
@@ -409,6 +407,7 @@ public class SetupEditor : EditorWindow
         buttonPrefab.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 0, 0);
         buttonPrefab.GetComponent<RectTransform>().localScale = new Vector3(_scale, _scale, 1);
 
+        //add to lists of button parameters
         buttonTextField.Add("new text");
         buttonScale.Add(_scale);
         buttonListDropDown.Add(false);
@@ -418,6 +417,7 @@ public class SetupEditor : EditorWindow
         return buttonPrefab;
     }
 
+    //destroy a button object
     void DestroyButton(int _i)
     {
         DestroyImmediate(buttonList[_i]);
@@ -430,7 +430,7 @@ public class SetupEditor : EditorWindow
 
 
     // TEXT
-
+    //add a new text object
     void AddText(int _type, int _menuType, string _text, float _size)
     {
         GameObject textPrefab = Instantiate(Resources.Load<GameObject>("TextPrefab"), new Vector3(0, 0, 0), Quaternion.identity);
@@ -446,7 +446,7 @@ public class SetupEditor : EditorWindow
 
 
     // MENU
-
+    //add a new menu object
     void AddMenu(int _i)
     {
         GameObject menuObj = GameObject.FindGameObjectWithTag(menuTypes[_i] + "Menu");
@@ -454,7 +454,7 @@ public class SetupEditor : EditorWindow
         if (menuObj == null)
         {
             Debug.Log(menuTypes[_i] + " Menu Added");
-            //instantiate
+            //instantiate a prefab
             GameObject menuPrefab = Instantiate(Resources.Load<GameObject>("MenuPrefab"), new Vector3(0, 0, 0), Quaternion.identity);
             menuPrefab.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform);
             menuPrefab.transform.tag = menuTypes[_i] + "Menu";
@@ -462,7 +462,7 @@ public class SetupEditor : EditorWindow
         }
         else
         {
-            //destroy object
+            //destroy menu object
             Debug.Log(menuTypes[_i] + " Menu Removed");
             DestroyImmediate(menuObj);
         }

@@ -223,8 +223,8 @@ RectTransform:
   - {fileID: 558121741}
   - {fileID: 2027994181}
   - {fileID: 668459373}
-  - {fileID: 1958535943}
   - {fileID: 1347468085}
+  - {fileID: 1041742671}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -946,6 +946,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1033234522}
   m_CullTransparentMesh: 1
+--- !u!1 &1041742670
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1041742671}
+  m_Layer: 5
+  m_Name: StartMenuObject
+  m_TagString: StartMenu
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1041742671
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1041742670}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2.0628684, y: 2.0628684, z: 2.0628684}
+  m_Children: []
+  m_Father: {fileID: 289551490}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -525, y: -933.44794}
+  m_SizeDelta: {x: -1050, y: -1866.8958}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1074319819
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1418,11 +1453,11 @@ RectTransform:
   m_LocalScale: {x: 2.0628684, y: 2.0628684, z: 2.0628684}
   m_Children: []
   m_Father: {fileID: 289551490}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -525, y: -933.44794}
+  m_AnchoredPosition: {x: -525, y: -933.4492}
   m_SizeDelta: {x: -1050, y: -1866.8958}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &1535148318 stripped
@@ -1464,7 +1499,7 @@ MonoBehaviour:
     currency: 0
     lootboxPrizes: 
   gameplaySetupObject:
-    lives: 2
+    lives: 3
 --- !u!4 &1561693547
 Transform:
   m_ObjectHideFlags: 0
@@ -1561,41 +1596,6 @@ Transform:
   m_Father: {fileID: 2029635228}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1958535942
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1958535943}
-  m_Layer: 5
-  m_Name: MenuPrefab(Clone)
-  m_TagString: StartMenu
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1958535943
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1958535942}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.0628684, y: 2.0628684, z: 2.0628684}
-  m_Children: []
-  m_Father: {fileID: 289551490}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -525, y: -933.44794}
-  m_SizeDelta: {x: -1050, y: -1866.8958}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2027994180
 GameObject:
   m_ObjectHideFlags: 0
