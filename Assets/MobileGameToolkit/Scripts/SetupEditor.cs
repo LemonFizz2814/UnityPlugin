@@ -52,7 +52,6 @@ public class SetupEditor : EditorWindow
 
     AudioClip menuBackgroundMusic;
     AudioClip gameBackgroundMusic;
-    AudioClip buttonClickSound;
     AudioClip prizeSound;
     AudioClip playerJumpSound;
     AudioClip coinCollectSound;
@@ -146,8 +145,8 @@ public class SetupEditor : EditorWindow
     //saving variables
     void SaveVariables()
     {
-        PlayerPrefs.SetInt("lives", playerLives);
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>().UpdateVariables(currencyName, playerLives, playerSprite);
+        //PlayerPrefs.SetInt("lives", playerLives);
+        //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>().UpdateVariables(currencyName, playerLives, playerSprite);
     }
 
     //display GUI
@@ -162,7 +161,6 @@ public class SetupEditor : EditorWindow
             dataSave.LoadData();
             Debug.Log("dataSave.gameplaySetupObject.lives " + dataSave.gameplaySetupObject.lives);
             playerLives = dataSave.gameplaySetupObject.lives;
-            Debug.Log("playerLives " + playerLives);
 
             startup = false;
         }
@@ -192,6 +190,15 @@ public class SetupEditor : EditorWindow
                 if (GUILayout.Button("Add New Menu Type"))
                 {
                     Debug.Log("pressed");
+                }
+
+                //when any variables have been changed
+                if (GUI.changed)
+                {
+                    for (int i = 0; i < buttonList.Count; i++)
+                    {
+                        dataSave.SaveMenuSetup(startEnabled);
+                    }
                 }
                 break;
 
@@ -237,6 +244,14 @@ public class SetupEditor : EditorWindow
 
                 EditorGUILayout.Space();
 
+                //when any variables have been changed
+                if (GUI.changed)
+                {
+                    for (int i = 0; i < buttonList.Count; i++)
+                    {
+                        dataSave.SaveButtons(i, buttonList[i]);
+                    }
+                }
                 break;
             case 2: //text setup
                 GUILayout.Label("Text Menu", EditorStyles.boldLabel);
@@ -278,6 +293,15 @@ public class SetupEditor : EditorWindow
                 EditorGUILayout.EndVertical();
 
                 EditorGUILayout.Space();
+
+                //when any variables have been changed
+                if (GUI.changed)
+                {
+                    for (int i = 0; i < textList.Count; i++)
+                    {
+                        dataSave.SaveText(i, textList[i]);
+                    }
+                }
                 break;
 
             case 3: //gameplay setup
@@ -339,10 +363,12 @@ public class SetupEditor : EditorWindow
                 EditorGUILayout.EndScrollView();
                 EditorGUILayout.EndVertical();
 
+                //when any variables have been changed
                 if(GUI.changed)
                 {
                     SaveVariables();
-                    dataSave.SaveGamePlaySetup(playerLives);
+                    dataSave.SaveGamePlaySetup(playerLives, coinPoints, enemyDamage, playerJump, currencyName,
+                        menuBackgroundMusic, gameBackgroundMusic, coinCollectSound, playerJumpSound, playerHurtSound);
                 }
                 break;
             case 4: //lootbox setup
@@ -350,6 +376,15 @@ public class SetupEditor : EditorWindow
                 EditorGUILayout.Space();
 
                 ShowLootBoxEditOptions();
+
+                //when any variables have been changed
+                if (GUI.changed)
+                {
+                    for (int i = 0; i < lootboxList.Count; i++)
+                    {
+                        dataSave.SaveLootboxs(i, lootboxList[i], lootBoxPrice, prizeSound);
+                    }
+                }
                 break;
         }
     }
@@ -367,7 +402,7 @@ public class SetupEditor : EditorWindow
 
         buttonList[_i].sprite = (Sprite)EditorGUILayout.ObjectField("Button Sprite", buttonList[_i].sprite, typeof(Sprite), true);
 
-        buttonClickSound = (AudioClip)EditorGUILayout.ObjectField("Click Sound", buttonClickSound, typeof(AudioClip), true);
+        buttonList[_i].buttonClickSound = (AudioClip)EditorGUILayout.ObjectField("Click Sound", buttonList[_i].buttonClickSound, typeof(AudioClip), true);
 
         buttonList[_i].textField = EditorGUILayout.TextField("Button Text", buttonList[_i].textField);
 
