@@ -40,6 +40,9 @@ public class DataSave : MonoBehaviour
         public AudioClip coinCollectSound;
         public AudioClip playerJumpSound;
         public AudioClip playerHurtSound;
+        public Sprite enemySprite;
+        public Sprite coinSprite;
+        public Sprite backgroundSprite;
     }
     [Serializable]
     public class LootboxSetupSave
@@ -156,23 +159,28 @@ public class DataSave : MonoBehaviour
     }
 
     //save game play setup data
-    public void SaveGamePlaySetup(int _lives, int _coinPoints, int _enemyDamage, float _playerJump, string _currencyName,
-        AudioClip _menuBackgroundMusic, AudioClip _gameBackgroundMusic, AudioClip _coinCollectSound, AudioClip _playerJumpSound, AudioClip _playerHurtSound)
+    public void SaveGamePlaySetup(int _lives, int _coinPoints, int _enemyDamage, int _enemySpawnFrequency, int _coinSpawnFrequency, float _playerJump, string _currencyName,
+        AudioClip _menuBackgroundMusic, AudioClip _gameBackgroundMusic, AudioClip _coinCollectSound, AudioClip _playerJumpSound, AudioClip _playerHurtSound, Sprite _enemySprite, Sprite _coinSprite, Sprite _backgroundSprite)
     {
         gameplaySetupObject.lives = _lives;
         gameplaySetupObject.coinPoints = _coinPoints;
         gameplaySetupObject.enemyDamage = _enemyDamage;
         gameplaySetupObject.playerJump = _playerJump;
+        gameplaySetupObject.enemySpawnFrequency = _enemySpawnFrequency;
+        gameplaySetupObject.coinSpawnFrequency = _coinSpawnFrequency;
         gameplaySetupObject.currencyName = _currencyName;
         gameplaySetupObject.menuBackgroundMusic = _menuBackgroundMusic;
         gameplaySetupObject.gameBackgroundMusic = _gameBackgroundMusic;
         gameplaySetupObject.coinCollectSound = _coinCollectSound;
         gameplaySetupObject.playerJumpSound = _playerJumpSound;
         gameplaySetupObject.playerHurtSound = _playerHurtSound;
+        gameplaySetupObject.enemySprite = _enemySprite;
+        gameplaySetupObject.coinSprite = _coinSprite;
+        gameplaySetupObject.backgroundSprite = _backgroundSprite;
 
-        //jsonGamePlaySetup = JsonUtility.ToJson(gameplaySetupObject);
-        //gameplaySetupObject = JsonUtility.FromJson<GameplaySetupSave>(jsonGamePlaySetup);
-        Debug.Log("gameplaySetupObject.lives " + gameplaySetupObject.lives);
+    //jsonGamePlaySetup = JsonUtility.ToJson(gameplaySetupObject);
+    //gameplaySetupObject = JsonUtility.FromJson<GameplaySetupSave>(jsonGamePlaySetup);
+    Debug.Log("gameplaySetupObject.lives " + gameplaySetupObject.lives);
 
         File.WriteAllText(Application.persistentDataPath + "/gameplay.json", JsonUtility.ToJson(gameplaySetupObject, true));
     }

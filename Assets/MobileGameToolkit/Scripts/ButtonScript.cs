@@ -13,6 +13,8 @@ public class ButtonScript : MonoBehaviour
 
     public CanvasManager.ButtonType buttonType;
 
+    DataSave dataSave;
+
     public string socialMediaURL;
     public int lootBoxPrice;
 
@@ -20,6 +22,7 @@ public class ButtonScript : MonoBehaviour
     {
         canvasManager = GameObject.Find("Canvas").GetComponent<CanvasManager>();
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        dataSave = GameObject.FindGameObjectWithTag("DataSave").GetComponent<DataSave>();
     }
 
     public void SetType(CanvasManager.ButtonType _type)
@@ -75,7 +78,6 @@ public class ButtonScript : MonoBehaviour
                     displayPrizeObj.transform.SetParent(canvasManager.gameObject.transform);
 
                     //pick random prize to grant
-                    DataSave dataSave = GameObject.FindGameObjectWithTag("DataSave").GetComponent<DataSave>();
                     int randPrize = Random.Range(0, dataSave.gameDataObject.lootboxPrizes.Count);
                     dataSave.gameDataObject.lootboxPrizes[randPrize] = true;
 

@@ -41,10 +41,17 @@ public class CanvasManager : MonoBehaviour
     PlayerScript playerScript;
     GameManager gameManager;
 
+    public SpriteRenderer background;
+    public DataSave dataSave;
+
     private void Start()
     {
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+
+        dataSave = GameObject.FindGameObjectWithTag("DataSave").GetComponent<DataSave>();
+
+        background.sprite = dataSave.gameplaySetupObject.backgroundSprite;
 
         if (playerScript == null)
         {

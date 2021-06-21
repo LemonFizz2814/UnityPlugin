@@ -17,7 +17,6 @@ public class SetupEditor : EditorWindow
 
     int textSelected = 0;
     int gameSelected = 0;
-    int toolbarInt = 0;
     int enemyDamage = 1;
     int coinPoints = 10;
     int playerLives = 2;
@@ -33,6 +32,7 @@ public class SetupEditor : EditorWindow
     Sprite enemySprite;
     Sprite coinSprite;
     Sprite platformSprite;
+    Sprite backgroundSprite;
 
     DataSave dataSave;
 
@@ -44,7 +44,7 @@ public class SetupEditor : EditorWindow
     string[] textTypeAdd = new string[5] { "", ": ", "Score: ", "Lives: ", "" };
     string[] gameType = new string[2] { "Endless Runner", "Own Game~" };
 
-    string[] toolbarStrings = new string[5] { "Menus setup", "Buttons setup", "Text setup", "Gameplay menu", "Lootbox setup" };
+    string[] toolbarStrings = new string[5] { "Gameplay menu", "Menus setup", "Buttons setup", "Text setup", "Lootbox setup" };
 
     bool[] startEnabled = new bool[5] { false, false, false, false, false };
 
@@ -56,6 +56,17 @@ public class SetupEditor : EditorWindow
     AudioClip playerJumpSound;
     AudioClip coinCollectSound;
     AudioClip playerHurtSound;
+
+    enum ToolBar
+    {
+        Gameplay,
+        Menu,
+        Button,
+        Text,
+        Lootbox
+    }
+
+    ToolBar toolbar;
 
     //loot box object
     public class LootBoxItem
@@ -149,27 +160,146 @@ public class SetupEditor : EditorWindow
         //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>().UpdateVariables(currencyName, playerLives, playerSprite);
     }
 
+    //load variables from gameplaysetupobject
+    void GamePlaySetupObjectLoad()
+    {
+        playerLives = dataSave.gameplaySetupObject.lives;
+        coinCollectSound = dataSave.gameplaySetupObject.coinCollectSound;
+        coinPoints = dataSave.gameplaySetupObject.coinPoints;
+        coinSpawnFrequency = dataSave.gameplaySetupObject.coinSpawnFrequency;
+        currencyName = dataSave.gameplaySetupObject.currencyName;
+        enemyDamage = dataSave.gameplaySetupObject.enemyDamage;
+        enemySpawnFrequency = dataSave.gameplaySetupObject.enemySpawnFrequency;
+        gameBackgroundMusic = dataSave.gameplaySetupObject.gameBackgroundMusic;
+        menuBackgroundMusic = dataSave.gameplaySetupObject.menuBackgroundMusic;
+        playerHurtSound = dataSave.gameplaySetupObject.playerHurtSound;
+        playerJump = dataSave.gameplaySetupObject.playerJump;
+        playerJumpSound = dataSave.gameplaySetupObject.playerJumpSound;
+    }
+
+    //load variables from menuobject
+    void MenuSetupLoad()
+    {
+        startEnabled = dataSave.menuSetupObject.startEnabled;
+    }
+
+    //load variables from buttonobject
+    void ButtonSetupLoad()
+    {
+        buttonList = dataSave.buttonSetupObject.buttonItems;
+    }
+
+    //load variables from lootboxobject
+    void LootBoxLoad()
+    {
+        lootboxList = dataSave.lootboxSetupObject.lootBoxItems;
+        lootBoxPrice = dataSave.lootboxSetupObject.lootBoxPrice;
+        prizeSound = dataSave.lootboxSetupObject.prizeSound;
+    }
+
+    //load variables from textobject
+    void TextLoad()
+    {
+        textList = dataSave.textSetupObject.textItems;
+    }
+
     //display GUI
     private void OnGUI()
     {
         //do when editor or game is first opened
         if(startup)
         {
-            dataSave = GameObject.FindGameObjectWithTag("DataSave").GetComponent<DataSave>();
             defaultButtonSprite = Resources.Load<Sprite>("DefaultSprite");
             defaultFont = Resources.Load<TMP_FontAsset>("LEMONMILK-Regular SDF");
+
+            dataSave = GameObject.FindGameObjectWithTag("DataSave").GetComponent<DataSave>();
             dataSave.LoadData();
             Debug.Log("dataSave.gameplaySetupObject.lives " + dataSave.gameplaySetupObject.lives);
-            playerLives = dataSave.gameplaySetupObject.lives;
+
+            //get and load variables
+            GamePlaySetupObjectLoad();
+            MenuSetupLoad();
+            ButtonSetupLoad();
+            LootBoxLoad();
+            TextLoad();
 
             startup = false;
         }
 
         //menu toolbar
-        toolbarInt = GUILayout.Toolbar(toolbarInt, toolbarStrings);
-        switch (toolbarInt)
+        toolbar = (ToolBar)GUILayout.Toolbar((int)toolbar, toolbarStrings);
+        switch (toolbar)
         {
-            case 0: //menu setup
+            case ToolBar.Gameplay: //gameplay setup
+                GUILayout.Label("Gameplay Menu", EditorStyles.boldLabel);
+                EditorGUILayout.Space();
+
+                EditorGUILayout.Space();
+
+                EditorGUILayout.BeginVertical();
+                scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(position.width), GUILayout.Height(position.height - 100));
+
+                gameSelected = EditorGUILayout.Popup("Game Type", gameSelected, gameType);
+
+                menuBackgroundMusic = (AudioClip)EditorGUILayout.ObjectField("Menu Background Music", menuBackgroundMusic, typeof(AudioClip), true);
+                gameBackgroundMusic = (AudioClip)EditorGUILayout.ObjectField("Game Background Music", gameBackgroundMusic, typeof(AudioClip), true);
+
+                backgroundSprite = (Sprite)EditorGUILayout.ObjectField("Background Sprite", backgroundSprite, typeof(Sprite), true);
+
+                // EDIT PLAYER OPTIONS
+                GUILayout.Label("Edit Player", EditorStyles.largeLabel);
+                EditorGUI.indentLevel++;
+                playerLives = EditorGUILayout.IntField("Lives", playerLives);
+                playerJump = EditorGUILayout.FloatField("Jump Height", playerJump);
+                playerSprite = (Sprite)EditorGUILayout.ObjectField("Player Sprite", playerSprite, typeof(Sprite), true);
+                playerHurtSound = (AudioClip)EditorGUILayout.ObjectField("Player Hurt Sound", playerHurtSound, typeof(AudioClip), true);
+                playerJumpSound = (AudioClip)EditorGUILayout.ObjectField("Player Jump Sound", playerJumpSound, typeof(AudioClip), true);
+                EditorGUI.indentLevel--;
+                //EditorGUILayout.Space();
+
+                // EDIT ENEMY OPTIONS
+                GUILayout.Label("Edit Enemy", EditorStyles.largeLabel);
+                EditorGUI.indentLevel++;
+                enemyDamage = EditorGUILayout.IntField("Damage", enemyDamage);
+                enemySpawnFrequency = EditorGUILayout.IntField("Spawn Frequency", enemySpawnFrequency);
+                enemySprite = (Sprite)EditorGUILayout.ObjectField("Enemy Sprite", enemySprite, typeof(Sprite), true);
+                EditorGUI.indentLevel--;
+                //EditorGUILayout.Space();
+
+                // EDIT COIN OPTIONS
+                GUILayout.Label("Edit Coin", EditorStyles.largeLabel);
+                EditorGUI.indentLevel++;
+                coinPoints = EditorGUILayout.IntField("Score Awarded", coinPoints);
+                coinSpawnFrequency = EditorGUILayout.IntField("Spawn Frequency", coinSpawnFrequency);
+                coinSprite = (Sprite)EditorGUILayout.ObjectField("Coin Sprite", coinSprite, typeof(Sprite), true);
+                coinCollectSound = (AudioClip)EditorGUILayout.ObjectField("Coin Collect Sound", coinCollectSound, typeof(AudioClip), true);
+                EditorGUI.indentLevel--;
+                //EditorGUILayout.Space();
+
+                // EDIT PLATFORM
+                GUILayout.Label("Edit Platforms", EditorStyles.largeLabel);
+                EditorGUI.indentLevel++;
+                platformSprite = (Sprite)EditorGUILayout.ObjectField("Platform Sprite", platformSprite, typeof(Sprite), true);
+                EditorGUI.indentLevel--;
+                EditorGUILayout.Space();
+
+                /*if (GUILayout.Button("Add Player"))
+                {
+                    Debug.Log("added player");
+                    Instantiate(Resources.Load<GameObject>("PlayerPrefab"), new Vector3(0, 0, 0), Quaternion.identity);
+                }*/
+                EditorGUILayout.EndScrollView();
+                EditorGUILayout.EndVertical();
+
+                //when any variables have been changed
+                if (GUI.changed)
+                {
+                    SaveVariables();
+                    dataSave.SaveGamePlaySetup(playerLives, coinPoints, enemyDamage, enemySpawnFrequency, coinSpawnFrequency, playerJump, currencyName,
+                        menuBackgroundMusic, gameBackgroundMusic, coinCollectSound, playerJumpSound, playerHurtSound, enemySprite, coinSprite, backgroundSprite);
+                }
+                break;
+            case ToolBar.Menu: //menu setup
                 GUILayout.Label("Menu setup", EditorStyles.boldLabel);
                 EditorGUILayout.Space();
 
@@ -202,7 +332,7 @@ public class SetupEditor : EditorWindow
                 }
                 break;
 
-            case 1: //button setup
+            case ToolBar.Button: //button setup
                 GUILayout.Label("Buttons Menu", EditorStyles.boldLabel);
 
                 EditorGUILayout.Space();
@@ -253,7 +383,7 @@ public class SetupEditor : EditorWindow
                     }
                 }
                 break;
-            case 2: //text setup
+            case ToolBar.Text: //text setup
                 GUILayout.Label("Text Menu", EditorStyles.boldLabel);
 
                 EditorGUILayout.Space();
@@ -303,75 +433,7 @@ public class SetupEditor : EditorWindow
                     }
                 }
                 break;
-
-            case 3: //gameplay setup
-                GUILayout.Label("Gameplay Menu", EditorStyles.boldLabel);
-                EditorGUILayout.Space();
-
-                gameSelected = EditorGUILayout.Popup("Game Type", gameSelected, gameType);
-
-                EditorGUILayout.Space();
-
-                EditorGUILayout.BeginVertical();
-                scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(position.width), GUILayout.Height(position.height - 100));
-
-                menuBackgroundMusic = (AudioClip)EditorGUILayout.ObjectField("Menu Background Music", menuBackgroundMusic, typeof(AudioClip), true);
-                gameBackgroundMusic = (AudioClip)EditorGUILayout.ObjectField("Game Background Music", gameBackgroundMusic, typeof(AudioClip), true);
-
-                // EDIT PLAYER OPTIONS
-                GUILayout.Label("Edit Player", EditorStyles.largeLabel);
-                EditorGUI.indentLevel++;
-                playerLives = EditorGUILayout.IntField("Lives", playerLives);
-                playerJump = EditorGUILayout.FloatField("Jump Height", playerJump);
-                playerSprite = (Sprite)EditorGUILayout.ObjectField("Player Sprite", playerSprite, typeof(Sprite), true);
-                playerHurtSound = (AudioClip)EditorGUILayout.ObjectField("Player Hurt Sound", playerHurtSound, typeof(AudioClip), true);
-                playerJumpSound = (AudioClip)EditorGUILayout.ObjectField("Player Jump Sound", playerJumpSound, typeof(AudioClip), true);
-                EditorGUI.indentLevel--;
-                //EditorGUILayout.Space();
-
-                // EDIT ENEMY OPTIONS
-                GUILayout.Label("Edit Enemy", EditorStyles.largeLabel);
-                EditorGUI.indentLevel++;
-                enemyDamage = EditorGUILayout.IntField("Damage", enemyDamage);
-                enemySpawnFrequency = EditorGUILayout.IntField("Spawn Frequency", enemySpawnFrequency);
-                enemySprite = (Sprite)EditorGUILayout.ObjectField("Enemy Sprite", enemySprite, typeof(Sprite), true);
-                EditorGUI.indentLevel--;
-                //EditorGUILayout.Space();
-
-                // EDIT COIN OPTIONS
-                GUILayout.Label("Edit Coin", EditorStyles.largeLabel);
-                EditorGUI.indentLevel++;
-                coinPoints = EditorGUILayout.IntField("Score Awarded", coinPoints);
-                coinSpawnFrequency = EditorGUILayout.IntField("Spawn Frequency", coinSpawnFrequency);
-                coinSprite = (Sprite)EditorGUILayout.ObjectField("Coin Sprite", coinSprite, typeof(Sprite), true);
-                coinCollectSound = (AudioClip)EditorGUILayout.ObjectField("Coin Collect Sound", coinCollectSound, typeof(AudioClip), true);
-                EditorGUI.indentLevel--;
-                //EditorGUILayout.Space();
-
-                // EDIT PLATFORM
-                GUILayout.Label("Edit Platforms", EditorStyles.largeLabel);
-                EditorGUI.indentLevel++;
-                platformSprite = (Sprite)EditorGUILayout.ObjectField("Platform Sprite", platformSprite, typeof(Sprite), true);
-                EditorGUI.indentLevel--;
-                EditorGUILayout.Space();
-
-                /*if (GUILayout.Button("Add Player"))
-                {
-                    Debug.Log("added player");
-                    Instantiate(Resources.Load<GameObject>("PlayerPrefab"), new Vector3(0, 0, 0), Quaternion.identity);
-                }*/
-                EditorGUILayout.EndScrollView();
-                EditorGUILayout.EndVertical();
-
-                //when any variables have been changed
-                if(GUI.changed)
-                {
-                    SaveVariables();
-                    dataSave.SaveGamePlaySetup(playerLives, coinPoints, enemyDamage, playerJump, currencyName,
-                        menuBackgroundMusic, gameBackgroundMusic, coinCollectSound, playerJumpSound, playerHurtSound);
-                }
-                break;
-            case 4: //lootbox setup
+            case ToolBar.Lootbox: //lootbox setup
                 GUILayout.Label("Lootbox Setup", EditorStyles.boldLabel);
                 EditorGUILayout.Space();
 
@@ -520,13 +582,26 @@ public class SetupEditor : EditorWindow
         _buttonPrefab.GetComponent<Image>().sprite = (_sprite == null) ? Resources.Load<Sprite>("DefaultSprite") : _sprite;
         _buttonPrefab.GetComponent<RectTransform>().localScale = new Vector3(_scale, _scale, 1);
 
+        //check if the menu it is assigned exists
         if(GameObject.FindGameObjectWithTag(menuTypes[_parent] + "Menu") != null)
         {
             _buttonPrefab.transform.SetParent(GameObject.FindGameObjectWithTag(menuTypes[_parent] + "Menu").transform.GetChild(0));//GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(_parent).GetChild(0));
         }
         else
         {
+            //set it to the first menu that exists if the one assigned doesn't
             _buttonPrefab.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0).GetChild(0));
+            string value = GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0).name;
+            value = value.Substring(0, value.Length - 4);
+
+            //check the menus tag name with the existing menu tag types
+            for(int i = 0; i < menuTypes.Length; i++)
+            {
+                if(value == menuTypes[i])
+                {
+                    buttonList[_i].parent = i;
+                }
+            }
         }
 
         buttonList[_i] = new ButtonItem(_buttonPrefab, buttonList[_i].dropDown, _text, _scale, _parent, _type, buttonList[_i].buttonClickSound, _sprite);

@@ -46,7 +46,12 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        dataSave = GameObject.FindGameObjectWithTag("DataSave").GetComponent<DataSave>();
+
         audioSource = GetComponent<AudioSource>();
+
+        menuBackgroundMusic = dataSave.gameplaySetupObject.menuBackgroundMusic;
+        gameBackgroundMusic = dataSave.gameplaySetupObject.gameBackgroundMusic;
 
         PlaySound(menuBackgroundMusic);
     }
@@ -58,8 +63,6 @@ public class GameManager : MonoBehaviour
         platformObj = Resources.Load<GameObject>("Platform");
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         playerObj = GameObject.FindGameObjectWithTag("Player");
-
-        dataSave = GameObject.FindGameObjectWithTag("DataSave").GetComponent<DataSave>();
 
         enemyObj = Resources.Load<GameObject>("EnemyPrefab");
         coinObj = Resources.Load<GameObject>("CoinPrefab");
@@ -141,7 +144,8 @@ public class GameManager : MonoBehaviour
                 //spawn coins on platform
                 for (int i = 0; i < amountOfCoinsSpawned; i++)
                 {
-                    GameObject _coinObj = Instantiate(enemyObj, new Vector3(spawnLoc.x + (-coinplatformWidth + (i * 2)), spawnLoc.y + coinSpawnHeight, spawnLoc.z), Quaternion.identity);
+                    GameObject _coinObj = Instantiate(coinObj, new Vector3(spawnLoc.x + (-coinplatformWidth + (i * 2)), spawnLoc.y + coinSpawnHeight, spawnLoc.z), Quaternion.identity);
+                    _coinObj.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = dataSave.gameplaySetupObject.coinSprite;
                     Destroy(_coinObj, platformLifeTime);
                 }
                 break;
@@ -149,6 +153,7 @@ public class GameManager : MonoBehaviour
             case EPLATFORMTYPES.ENEMY:
                 //spawn enemy on platform
                 GameObject _enemyObj = Instantiate(enemyObj, new Vector3(spawnLoc.x, spawnLoc.y + enemySpawnHeight, spawnLoc.z), Quaternion.identity);
+                _enemyObj.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = dataSave.gameplaySetupObject.enemySprite;
                 Destroy(_enemyObj, platformLifeTime);
                 break;
         }
@@ -158,8 +163,12 @@ public class GameManager : MonoBehaviour
         StartCoroutine(PlatformSpawnLoop());
     }
 
+    //called when game is quit, save variables before quitting
     public void ApplicationQuit()
     {
+        //save variables before quitting
+        dataSave.SaveGameData(playerObj.GetComponent<PlayerScript>().currency, playerObj.GetComponent<PlayerScript>().GetScore(), dataSave.gameDataObject.lootboxPrizes);
+
         Application.Quit();
     }
 }
