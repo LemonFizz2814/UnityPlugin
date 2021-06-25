@@ -8,14 +8,10 @@ using UnityEditor;
 
 public class SetupEditor : EditorWindow
 {
-    string socialMediaURL;
-    string textField;
-    string currencyName;
+    string currencyName = "currency";
 
-    float textScale = 1.0f;
     float playerJump = 400.0f;
 
-    int textSelected = 0;
     int gameSelected = 0;
     int enemyDamage = 1;
     int coinPoints = 10;
@@ -39,12 +35,12 @@ public class SetupEditor : EditorWindow
     string[] buttonTypes = new string[8] { "Play", "Exit", "Shop", "Back", "SocialMedia", "Settings", "Advert", "Lootbox" };
     string[] buttonInfo = new string[8] { "Starts game when presed", "Exits application when pressed", "Opens shop menu when pressed", "Goes back to start menu when pressed", "Opens a link to social media when pressed", "Opens the setting menu when pressed", "Plays an advertisement when pressed", "Opens a lootbox when pressed" };
     string[] menuTypes = new string[5] { "Start", "GameOver", "Settings", "Shop", "GamePlay" };
-    string[] menuTitle = new string[5] { "Add", "Add", "Add", "Add", "Add" };
+    string[] menuTitle = new string[5] { "Show", "Show", "Show", "Show", "Show" };
     string[] textTypes = new string[4] { "Info", "Currency", "Score", "Lives" };
     string[] textTypeAdd = new string[5] { "", ": ", "Score: ", "Lives: ", "" };
     string[] gameType = new string[2] { "Endless Runner", "Own Game~" };
 
-    string[] toolbarStrings = new string[5] { "Gameplay menu", "Menus setup", "Buttons setup", "Text setup", "Lootbox setup" };
+    string[] toolbarStrings = new string[6] { "Setup", "Gameplay", "Menu", "Button", "Text", "Lootbox" };
 
     bool[] startEnabled = new bool[5] { false, false, false, false, false };
 
@@ -59,6 +55,7 @@ public class SetupEditor : EditorWindow
 
     enum ToolBar
     {
+        Setup,
         Gameplay,
         Menu,
         Button,
@@ -153,13 +150,6 @@ public class SetupEditor : EditorWindow
         GetWindow<SetupEditor>("Setup Editor");
     }
 
-    //saving variables
-    void SaveVariables()
-    {
-        //PlayerPrefs.SetInt("lives", playerLives);
-        //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>().UpdateVariables(currencyName, playerLives, playerSprite);
-    }
-
     //load variables from gameplaysetupobject
     void GamePlaySetupObjectLoad()
     {
@@ -168,6 +158,7 @@ public class SetupEditor : EditorWindow
         coinPoints = dataSave.gameplaySetupObject.coinPoints;
         coinSpawnFrequency = dataSave.gameplaySetupObject.coinSpawnFrequency;
         currencyName = dataSave.gameplaySetupObject.currencyName;
+        Debug.Log("setup dataSave.gameplaySetupObject.currencyName " + currencyName);
         enemyDamage = dataSave.gameplaySetupObject.enemyDamage;
         enemySpawnFrequency = dataSave.gameplaySetupObject.enemySpawnFrequency;
         gameBackgroundMusic = dataSave.gameplaySetupObject.gameBackgroundMusic;
@@ -175,12 +166,14 @@ public class SetupEditor : EditorWindow
         playerHurtSound = dataSave.gameplaySetupObject.playerHurtSound;
         playerJump = dataSave.gameplaySetupObject.playerJump;
         playerJumpSound = dataSave.gameplaySetupObject.playerJumpSound;
+        backgroundSprite = Resources.Load<Sprite>(dataSave.gameplaySetupObject.backgroundSprite);
+        playerSprite = dataSave.gameplaySetupObject.playerSprite;
     }
 
     //load variables from menuobject
     void MenuSetupLoad()
     {
-        startEnabled = dataSave.menuSetupObject.startEnabled;
+        //startEnabled = dataSave.menuSetupObject.startEnabled;
     }
 
     //load variables from buttonobject
@@ -230,6 +223,18 @@ public class SetupEditor : EditorWindow
         toolbar = (ToolBar)GUILayout.Toolbar((int)toolbar, toolbarStrings);
         switch (toolbar)
         {
+            case ToolBar.Setup: //setup menu
+                GUILayout.Label("Setup", EditorStyles.boldLabel);
+                EditorGUILayout.Space();
+
+                if (GUILayout.Button("Instantiate Mobile Components In Scene"))
+                {
+                    Instantiate(Resources.Load<GameObject>("GameManager"), new Vector3(0, 0, 0), Quaternion.identity);
+                    Instantiate(Resources.Load<GameObject>("Canvas"), new Vector3(0, 0, 0), Quaternion.identity);
+                    Instantiate(Resources.Load<GameObject>("DataSave"), new Vector3(0, 0, 0), Quaternion.identity);
+                    Instantiate(Resources.Load<GameObject>("MainCamera"), new Vector3(0, 0, 0), Quaternion.identity);
+                }
+                break;
             case ToolBar.Gameplay: //gameplay setup
                 GUILayout.Label("Gameplay Menu", EditorStyles.boldLabel);
                 EditorGUILayout.Space();
@@ -243,6 +248,8 @@ public class SetupEditor : EditorWindow
 
                 menuBackgroundMusic = (AudioClip)EditorGUILayout.ObjectField("Menu Background Music", menuBackgroundMusic, typeof(AudioClip), true);
                 gameBackgroundMusic = (AudioClip)EditorGUILayout.ObjectField("Game Background Music", gameBackgroundMusic, typeof(AudioClip), true);
+
+                currencyName = EditorGUILayout.TextField("Currency Name", currencyName);
 
                 backgroundSprite = (Sprite)EditorGUILayout.ObjectField("Background Sprite", backgroundSprite, typeof(Sprite), true);
 
@@ -270,6 +277,7 @@ public class SetupEditor : EditorWindow
                 GUILayout.Label("Edit Coin", EditorStyles.largeLabel);
                 EditorGUI.indentLevel++;
                 coinPoints = EditorGUILayout.IntField("Score Awarded", coinPoints);
+                coinPoints = EditorGUILayout.IntField("Score Awarded", coinPoints);
                 coinSpawnFrequency = EditorGUILayout.IntField("Spawn Frequency", coinSpawnFrequency);
                 coinSprite = (Sprite)EditorGUILayout.ObjectField("Coin Sprite", coinSprite, typeof(Sprite), true);
                 coinCollectSound = (AudioClip)EditorGUILayout.ObjectField("Coin Collect Sound", coinCollectSound, typeof(AudioClip), true);
@@ -294,13 +302,12 @@ public class SetupEditor : EditorWindow
                 //when any variables have been changed
                 if (GUI.changed)
                 {
-                    SaveVariables();
                     dataSave.SaveGamePlaySetup(playerLives, coinPoints, enemyDamage, enemySpawnFrequency, coinSpawnFrequency, playerJump, currencyName,
-                        menuBackgroundMusic, gameBackgroundMusic, coinCollectSound, playerJumpSound, playerHurtSound, enemySprite, coinSprite, backgroundSprite);
+                        menuBackgroundMusic, gameBackgroundMusic, coinCollectSound, playerJumpSound, playerHurtSound, enemySprite, coinSprite, AssetDatabase.GetAssetPath(backgroundSprite), playerSprite);
                 }
                 break;
             case ToolBar.Menu: //menu setup
-                GUILayout.Label("Menu setup", EditorStyles.boldLabel);
+                GUILayout.Label("Menu Preview", EditorStyles.boldLabel);
                 EditorGUILayout.Space();
 
                 //display menus
@@ -308,19 +315,13 @@ public class SetupEditor : EditorWindow
                 {
                     if (GUILayout.Button("" + menuTitle[i] + " " + menuTypes[i] + " Menu"))
                     {
-                        AddMenu(i);
-                        menuTitle[i] = (startEnabled[i]) ? "Add" : "Remove";
+                        menuTitle[i] = (startEnabled[i]) ? "Show" : "Hide";
                         startEnabled[i] = !startEnabled[i];
+                        ShowMenu(i, startEnabled[i]);
                     }
                 }
 
                 EditorGUILayout.Space();
-
-                //button to add a new menu
-                if (GUILayout.Button("Add New Menu Type"))
-                {
-                    Debug.Log("pressed");
-                }
 
                 //when any variables have been changed
                 if (GUI.changed)
@@ -468,15 +469,6 @@ public class SetupEditor : EditorWindow
 
         buttonList[_i].textField = EditorGUILayout.TextField("Button Text", buttonList[_i].textField);
 
-        //additional changes for buttons
-        if (EditorGUILayout.BeginFadeGroup(Convert.ToInt32(buttonList[_i].type == 4))) //social media
-        {
-            GUILayout.Label("Social Media Options", EditorStyles.label);
-            socialMediaURL = EditorGUILayout.TextField("Social Media URL", "");
-        }
-        EditorGUILayout.EndFadeGroup();
-        //EditorGUILayout.EndFadeGroup();
-
         if (GUILayout.Button("Delete Button " + _i))
         {
             DestroyButton(_i);
@@ -495,12 +487,8 @@ public class SetupEditor : EditorWindow
         textList[_i].type = EditorGUILayout.Popup("Text Type", textList[_i].type, textTypes);
         textList[_i].textField = EditorGUILayout.TextField("Text", textList[_i].textField);
         textList[_i].scale = EditorGUILayout.Slider("Font size", textList[_i].scale, 0, 400);
+        textList[_i].parent = EditorGUILayout.Popup("Menu Parent", textList[_i].parent, menuTypes);
         textList[_i].textFont = (TMP_FontAsset)EditorGUILayout.ObjectField("Button Sprite", textList[_i].textFont, typeof(TMP_FontAsset), true);
-
-        if (EditorGUILayout.BeginFadeGroup(Convert.ToInt32(textList[_i].type == 1))) //currency
-        {
-            currencyName = EditorGUILayout.TextField("Currency Name", currencyName);
-        }
 
         if (GUILayout.Button("Delete Text " + _i))
         {
@@ -508,9 +496,9 @@ public class SetupEditor : EditorWindow
         }
         if (GUI.changed)//when GUI has been updated
         {
-            UpdateText(_i, textList[_i].obj, textList[_i].type, textList[_i].textField, textList[_i].scale, textList[_i].textFont, textList[_i].type);
+            UpdateText(_i, textList[_i].obj, textList[_i].type, textList[_i].textField, textList[_i].scale, textList[_i].textFont, textList[_i].parent);
         }
-        EditorGUILayout.EndFadeGroup();
+        //EditorGUILayout.EndFadeGroup();
     }
 
     //edit options for lootbox objects
@@ -585,7 +573,7 @@ public class SetupEditor : EditorWindow
         //check if the menu it is assigned exists
         if(GameObject.FindGameObjectWithTag(menuTypes[_parent] + "Menu") != null)
         {
-            _buttonPrefab.transform.SetParent(GameObject.FindGameObjectWithTag(menuTypes[_parent] + "Menu").transform.GetChild(0));//GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(_parent).GetChild(0));
+            _buttonPrefab.transform.SetParent(GameObject.FindGameObjectWithTag(menuTypes[_parent] + "Menu").transform.GetChild(0));
         }
         else
         {
@@ -622,12 +610,6 @@ public class SetupEditor : EditorWindow
         buttonPrefab.GetComponent<RectTransform>().localScale = new Vector3(_scale, _scale, 1);
 
         //add to lists of button parameters
-        /*buttonTextField.Add("new text");
-        buttonScale.Add(_scale);
-        buttonListDropDown.Add(false);
-        buttonSelected.Add(_type);
-        buttonParent.Add(_type);*/
-
         buttonList.Add(new ButtonItem(buttonPrefab, false, "new text", _scale, _type, _type, null, defaultButtonSprite));
 
         return buttonPrefab;
@@ -658,12 +640,23 @@ public class SetupEditor : EditorWindow
     }
     void UpdateText(int _i, GameObject _textPrefab, int _type, string _text, float _scale, TMP_FontAsset _font, int _parent)
     {
-        _textPrefab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = (_text == "") ? buttonTypes[_type] : _text;
-        _textPrefab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().font = _font;
+        _textPrefab.GetComponent<TextMeshProUGUI>().text = _text;
+        _textPrefab.GetComponent<TextMeshProUGUI>().font = _font;
         //force update text in inspector
-        if (GUI.changed) { EditorUtility.SetDirty(_textPrefab.transform.GetChild(0)); }
+        if (GUI.changed) { EditorUtility.SetDirty(_textPrefab); }
 
-        _textPrefab.GetComponent<ButtonScript>().SetType((CanvasManager.ButtonType)_type);
+        switch((CanvasManager.TextType)_type)
+        {
+            case CanvasManager.TextType.Currency:
+                _textPrefab.tag = "CurrencyText";
+                break;
+            case CanvasManager.TextType.Score:
+                _textPrefab.tag = "ScoreText";
+                break;
+            case CanvasManager.TextType.Lives:
+                _textPrefab.tag = "LivesText";
+                break;
+        }
         
         _textPrefab.GetComponent<RectTransform>().localScale = new Vector3(_scale, _scale, 1);
 
@@ -690,24 +683,8 @@ public class SetupEditor : EditorWindow
 
     // MENU
     //add a new menu object
-    void AddMenu(int _i)
+    void ShowMenu(int _i, bool _show)
     {
-        GameObject menuObj = GameObject.FindGameObjectWithTag(menuTypes[_i] + "Menu");
-
-        if (menuObj == null)
-        {
-            Debug.Log(menuTypes[_i] + " Menu Added");
-            //instantiate a prefab
-            GameObject menuPrefab = Instantiate(Resources.Load<GameObject>("MenuPrefab"), new Vector3(0, 0, 0), Quaternion.identity);
-            menuPrefab.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform);
-            menuPrefab.transform.tag = menuTypes[_i] + "Menu";
-            menuPrefab.name = menuTypes[_i] + "MenuObject";
-        }
-        else
-        {
-            //destroy menu object
-            Debug.Log(menuTypes[_i] + " Menu Removed");
-            DestroyImmediate(menuObj);
-        }
+        GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(_i).GetChild(0).gameObject.SetActive(_show);
     }
 }

@@ -13,6 +13,8 @@ public class ButtonScript : MonoBehaviour
 
     public CanvasManager.ButtonType buttonType;
 
+    public AudioClip clickSound;
+
     DataSave dataSave;
 
     public string socialMediaURL;
@@ -25,14 +27,18 @@ public class ButtonScript : MonoBehaviour
         dataSave = GameObject.FindGameObjectWithTag("DataSave").GetComponent<DataSave>();
     }
 
+    //set button type
     public void SetType(CanvasManager.ButtonType _type)
     {
         buttonType = _type;
     }
 
+    //when button clicked
     public void OnButtonClicked()
     {
-        switch(buttonType)
+        GetComponent<AudioSource>().PlayOneShot(clickSound);
+
+        switch (buttonType)
         {
             case CanvasManager.ButtonType.Play:
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().name); //restart scene

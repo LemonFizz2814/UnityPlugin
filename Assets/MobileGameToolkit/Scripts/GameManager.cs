@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    float startHeightMin = -6.0f;
-    float startHeightMax = -2.8f;
+    float startHeightMin = -5.5f;
+    float startHeightMax = -3.0f;
 
-    float platformSpawnTimeMin = 2.8f;
-    float platformSpawnTimeMax = 3.2f;
+    float platformSpawnTimeMin = 2.0f;
+    float platformSpawnTimeMax = 2.7f;
 
-    float platformLifeTime = 7.0f;
+    float platformLifeTime = 8.0f;
 
     float amountOfCoinsSpawned = 4;
-    float coinSpawnHeight = 5;
+    float coinSpawnHeight = 2;
     float coinplatformWidth = 3;
 
-    float enemySpawnHeight = 5;
+    float enemySpawnHeight = 2;
 
-    Vector3 playerSpeed = new Vector3(3, 0, 0);
+    Vector3 playerSpeed = new Vector3(3.2f, 0, 0);
 
     bool gameStarted = false;
 
@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     AudioClip menuBackgroundMusic;
 
     AudioSource audioSource;
+
+    List<GameObject> allGameObjects = new List<GameObject>();
 
     enum EPLATFORMTYPES
     {
@@ -59,10 +61,21 @@ public class GameManager : MonoBehaviour
     //when game has started
     public void StartGame()
     {
+        //destroy all previous platforms
+        for(int i = 0; i < allGameObjects.Count; i++)
+        {
+            Destroy(allGameObjects[i]);
+        }
+
+        allGameObjects.Clear();
+
         gameStarted = true;
+
         platformObj = Resources.Load<GameObject>("Platform");
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         playerObj = GameObject.FindGameObjectWithTag("Player");
+
+        mainCamera.transform.localPosition = new Vector3(0, 0, -10);
 
         enemyObj = Resources.Load<GameObject>("EnemyPrefab");
         coinObj = Resources.Load<GameObject>("CoinPrefab");
@@ -129,6 +142,8 @@ public class GameManager : MonoBehaviour
         spawnLoc = new Vector3(spawnLoc.x, Random.Range(startHeightMin, startHeightMax), spawnLoc.z);
 
         GameObject _platformObj = Instantiate(platformObj, spawnLoc, Quaternion.identity);
+        allGameObjects.Add(_platformObj);
+
         Destroy(_platformObj, platformLifeTime);
 
         //make random platform type
@@ -137,15 +152,16 @@ public class GameManager : MonoBehaviour
         switch (platformType)
         {
             case EPLATFORMTYPES.NORMAL:
-                //put anything else in here for normal if wanted
+                //put anything else in here for normal if wanted else keep empty
                 break;
 
             case EPLATFORMTYPES.COIN:
                 //spawn coins on platform
                 for (int i = 0; i < amountOfCoinsSpawned; i++)
                 {
-                    GameObject _coinObj = Instantiate(coinObj, new Vector3(spawnLoc.x + (-coinplatformWidth + (i * 2)), spawnLoc.y + coinSpawnHeight, spawnLoc.z), Quaternion.identity);
-                    _coinObj.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = dataSave.gameplaySetupObject.coinSprite;
+                    GameObject _coinObj = Instantiate(coinObj, new Vector3(spawnLoc.x + (-coinplatformWidth + (i * 1.5f)), spawnLoc.y + coinSpawnHeight, spawnLoc.z), Quaternion.identity);
+                    //_coinObj.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = dataSave.gameplaySetupObject.coinSprite;
+                    _coinObj.transform.SetParent(_platformObj.transform);
                     Destroy(_coinObj, platformLifeTime);
                 }
                 break;
@@ -153,7 +169,8 @@ public class GameManager : MonoBehaviour
             case EPLATFORMTYPES.ENEMY:
                 //spawn enemy on platform
                 GameObject _enemyObj = Instantiate(enemyObj, new Vector3(spawnLoc.x, spawnLoc.y + enemySpawnHeight, spawnLoc.z), Quaternion.identity);
-                _enemyObj.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = dataSave.gameplaySetupObject.enemySprite;
+                //_enemyObj.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = dataSave.gameplaySetupObject.enemySprite;
+                _enemyObj.transform.SetParent(_platformObj.transform);
                 Destroy(_enemyObj, platformLifeTime);
                 break;
         }

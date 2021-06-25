@@ -7,7 +7,6 @@ using System;
 
 public class DataSave : MonoBehaviour
 {
-    [Serializable]
     public class GameDataSave
     {
         public int highscore;
@@ -15,17 +14,14 @@ public class DataSave : MonoBehaviour
         public Sprite selectedSprite;
         public List<bool> lootboxPrizes = new List<bool>();
     }
-    [Serializable]
     public class ButtonSetupSave
     {
         public List<SetupEditor.ButtonItem> buttonItems = new List<SetupEditor.ButtonItem>();
     }
-    [Serializable]
     public class TextSetupSave
     {
         public List<SetupEditor.TextItem> textItems = new List<SetupEditor.TextItem>();
     }
-    [Serializable]
     public class GameplaySetupSave
     {
         public int lives;
@@ -42,16 +38,15 @@ public class DataSave : MonoBehaviour
         public AudioClip playerHurtSound;
         public Sprite enemySprite;
         public Sprite coinSprite;
-        public Sprite backgroundSprite;
+        public string backgroundSprite;
+        public Sprite playerSprite;
     }
-    [Serializable]
     public class LootboxSetupSave
     {
         public int lootBoxPrice;
         public AudioClip prizeSound; 
         public List<SetupEditor.LootBoxItem> lootBoxItems = new List<SetupEditor.LootBoxItem>();
     }
-    [Serializable]
     public class MenuSave
     {
         public bool[] startEnabled;
@@ -73,7 +68,7 @@ public class DataSave : MonoBehaviour
     string jsonMenuSetup;
     string jsonTextSetup;
 
-    private void Start()
+    private void Awake()
     {
         LoadData();
     }
@@ -83,16 +78,7 @@ public class DataSave : MonoBehaviour
     {
         Debug.Log("Load Data");
 
-        /*if (JsonUtility.ToJson(gameDataObject) == null)
-        {
-            Debug.Log("gameDataObject Is null");
-            SaveGameData(0, 0, null);
-        }
-        if (JsonUtility.ToJson(gameplaySetupObject) == null)
-        {
-            Debug.Log("jsonGamePlaySetup Is null");
-            SaveGamePlaySetup(3);
-        }*/
+        //make json files if they do not exist
         if (!File.Exists(Application.persistentDataPath + "/gameData.json"))
         {
             //Debug.Log("Doesn't exist");
@@ -130,6 +116,7 @@ public class DataSave : MonoBehaviour
             File.WriteAllText(Application.persistentDataPath + "/text.json", jsonTextSetup, Encoding.UTF8);
         }
 
+        //read json and set objects to json
         gameDataObject = JsonUtility.FromJson<GameDataSave>(File.ReadAllText(Application.persistentDataPath + "/gameData.json"));
         gameplaySetupObject = JsonUtility.FromJson<GameplaySetupSave>(File.ReadAllText(Application.persistentDataPath + "/gameplay.json"));
         buttonSetupObject = JsonUtility.FromJson<ButtonSetupSave>(File.ReadAllText(Application.persistentDataPath + "/button.json"));
@@ -137,6 +124,7 @@ public class DataSave : MonoBehaviour
         menuSetupObject = JsonUtility.FromJson<MenuSave>(File.ReadAllText(Application.persistentDataPath + "/menu.json"));
         textSetupObject = JsonUtility.FromJson<TextSetupSave>(File.ReadAllText(Application.persistentDataPath + "/text.json"));
 
+        //set the json string files to the objects
         jsonGameData = JsonUtility.ToJson(gameDataObject);
         jsonGamePlaySetup = JsonUtility.ToJson(gameplaySetupObject);
         jsonButtonSetup = JsonUtility.ToJson(buttonSetupObject);
@@ -160,14 +148,14 @@ public class DataSave : MonoBehaviour
 
     //save game play setup data
     public void SaveGamePlaySetup(int _lives, int _coinPoints, int _enemyDamage, int _enemySpawnFrequency, int _coinSpawnFrequency, float _playerJump, string _currencyName,
-        AudioClip _menuBackgroundMusic, AudioClip _gameBackgroundMusic, AudioClip _coinCollectSound, AudioClip _playerJumpSound, AudioClip _playerHurtSound, Sprite _enemySprite, Sprite _coinSprite, Sprite _backgroundSprite)
+        AudioClip _menuBackgroundMusic, AudioClip _gameBackgroundMusic, AudioClip _coinCollectSound, AudioClip _playerJumpSound, AudioClip _playerHurtSound, Sprite _enemySprite, Sprite _coinSprite, string _backgroundSprite, Sprite _playerSprite)
     {
         gameplaySetupObject.lives = _lives;
         gameplaySetupObject.coinPoints = _coinPoints;
         gameplaySetupObject.enemyDamage = _enemyDamage;
-        gameplaySetupObject.playerJump = _playerJump;
         gameplaySetupObject.enemySpawnFrequency = _enemySpawnFrequency;
         gameplaySetupObject.coinSpawnFrequency = _coinSpawnFrequency;
+        gameplaySetupObject.playerJump = _playerJump;
         gameplaySetupObject.currencyName = _currencyName;
         gameplaySetupObject.menuBackgroundMusic = _menuBackgroundMusic;
         gameplaySetupObject.gameBackgroundMusic = _gameBackgroundMusic;
@@ -177,10 +165,10 @@ public class DataSave : MonoBehaviour
         gameplaySetupObject.enemySprite = _enemySprite;
         gameplaySetupObject.coinSprite = _coinSprite;
         gameplaySetupObject.backgroundSprite = _backgroundSprite;
+        gameplaySetupObject.playerSprite = _playerSprite;
 
-    //jsonGamePlaySetup = JsonUtility.ToJson(gameplaySetupObject);
-    //gameplaySetupObject = JsonUtility.FromJson<GameplaySetupSave>(jsonGamePlaySetup);
-    Debug.Log("gameplaySetupObject.lives " + gameplaySetupObject.lives);
+        //jsonGamePlaySetup = JsonUtility.ToJson(gameplaySetupObject);
+        //gameplaySetupObject = JsonUtility.FromJson<GameplaySetupSave>(jsonGamePlaySetup);
 
         File.WriteAllText(Application.persistentDataPath + "/gameplay.json", JsonUtility.ToJson(gameplaySetupObject, true));
     }
@@ -215,7 +203,7 @@ public class DataSave : MonoBehaviour
         File.WriteAllText(Application.persistentDataPath + "/lootbox.json", JsonUtility.ToJson(lootboxSetupObject, true));
     }
 
-    //save text
+    //save text data
     public void SaveText(int _i, SetupEditor.TextItem _textItem)
     {
         textSetupObject.textItems[_i] = _textItem;

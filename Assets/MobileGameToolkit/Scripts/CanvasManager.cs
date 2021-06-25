@@ -41,8 +41,7 @@ public class CanvasManager : MonoBehaviour
     PlayerScript playerScript;
     GameManager gameManager;
 
-    public SpriteRenderer background;
-    public DataSave dataSave;
+    DataSave dataSave;
 
     private void Start()
     {
@@ -51,13 +50,12 @@ public class CanvasManager : MonoBehaviour
 
         dataSave = GameObject.FindGameObjectWithTag("DataSave").GetComponent<DataSave>();
 
-        background.sprite = dataSave.gameplaySetupObject.backgroundSprite;
-
         if (playerScript == null)
         {
             print("ERROR, player object not found");
         }
 
+        //add all menu objects into list
         for (int i = 0; i < System.Enum.GetValues(typeof(MenuType)).Length; i++)
         {
             //menuObjList.Add(FindObject(menuTagStrings[i])[0]);
@@ -72,26 +70,30 @@ public class CanvasManager : MonoBehaviour
         ShowMenuObject(true, MenuType.Start);
     }
 
+    //display menu objects
     public void ShowMenuObject(bool _active, MenuType _menuType)
     {
+        //update all text types
         UpdateCurrencyText(playerScript.GetNameOfCurrency(), playerScript.currency);
         UpdateLivesText(playerScript.lives);
         UpdateScoreText(playerScript.score);
 
-        if (menuObjList[(int)_menuType] != null) //check if menu exists in menu
+        //check if menu exists in menu
+        if (menuObjList[(int)_menuType] != null)
         {
             for(int i = 0; i < menuObjList.Count; i++)
             {
-                menuObjList[i].SetActive(false);
+                menuObjList[i].transform.GetChild(0).gameObject.SetActive(false);
             }
-            menuObjList[(int)_menuType].SetActive(_active);
+            menuObjList[(int)_menuType].transform.GetChild(0).gameObject.SetActive(_active);
         }
-        else
+        else //error check
         {
             print("ERROR, " + _menuType.ToString() + " Menu not found, place the prefab in Canvas to call to it"); //error handling for prefab not found
         }
     }
 
+    //Find object in scene with tag
     public List<GameObject> FindObject(string _tag)
     {
         Transform[] children = gameObject.GetComponentsInChildren<Transform>();
@@ -111,29 +113,34 @@ public class CanvasManager : MonoBehaviour
         return listOfChildren;
     }
 
+    //update all the currency text
     public void UpdateCurrencyText(string _nameOfCurrency, int _currency)
     {
-        foreach(GameObject instance in FindObject("CurrencyText"))
+        foreach(GameObject instance in GameObject.FindGameObjectsWithTag("CurrencyText"))
         {
             instance.GetComponent<TextMeshProUGUI>().text = _nameOfCurrency + ": " + _currency;
         }
     }
 
+    //update all live text
     public void UpdateLivesText(int _lives)
     {
-        foreach (GameObject instance in FindObject("LivesText"))
+        foreach (GameObject instance in GameObject.FindGameObjectsWithTag("LivesText"))
         {
             instance.GetComponent<TextMeshProUGUI>().text = "Lives: " + _lives;
         }
     }
+
+    //update all score text
     public void UpdateScoreText(int _score)
     {
-        foreach (GameObject instance in FindObject("ScoreText"))
+        foreach (GameObject instance in GameObject.FindGameObjectsWithTag("ScoreText"))
         {
             instance.GetComponent<TextMeshProUGUI>().text = "Score: " + _score;
         }
     }
 
+    //call when game begins
     public void StartGame()
     {
         gameManager.StartGame();

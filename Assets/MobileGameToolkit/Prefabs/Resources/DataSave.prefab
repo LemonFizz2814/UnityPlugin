@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2468593256422621614
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2468593256422621612}
+  - component: {fileID: 2468593256422621613}
+  m_Layer: 0
+  m_Name: DataSave
+  m_TagString: DataSave
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2468593256422621612
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2468593256422621614}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 312.24844, y: 411.58582, z: -92.89152}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2468593256422621613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2468593256422621614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 629e1f150375fbd47b6a6ae7e32eb669, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameDataObject:
+    highscore: 0
+    currency: 0
+    selectedSprite: {fileID: 0}
+    lootboxPrizes: 
+  gameplaySetupObject:
+    lives: 4
+    coinPoints: 10
+    enemyDamage: 1
+    enemySpawnFrequency: 0
+    coinSpawnFrequency: 0
+    playerJump: 400
+    currencyName: 
+    menuBackgroundMusic: {fileID: 0}
+    gameBackgroundMusic: {fileID: 0}
+    coinCollectSound: {fileID: 0}
+    playerJumpSound: {fileID: 0}
+    playerHurtSound: {fileID: 0}
+    enemySprite: {fileID: 0}
+    coinSprite: {fileID: 0}
+    backgroundSprite: {fileID: 0}
+  lootboxSetupObject:
+    lootBoxPrice: 0
+    prizeSound: {fileID: 0}
+  menuSetupObject:
+    startEnabled: 

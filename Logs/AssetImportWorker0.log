@@ -1,176 +1,670 @@
 Using pre-set license
 Built from '2020.3/release' branch; Version is '2020.3.2f1 (8fd9074bf66c) revision 9427207'; Using compiler version '192528614'; Build Type 'Release'
-OS: 'Windows 10 Enterprise; OS build 18363.476; Version 1909; 64bit' Language: 'en' Physical Memory: 32541 MB
+OS: 'Windows 10 Home; OS build 19041.1052; Version 2004; 64bit' Language: 'en' Physical Memory: 16234 MB
 BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
 
  COMMAND LINE ARGUMENTS:
-C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Unity.exe
+D:\2020.3.2f1\Editor\Unity.exe
 -adb2
 -batchMode
 -noUpm
 -name
 AssetImportWorker0
 -projectPath
-D:/Users/MDS00001SS/Downloads/UnityPlugin
+C:/Users/Administrator/Downloads/UnityPlugin
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-55373
-Successfully changed project path to: D:/Users/MDS00001SS/Downloads/UnityPlugin
-D:/Users/MDS00001SS/Downloads/UnityPlugin
+57981
+Successfully changed project path to: C:/Users/Administrator/Downloads/UnityPlugin
+C:/Users/Administrator/Downloads/UnityPlugin
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 36.32 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 42.98 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.2f1 (8fd9074bf66c)
-[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.2f1/Editor/Data/Resources/UnitySubsystems
-[Subsystems] Discovering subsystems at path D:/Users/MDS00001SS/Downloads/UnityPlugin/Assets
+[Subsystems] Discovering subsystems at path D:/2020.3.2f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/Administrator/Downloads/UnityPlugin/Assets
 GfxDevice: creating device client; threaded=0
 Direct3D:
     Version:  Direct3D 11.0 [level 11.1]
-    Renderer: NVIDIA GeForce RTX 2080 (ID=0x1e82)
+    Renderer: NVIDIA GeForce GTX 1060 6GB (ID=0x1b83)
     Vendor:   
-    VRAM:     8010 MB
+    VRAM:     6052 MB
     Driver:   27.21.14.6172
 Initialize mono
-Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.2f1/Editor/Data/Managed'
-Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.2f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
-Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.2f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56536
+Mono path[0] = 'D:/2020.3.2f1/Editor/Data/Managed'
+Mono path[1] = 'D:/2020.3.2f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'D:/2020.3.2f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56204
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
-Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.2f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.001100 seconds.
+Register platform support module: D:/2020.3.2f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: D:/2020.3.2f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.001066 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 33.78 ms, found 1 plugins.
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 44.89 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.795 seconds
+- Completed reload, in  1.757 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.000656 seconds.
+Registered in 0.001051 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 33.60 ms, found 1 plugins.
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 39.53 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.747 seconds
+- Completed reload, in  0.859 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
-Refreshing native plugins compatible for Editor in 0.40 ms, found 1 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
+Refreshing native plugins compatible for Editor in 0.39 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1949 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 1947 Unused Serialized files (Serialized files now loaded: 0)
 System memory in use before: 90.5 MB.
 System memory in use after: 90.4 MB.
 
-Unloading 40 unused Assets to reduce memory usage. Loaded Objects now: 2378.
-Total: 2.142400 ms (FindLiveObjects: 0.196700 ms CreateObjectMapping: 0.100300 ms MarkObjects: 1.718600 ms  DeleteObjects: 0.126000 ms)
+Unloading 40 unused Assets to reduce memory usage. Loaded Objects now: 2376.
+Total: 1.960200 ms (FindLiveObjects: 0.170600 ms CreateObjectMapping: 0.097500 ms MarkObjects: 1.588400 ms  DeleteObjects: 0.103200 ms)
 
 ========================================================================
 Received Import Request.
+  path: Assets/MobileGameToolkit/Audio/PlayerDeath.mp3
+  artifactKey: Guid(9b42cb89d760fab478bfe7513bbb015d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Audio/PlayerDeath.mp3 using Guid(9b42cb89d760fab478bfe7513bbb015d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c4ba25c0dcee402831e36cba2e6ac3bb') in 0.087848 seconds
+  Import took 0.090354 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002836 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Drop Shadow.mat
+  artifactKey: Guid(e73a58f6e2794ae7b1b7e50b7fb811b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Drop Shadow.mat using Guid(e73a58f6e2794ae7b1b7e50b7fb811b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd7c9a6e63d9fa0062e755b0df8e71c27') in 0.376454 seconds
+  Import took 0.379135 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.003004 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMPro_Surface.cginc
+  artifactKey: Guid(d930090c0cd643c7b55f19a38538c162) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMPro_Surface.cginc using Guid(d930090c0cd643c7b55f19a38538c162) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0561c6ccaeef17fbdac01ea0cbf024c2') in 0.004783 seconds
+  Import took 0.007060 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002436 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_SDF SSD.shader
+  artifactKey: Guid(14eb328de4b8eb245bb7cea29e4ac00b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_SDF SSD.shader using Guid(14eb328de4b8eb245bb7cea29e4ac00b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8e6186d55496cbb2b0909227b5a4ee0f') in 0.002985 seconds
+  Import took 0.005189 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002413 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_SDF.shader
+  artifactKey: Guid(68e6db2ebdc24f95958faec2be5558d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_SDF.shader using Guid(68e6db2ebdc24f95958faec2be5558d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '86e9f166da36bd248b9b59bce032d8c7') in 0.002038 seconds
+  Import took 0.004017 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002090 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Shaders
+  artifactKey: Guid(e9f693669af91aa45ad615fc681ed29f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Shaders using Guid(e9f693669af91aa45ad615fc681ed29f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e1be43f07b635039f26a72cc318c128c') in 0.001859 seconds
+  Import took 0.003962 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002887 seconds.
+  path: Assets/MobileGameToolkit/Prefabs/Resources/Fonts/Jersey M54.ttf
+  artifactKey: Guid(2f6a8810b63821c4690704cf612599ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Prefabs/Resources/Fonts/Jersey M54.ttf using Guid(2f6a8810b63821c4690704cf612599ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ff27b0d39847a98994a8cb532ffa6992') in 0.019368 seconds
+  Import took 0.021625 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.005079 seconds.
+  path: Assets/MobileGameToolkit/Scripts
+  artifactKey: Guid(145905b6c5cc6194c825fb72f4dcf33d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Scripts using Guid(145905b6c5cc6194c825fb72f4dcf33d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a2ab95c7cf08a3bebad5b0728b080e62') in 0.001933 seconds
+  Import took 0.004130 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.005216 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader
+  artifactKey: Guid(fe393ace9b354375a9cb14cdbbc28be4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader using Guid(fe393ace9b354375a9cb14cdbbc28be4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '99bb0299ec68b76d4a20ff6fd3e4d276') in 0.002261 seconds
+  Import took 0.004519 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002922 seconds.
+  path: Assets/MobileGameToolkit/Audio/EnemyDeath.wav
+  artifactKey: Guid(f9b11fd256b195f49bca809d17d168ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Audio/EnemyDeath.wav using Guid(f9b11fd256b195f49bca809d17d168ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0fc02d0e2a77eb9ac4fc15ed7e157a09') in 0.006653 seconds
+  Import took 0.008915 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.003177 seconds.
+  path: Assets/MobileGameToolkit/Prefabs/Resources/MainCamera.prefab
+  artifactKey: Guid(784353c95fbad9542992752d8fb055c5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Prefabs/Resources/MainCamera.prefab using Guid(784353c95fbad9542992752d8fb055c5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '473822414c1e2b776cd531e5811ea749') in 0.019892 seconds
+  Import took 0.022417 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.005137 seconds.
+  path: Assets/MobileGameToolkit/Prefabs/Resources/ButtonPrefab.prefab
+  artifactKey: Guid(293d9a2264fb35e44872824912106e22) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Prefabs/Resources/ButtonPrefab.prefab using Guid(293d9a2264fb35e44872824912106e22) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7b23d7348285474a26b0448877b1b34d') in 0.049821 seconds
+  Import took 0.052301 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002567 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_Bitmap.shader
+  artifactKey: Guid(128e987d567d4e2c824d754223b3f3b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_Bitmap.shader using Guid(128e987d567d4e2c824d754223b3f3b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c7bb65fc6673a77c6c66a5bf1765ffbf') in 0.002348 seconds
+  Import took 0.004790 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002978 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD.shader
+  artifactKey: Guid(c8d12adcee749c344b8117cf7c7eb912) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD.shader using Guid(c8d12adcee749c344b8117cf7c7eb912) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fe6854b209b0647b60f7d703f90c659f') in 0.003032 seconds
+  Import took 0.005785 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002008 seconds.
+  path: Assets/MobileGameToolkit/Prefabs/Resources/Fonts
+  artifactKey: Guid(871ac4297a8403540a85cc3298f5b0a5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Prefabs/Resources/Fonts using Guid(871ac4297a8403540a85cc3298f5b0a5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9db653f01756a371ce32f571fd66fa5a') in 0.002126 seconds
+  Import took 0.004622 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.004007 seconds.
+  path: Assets/MobileGameToolkit/Audio/GameOver.ogg
+  artifactKey: Guid(04a532a988107704ea08711014aff842) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Audio/GameOver.ogg using Guid(04a532a988107704ea08711014aff842) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '71d6ca4710bdc24e6738180dfbad5b65') in 0.008079 seconds
+  Import took 0.010684 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002898 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Resources/LineBreaking Following Characters.txt
+  artifactKey: Guid(fade42e8bc714b018fac513c043d323b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Resources/LineBreaking Following Characters.txt using Guid(fade42e8bc714b018fac513c043d323b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2f3263bc9b9a9a9fb0a157d6d0920c06') in 0.006826 seconds
+  Import took 0.009252 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.005441 seconds.
+  path: Assets/MobileGameToolkit/Audio/CoinSound.wav
+  artifactKey: Guid(19124719651673d468ba82bd5ff9469e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Audio/CoinSound.wav using Guid(19124719651673d468ba82bd5ff9469e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3e9dda8336a98e47e475d3aa37a771a4') in 0.005925 seconds
+  Import took 0.008490 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.005267 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Fonts
+  artifactKey: Guid(6ab70aee4d56447429c680537fbf93ed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Fonts using Guid(6ab70aee4d56447429c680537fbf93ed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a3441593631d9ef858cd2659dd405b08') in 0.001834 seconds
+  Import took 0.004237 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002824 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Sprites/EmojiOne.json
+  artifactKey: Guid(8f05276190cf498a8153f6cbe761d4e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Sprites/EmojiOne.json using Guid(8f05276190cf498a8153f6cbe761d4e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '93a06ef054301638b107e5c7e389cbbb') in 0.008942 seconds
+  Import took 0.011511 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002493 seconds.
+  path: Assets/MobileGameToolkit/Prefabs/Resources/EnemyPrefab.prefab
+  artifactKey: Guid(0d14deca2b8572c4abb7396fbc53dc26) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Prefabs/Resources/EnemyPrefab.prefab using Guid(0d14deca2b8572c4abb7396fbc53dc26) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '45fce07baf01463f3ec64070490ed4df') in 0.006657 seconds
+  Import took 0.009157 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.005444 seconds.
+  path: Assets/MobileGameToolkit/Prefabs/Resources/Fonts/Floppy Pixel Regular Mac.ttf
+  artifactKey: Guid(5584f7ea7b8c98548ab1367a34388ca6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Prefabs/Resources/Fonts/Floppy Pixel Regular Mac.ttf using Guid(5584f7ea7b8c98548ab1367a34388ca6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '717b13835c235e764b68d52285d959ce') in 0.006575 seconds
+  Import took 0.008941 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001875 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro
+  artifactKey: Guid(f54d1bd14bd3ca042bd867b519fee8cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro using Guid(f54d1bd14bd3ca042bd867b519fee8cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c39565d08a2499f604508dd1ea501fd5') in 0.001866 seconds
+  Import took 0.003877 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.006632 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Resources/Fonts & Materials
+  artifactKey: Guid(731f1baa9d144a9897cb1d341c2092b8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Resources/Fonts & Materials using Guid(731f1baa9d144a9897cb1d341c2092b8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7a0339ce8f3542579f932d25d0e0e913') in 0.002004 seconds
+  Import took 0.004526 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002535 seconds.
+  path: Assets/MobileGameToolkit/Prefabs/Resources/DisplayPrize.prefab
+  artifactKey: Guid(63364fe8f7bf6ac4bad5a2299b0e83f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Prefabs/Resources/DisplayPrize.prefab using Guid(63364fe8f7bf6ac4bad5a2299b0e83f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'efd2936293d07f522573da712be49ab9') in 0.019360 seconds
+  Import took 0.022490 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.003327 seconds.
+  path: Assets/MobileGameToolkit/Scripts/GameManager.cs
+  artifactKey: Guid(75fded778b904e044a003473cdfe5aba) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Scripts/GameManager.cs using Guid(75fded778b904e044a003473cdfe5aba) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '750c0c34f5dcebf13f7ec711e4dc11cf') in 0.004780 seconds
+  Import took 0.007578 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002968 seconds.
+  path: Assets/MobileGameToolkit/Scripts/ButtonScript.cs
+  artifactKey: Guid(f107d678e30019f47aac62fa06b65261) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Scripts/ButtonScript.cs using Guid(f107d678e30019f47aac62fa06b65261) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bfe57ba9465fe74a69b5d0e1db04ef51') in 0.002081 seconds
+  Import took 0.066406 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.004260 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_Bitmap-Custom-Atlas.shader
+  artifactKey: Guid(48bb5f55d8670e349b6e614913f9d910) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_Bitmap-Custom-Atlas.shader using Guid(48bb5f55d8670e349b6e614913f9d910) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '49c3f1df44b18809101ebf09689ae537') in 0.002902 seconds
+  Import took 0.006167 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002900 seconds.
+  path: Assets/MobileGameToolkit/Prefabs/Resources/MenuPrefab.prefab
+  artifactKey: Guid(7bbcaf7ac2ba5214db00f530a204f4b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Prefabs/Resources/MenuPrefab.prefab using Guid(7bbcaf7ac2ba5214db00f530a204f4b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '29094f15b27b38c5e52d32d5018a57c9') in 0.003046 seconds
+  Import took 0.005472 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002750 seconds.
+  path: Assets/MobileGameToolkit/Prefabs/Resources/CoinPrefab.prefab
+  artifactKey: Guid(ffb4f8781d03ceb4db5e953f97c72398) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Prefabs/Resources/CoinPrefab.prefab using Guid(ffb4f8781d03ceb4db5e953f97c72398) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5c97ab72c469e6b99563a52af8654fef') in 0.009032 seconds
+  Import took 0.011545 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002831 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader
+  artifactKey: Guid(85187c2149c549c5b33f0cdb02836b17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader using Guid(85187c2149c549c5b33f0cdb02836b17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8c12692fc682587a34134a890c4bcccc') in 0.002160 seconds
+  Import took 0.004438 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002426 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMPro_Properties.cginc
+  artifactKey: Guid(3997e2241185407d80309a82f9148466) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMPro_Properties.cginc using Guid(3997e2241185407d80309a82f9148466) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0d79eb9644b23516e784b7f77cc73c4d') in 0.002327 seconds
+  Import took 0.004757 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.003304 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset
+  artifactKey: Guid(8f586378b4e144a9851e7b34d9b748ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset using Guid(8f586378b4e144a9851e7b34d9b748ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0993fc02711b3bbe6d995d41cc54c5cd') in 0.029146 seconds
+  Import took 0.031715 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002615 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Resources/Style Sheets/Default Style Sheet.asset
+  artifactKey: Guid(f952c082cb03451daed3ee968ac6c63e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Resources/Style Sheets/Default Style Sheet.asset using Guid(f952c082cb03451daed3ee968ac6c63e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '140ceb46d6fa3cb812ba039ebf1c53e7') in 0.003862 seconds
+  Import took 0.006336 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.004369 seconds.
+  path: Assets/MobileGameToolkit/Prefabs/Resources/Fonts/University.otf
+  artifactKey: Guid(a903777098ae45c4ca4dc7369a18dc84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Prefabs/Resources/Fonts/University.otf using Guid(a903777098ae45c4ca4dc7369a18dc84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9adb4ae0954c0851092558c84f24f7ac') in 0.007866 seconds
+  Import took 0.010475 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001987 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Documentation
+  artifactKey: Guid(8e7e8f5a82a3a134e91c54efd2274ea9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Documentation using Guid(8e7e8f5a82a3a134e91c54efd2274ea9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3866dd9622994289b8b2de6f56d9f63c') in 0.001933 seconds
+  Import took 0.004188 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.005031 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMPro.cginc
+  artifactKey: Guid(407bc68d299748449bbf7f48ee690f8d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMPro.cginc using Guid(407bc68d299748449bbf7f48ee690f8d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a7b8ca86563ddda39b16ad76be2dfed1') in 0.002495 seconds
+  Import took 0.004966 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002832 seconds.
+  path: Assets/MobileGameToolkit/Prefabs/Resources/Fonts/PiratesBay.ttf
+  artifactKey: Guid(07e15522b3242f540b504232ba247f26) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Prefabs/Resources/Fonts/PiratesBay.ttf using Guid(07e15522b3242f540b504232ba247f26) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2f74066be55453b01e4c312523d43eab') in 0.006886 seconds
+  Import took 0.009490 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002985 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Fonts/LiberationSans - OFL.txt
+  artifactKey: Guid(6e59c59b81ab47f9b6ec5781fa725d2c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Fonts/LiberationSans - OFL.txt using Guid(6e59c59b81ab47f9b6ec5781fa725d2c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5e2e4e0c12b611f372de98bf8cf2c503') in 0.002774 seconds
+  Import took 0.005159 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001755 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Resources/Style Sheets
+  artifactKey: Guid(4aecb92fff08436c8303b10eab8da368) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Resources/Style Sheets using Guid(4aecb92fff08436c8303b10eab8da368) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6a0623226ec8fca0e40ad04048dd5cdd') in 0.002021 seconds
+  Import took 0.004260 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002889 seconds.
+  path: Assets/MobileGameToolkit/Prefabs/Resources/Fonts/Enchanted Land.otf
+  artifactKey: Guid(521b8357fc3627249aa5c8da72cef422) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Prefabs/Resources/Fonts/Enchanted Land.otf using Guid(521b8357fc3627249aa5c8da72cef422) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fa762bafb60a2e7cb80b4433def662db') in 0.007048 seconds
+  Import took 0.009581 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002371 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Resources/Sprite Assets/EmojiOne.asset
+  artifactKey: Guid(c41005c129ba4d66911b75229fd70b45) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Resources/Sprite Assets/EmojiOne.asset using Guid(c41005c129ba4d66911b75229fd70b45) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c7caeba900b5528200e11d20e5fa9515') in 0.006790 seconds
+  Import took 0.009201 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002319 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader
+  artifactKey: Guid(bc1ede39bf3643ee8e493720e4259791) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader using Guid(bc1ede39bf3643ee8e493720e4259791) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7cd14886fa6cd2aab96f3668e98b7e55') in 0.002085 seconds
+  Import took 0.004320 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002333 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_Sprite.shader
+  artifactKey: Guid(cf81c85f95fe47e1a27f6ae460cf182c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_Sprite.shader using Guid(cf81c85f95fe47e1a27f6ae460cf182c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7b42f95599eab785626be5564a63b559') in 0.002225 seconds
+  Import took 0.004702 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002419 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Sprites/EmojiOne Attribution.txt
+  artifactKey: Guid(381dcb09d5029d14897e55f98031fca5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Sprites/EmojiOne Attribution.txt using Guid(381dcb09d5029d14897e55f98031fca5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '53ea14fc020f333b9043951fad905202') in 0.002482 seconds
+  Import took 0.004906 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002371 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMPro_Mobile.cginc
+  artifactKey: Guid(c334973cef89a9840b0b0c507e0377ab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMPro_Mobile.cginc using Guid(c334973cef89a9840b0b0c507e0377ab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '73504e105e5d475a54f5787a2d277804') in 0.002723 seconds
+  Import took 0.005050 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002327 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset
+  artifactKey: Guid(2e498d1c8094910479dc3e1b768306a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset using Guid(2e498d1c8094910479dc3e1b768306a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6325ae9a70782a205d52cf1addc2954c') in 0.007748 seconds
+  Import took 0.010290 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.008242 seconds.
+  path: Assets/MobileGameToolkit/Scripts/DataSave.cs
+  artifactKey: Guid(629e1f150375fbd47b6a6ae7e32eb669) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Scripts/DataSave.cs using Guid(629e1f150375fbd47b6a6ae7e32eb669) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4ab01a84ebad61b26a68c5c85ab3d325') in 0.001732 seconds
+  Import took 0.004027 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002275 seconds.
   path: Assets/MobileGameToolkit/Scripts/CanvasManager.cs
   artifactKey: Guid(a0e9b87210e418d46ae853e02704fabd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/MobileGameToolkit/Scripts/CanvasManager.cs using Guid(a0e9b87210e418d46ae853e02704fabd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '09d0fc17873cf3dc0c0093441398d988') in 0.019805 seconds
-  Import took 0.022303 seconds .
+Start importing Assets/MobileGameToolkit/Scripts/CanvasManager.cs using Guid(a0e9b87210e418d46ae853e02704fabd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '10cdafef65f8bd71e86a989240132642') in 0.001966 seconds
+  Import took 0.004190 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000265 seconds.
+  Time since last request: 0.002666 seconds.
+  path: Assets/MobileGameToolkit/Audio/ButtonPress.mp3
+  artifactKey: Guid(66b0e8ab56cb7d043a1ca2b9eb3f0c04) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Audio/ButtonPress.mp3 using Guid(66b0e8ab56cb7d043a1ca2b9eb3f0c04) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5cd1443293e35f7aeddddd45d682a7c1') in 0.006390 seconds
+  Import took 0.008662 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002795 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_SDF-Surface.shader
+  artifactKey: Guid(f7ada0af4f174f0694ca6a487b8f543d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_SDF-Surface.shader using Guid(f7ada0af4f174f0694ca6a487b8f543d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bb10547ef9697b6f36b248be30bce61c') in 0.002086 seconds
+  Import took 0.004311 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002339 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Outline.mat
+  artifactKey: Guid(79459efec17a4d00a321bdcc27bbc385) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Outline.mat using Guid(79459efec17a4d00a321bdcc27bbc385) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c269c21ac78df1e67178f1f5f025eb67') in 0.058224 seconds
+  Import took 0.060536 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.005175 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Resources/Sprite Assets
+  artifactKey: Guid(512a49d95c0c4332bdd98131869c23c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Resources/Sprite Assets using Guid(512a49d95c0c4332bdd98131869c23c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '516dabe27f735b4afb1a24a03aa89ce9') in 0.001852 seconds
+  Import took 0.004111 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002481 seconds.
   path: Assets/MobileGameToolkit/Scripts/SetupEditor.cs
   artifactKey: Guid(c6c466df15dffec4cabf1c0921185482) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/MobileGameToolkit/Scripts/SetupEditor.cs using Guid(c6c466df15dffec4cabf1c0921185482) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f7005c243ad519c5d28dedeb569d14c7') in 0.001445 seconds
-  Import took 0.004214 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.000670 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.42 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.685 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.43 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1931 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 89.2 MB.
-System memory in use after: 89.1 MB.
-
-Unloading 28 unused Assets to reduce memory usage. Loaded Objects now: 2382.
-Total: 1.873600 ms (FindLiveObjects: 0.187300 ms CreateObjectMapping: 0.061500 ms MarkObjects: 1.524500 ms  DeleteObjects: 0.099300 ms)
+Start importing Assets/MobileGameToolkit/Scripts/SetupEditor.cs using Guid(c6c466df15dffec4cabf1c0921185482) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '80cd5c7657ca5affd34b7b9e5d4017cc') in 0.001899 seconds
+  Import took 0.004172 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 464.951256 seconds.
-  path: Assets/MobileGameToolkit/Scripts/ButtonScript.cs
-  artifactKey: Guid(f107d678e30019f47aac62fa06b65261) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/MobileGameToolkit/Scripts/ButtonScript.cs using Guid(f107d678e30019f47aac62fa06b65261) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '19a3b40f7530fdbb144955eb8babb2d2') in 0.007347 seconds
-  Import took 0.010501 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.000949 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.42 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.664 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.43 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1931 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 89.2 MB.
-System memory in use after: 89.2 MB.
-
-Unloading 28 unused Assets to reduce memory usage. Loaded Objects now: 2386.
-Total: 1.813500 ms (FindLiveObjects: 0.150800 ms CreateObjectMapping: 0.059500 ms MarkObjects: 1.518500 ms  DeleteObjects: 0.084000 ms)
+  Time since last request: 0.002769 seconds.
+  path: Assets/MobileGameToolkit/Audio/CollectSound.wav
+  artifactKey: Guid(fd6b88bc78f0fee47b40e8818234d4f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Audio/CollectSound.wav using Guid(fd6b88bc78f0fee47b40e8818234d4f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2b95b46bdaa908e19926c4d51dc0564c') in 0.005677 seconds
+  Import took 0.007918 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 135.681283 seconds.
-  path: Assets/MobileGameToolkit/Scripts/ButtonScript.cs
-  artifactKey: Guid(f107d678e30019f47aac62fa06b65261) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/MobileGameToolkit/Scripts/ButtonScript.cs using Guid(f107d678e30019f47aac62fa06b65261) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9bf53476140ea55176129837d7d9f957') in 0.011537 seconds
-  Import took 0.020010 seconds .
+  Time since last request: 0.002233 seconds.
+  path: Assets/MobileGameToolkit/Prefabs
+  artifactKey: Guid(b1ae920769a38264ba61ac3f83b4a852) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Prefabs using Guid(b1ae920769a38264ba61ac3f83b4a852) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a8a2f3cb54f69be3dc736251b4361325') in 0.001868 seconds
+  Import took 0.003841 seconds .
 
 ========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.000695 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.42 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.663 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.43 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1931 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 89.2 MB.
-System memory in use after: 89.2 MB.
+Received Import Request.
+  Time since last request: 0.006900 seconds.
+  path: Assets/MobileGameToolkit/Prefabs/Resources/Sprites
+  artifactKey: Guid(edbc1cfe974359b4599a97dcb85e1c37) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Prefabs/Resources/Sprites using Guid(edbc1cfe974359b4599a97dcb85e1c37) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3d46b3bc6f43beefab0b0bbe00ec5b7d') in 0.001820 seconds
+  Import took 0.003963 seconds .
 
-Unloading 28 unused Assets to reduce memory usage. Loaded Objects now: 2390.
-Total: 1.823400 ms (FindLiveObjects: 0.168700 ms CreateObjectMapping: 0.051100 ms MarkObjects: 1.508700 ms  DeleteObjects: 0.094100 ms)
+========================================================================
+Received Import Request.
+  Time since last request: 0.007400 seconds.
+  path: Assets/MobileGameToolkit/Prefabs/Resources/LEMONMILK-Regular SDF.asset
+  artifactKey: Guid(fbea6dc470d85084c9cb93eb37ddd704) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Prefabs/Resources/LEMONMILK-Regular SDF.asset using Guid(fbea6dc470d85084c9cb93eb37ddd704) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a39931a19101c5644bf0571d03e10d21') in 0.021650 seconds
+  Import took 0.024148 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.003091 seconds.
+  path: Assets/MobileGameToolkit/Prefabs/Resources/Fonts/Legend M54.ttf
+  artifactKey: Guid(03b210411a322fb448ceccb62029b53b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Prefabs/Resources/Fonts/Legend M54.ttf using Guid(03b210411a322fb448ceccb62029b53b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a0bed5b14977eb754a8c9b596b929915') in 0.006901 seconds
+  Import took 0.009315 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002930 seconds.
+  path: Assets/MobileGameToolkit/Audio/GameOverSound.wav
+  artifactKey: Guid(92c7d9d7f02186d44aa0363697179270) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Audio/GameOverSound.wav using Guid(92c7d9d7f02186d44aa0363697179270) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '11526c8b2a74e7b03b3f349e1281bbaf') in 0.005633 seconds
+  Import took 0.008025 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002837 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_SDF Overlay.shader
+  artifactKey: Guid(dd89cf5b9246416f84610a006f916af7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_SDF Overlay.shader using Guid(dd89cf5b9246416f84610a006f916af7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ef12b527af03d0c6c207238c06fe7a2a') in 0.002131 seconds
+  Import took 0.004394 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.003681 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Sprites/EmojiOne.png
+  artifactKey: Guid(dffef66376be4fa480fb02b19edbe903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Sprites/EmojiOne.png using Guid(dffef66376be4fa480fb02b19edbe903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b454f36992cf9720a4ade4575b9297a7') in 0.012302 seconds
+  Import took 0.014812 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.003036 seconds.
+  path: Assets/MobileGameToolkit/Scenes/DemoScene.unity
+  artifactKey: Guid(2cda990e2423bbf4892e6590ba056729) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Scenes/DemoScene.unity using Guid(2cda990e2423bbf4892e6590ba056729) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b781ff58a7953d94ad6aa7cef49730d0') in 0.002409 seconds
+  Import took 0.004785 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002747 seconds.
+  path: Assets/MobileGameToolkit/Prefabs/Resources/GameManager.prefab
+  artifactKey: Guid(2e7385e52b3941a47ad49d23f9ad00d3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Prefabs/Resources/GameManager.prefab using Guid(2e7385e52b3941a47ad49d23f9ad00d3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8aeec69b85941ccbf45d36e6b1298268') in 0.003126 seconds
+  Import took 0.005427 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002686 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Resources/TMP Settings.asset
+  artifactKey: Guid(3f5b5dff67a942289a9defa416b206f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Resources/TMP Settings.asset using Guid(3f5b5dff67a942289a9defa416b206f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1e9774aa249bac67ee762a495b89b4e6') in 0.022654 seconds
+  Import took 0.025143 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.003200 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Sprites
+  artifactKey: Guid(d0603b6d5186471b96c778c3949c7ce2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Sprites using Guid(d0603b6d5186471b96c778c3949c7ce2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '54b90cb3738d2d73cd504e78f8ae6c91') in 0.001651 seconds
+  Import took 0.003817 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.004595 seconds.
+  path: Assets/MobileGameToolkit/Prefabs/Resources/Platform.prefab
+  artifactKey: Guid(579dd80b7d86e634c897499e730f0169) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Prefabs/Resources/Platform.prefab using Guid(579dd80b7d86e634c897499e730f0169) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd265b4732f2fa0ce45135546209d2699') in 0.007448 seconds
+  Import took 0.010014 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.007371 seconds.
+  path: Assets/MobileGameToolkit/Scripts/PlayerScript.cs
+  artifactKey: Guid(e2473450c24cae44e93deaec8fae3240) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/Scripts/PlayerScript.cs using Guid(e2473450c24cae44e93deaec8fae3240) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '22c09512a7e0373e2e66cb6f179e805e') in 0.001942 seconds
+  Import took 0.004343 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.008939 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Documentation/TextMesh Pro User Guide 2016.pdf
+  artifactKey: Guid(1b8d251f9af63b746bf2f7ffe00ebb9b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Documentation/TextMesh Pro User Guide 2016.pdf using Guid(1b8d251f9af63b746bf2f7ffe00ebb9b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '62eedd5f7c9e456521c2e6442ad82a69') in 0.004669 seconds
+  Import took 0.007117 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.005158 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_Bitmap-Mobile.shader
+  artifactKey: Guid(1e3b057af24249748ff873be7fafee47) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_Bitmap-Mobile.shader using Guid(1e3b057af24249748ff873be7fafee47) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1d9c84b20ba57783d038defabd0359c2') in 0.002283 seconds
+  Import took 0.004705 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002610 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader
+  artifactKey: Guid(a02a7d8c237544f1962732b55a9aebf1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader using Guid(a02a7d8c237544f1962732b55a9aebf1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '45760b5796ff5987daef5e74ff691eb1') in 0.002082 seconds
+  Import took 0.004415 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001842 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Resources
+  artifactKey: Guid(243e06394e614e5d99fab26083b707fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Resources using Guid(243e06394e614e5d99fab26083b707fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f4aa49c28bf0b1d3358a9221559fac8b') in 0.001636 seconds
+  Import took 0.003674 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.006543 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Resources/LineBreaking Leading Characters.txt
+  artifactKey: Guid(d82c1b31c7e74239bff1220585707d2b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Resources/LineBreaking Leading Characters.txt using Guid(d82c1b31c7e74239bff1220585707d2b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2eebe30dcfa0a46a770f930532d73430') in 0.002233 seconds
+  Import took 0.004572 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.005708 seconds.
+  path: Assets/MobileGameToolkit/TextMesh Pro/Fonts/LiberationSans.ttf
+  artifactKey: Guid(e3265ab4bf004d28a9537516768c1c75) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/MobileGameToolkit/TextMesh Pro/Fonts/LiberationSans.ttf using Guid(e3265ab4bf004d28a9537516768c1c75) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f4971f4ee26649245eb0e58b7d866df0') in 0.006936 seconds
+  Import took 0.009367 seconds .
 
 AssetImportWorkerClient::OnTransportError - code=2 error=End of file

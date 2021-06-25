@@ -17,6 +17,7 @@ TagManager:
   - GamePlayMenu
   - GameManager
   - DataSave
+  - Boundary
   layers:
   - Default
   - TransparentFX
